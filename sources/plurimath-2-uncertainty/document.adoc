@@ -1,0 +1,41 @@
+= Plurimath — Part 2: Measurement uncertainty — model, representation and round-trip policy
+:docnumber: 2
+:edition: 1
+:revdate: 2026-10-30
+:copyright-year: 2026
+:language: en
+:title-intro-en: Plurimath
+:title-main-en: Part 2: Measurement uncertainty — model, representation and round-trip policy
+:doctype: standard
+:docstage: 20
+:mn-document-class: iso
+:mn-output-extensions: xml,html,doc,pdf
+:imagesdir: images
+
+== Status of this draft
+
+Model and the ASCII/MathML/OMML/UnicodeMath representations are implemented (plurimath#495–#509, unreleased until the next plurimath release); this part formalizes them and the remaining surface (plurimath#524).
+
+== Abstract
+
+The uncertainty record: fields (value, category standard/expanded/coverage_interval, magnitude, coverage_factor, coverage_probability, lower/upper, interval_kind shortest/probabilistically_symmetric, notation absolute/concise, unit), exact-decimal text preservation, invariants — a record, never a computation; p never derived from k (JCGM 100 §6.3.2); the magnitude is a DIFFERENCE quantity, so conversion applies the factor and never the offset (UnitsML 4 difference law). Round-trip policy: markers win; the visible form is presentation; read-time disagreement raises `InvalidUncertainty`. Representations, one clause each: MathML 4 `intent` markers (`standard-uncertainty`, `expanded-uncertainty`, `coverage-interval`, `:concise`/`:shortest`/`:probabilistically-symmetric`, `$unit` references); OMML hidden-phantom encoding (risks documented); UnicodeMath `ⓘ("…")` with `〖…〗` negatives and `ⓐ(...)` units; LaTeX/HTML output-only with declared losses. Concise `10.3(2)` is a REPORTING convention (GUM §7.2.2 form 2): output-only; `n((d))` held in reserve; `+-` rejected everywhere (`3+-1` ambiguity); plain `±` remains the Pm symbol.
+
+== Clause plan
+
+- 5 The model — fields and invariants
+- 6 Round-trip policy and the lossiness matrix
+- 7 MathML 4 intent markers
+- 8 OMML hidden-phantom encoding
+- 9 UnicodeMath ⓘ annotation
+- 10 LaTeX and HTML presentation contracts
+- 11 ASCII channels (references: asciimath 2 quoted channel; pma 1 native literals)
+- Annex A (normative) the round-trip matrix
+- Annex B (informative) open maintainer decisions
+
+== Normative references
+
+JCGM 100:2008+Amd.1:2026; JCGM 101:2008; VIM 2.30–2.38; GUM-5:2026 A.11 (never "confidence interval"); UnitsML 4; Plurimath 1.
+
+== Conformance
+
+UnitsML 8 Annex A: every model field survives every lossless channel byte-identically.

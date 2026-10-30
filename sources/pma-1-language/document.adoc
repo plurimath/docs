@@ -1,0 +1,39 @@
+= pma — Part 1: The pma language — grammar, constructors, literals and static semantics
+:docnumber: 1
+:edition: 1
+:revdate: 2026-10-30
+:copyright-year: 2026
+:language: en
+:title-intro-en: pma
+:title-main-en: Part 1: The pma language — grammar, constructors, literals and static semantics
+:doctype: standard
+:docstage: 20
+:mn-document-class: iso
+:mn-output-extensions: xml,html,doc,pdf
+:imagesdir: images
+
+== Status of this draft
+
+Proposed (the plurimath#513 R-B1 expression language, dialect P); grammar work tracked in plurimath/amath#16. This part is its normative specification.
+
+== Abstract
+
+pma, the featureful strict input language: reserved constructors as grammar terminals — `unit(kg m/s^2)` (content = the UnitsML 6 artifact grammar, unquoted), `ustd(v,u)`, `uexp(v,U,k[,p])`, `ucov(v,lo,hi,p[,kind])`, `diff(q)` — plus measured literals `(v +/- u)` where `+/-` is one terminal (shared exponent `(3.85 +/- 0.23)e4`, relative `(10.3 +/- 2%)`, distribution tags from the closed JCGM family set, fenced `±` sugar as a maintainer decision), and `unit(J::energy)` L1-quantity assertions (lowest precedence inside `unit(...)`, resolution per UnitsML 4). Static semantics: quantity membership, scale legality and reserved-word discipline checked before evaluation (UnitsML 4/5 rules). Strict error discipline: no fallback-to-letters, no load-bearing whitespace, no concise input (output-only per Plurimath 2), no conversion syntax (conversion is an evaluation API, Plurimath 4). The checksummed pma artifact, generated from the registry edition, is the normative grammar; materialization is into the Plurimath math model.
+
+== Clause plan
+
+- 5 Design rules (owned grammar; reserved-word collision CI; explicit input)
+- 6 Constructors
+- 7 Measured literals
+- 8 Quantity assertions and static semantics
+- 9 Rejected syntaxes
+- 10 Materialization and the artifact contract
+- Annex A (normative) the pma corpus
+
+== Normative references
+
+Plurimath 1; UnitsML 6, 4, 5, 2; Plurimath 2.
+
+== Conformance
+
+UnitsML 8 Annex A (pma column) + the pma corpus; byte-identical across runtimes.

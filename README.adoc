@@ -1,0 +1,15 @@
+# Plurimath specification register
+
+ISO-style specifications for the Plurimath stack, organized as **series with parts**:
+
+- **Plurimath** — the central math model and its format interfaces, uncertainty representation, and evaluation:
+  - Part 1 — General and the math model (primitives, registry, formula tree)
+  - Part 2 — Measurement uncertainty (model, representation, round-trip policy)
+  - Part 3 — Format interfaces (MathML, OMML, UnicodeMath, LaTeX, HTML)
+  - Part 4 — Evaluation (bindings, propagation, Monte Carlo, conformity decisions; Annex A: the H.1.7 second-order derivation)
+- **asciimath** — the legacy input language: Part 1 the language; Part 2 extension channels
+- **pma** — the featureful strict input language: Part 1 the language
+
+The companion **UnitsML** series (units, quantities, conversions, the register, XML) lives in [unitsml/docs](https://github.com/unitsml/docs). Dependency direction: asciimath/pma → math model → UnitsML semantics; the only inter-series seams are the unit-expression content grammar (UnitsML 6), the units semantics (UnitsML 4/5), and the conformance corpora (UnitsML 8).
+
+Per-part drafting plans: `TODO.docs/` in the program workspace; program graph: unitsml/unitsml-ruby#95.

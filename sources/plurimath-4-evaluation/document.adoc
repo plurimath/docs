@@ -1,0 +1,38 @@
+= Plurimath — Part 4: Evaluation — bindings, propagation, Monte Carlo and conformity decisions
+:docnumber: 4
+:edition: 1
+:revdate: 2026-10-30
+:copyright-year: 2026
+:language: en
+:title-intro-en: Plurimath
+:title-main-en: Part 4: Evaluation — bindings, propagation, Monte Carlo and conformity decisions
+:doctype: standard
+:docstage: 20
+:mn-document-class: iso
+:mn-output-extensions: xml,html,doc,pdf
+:imagesdir: images
+
+== Status of this draft
+
+Requirements: plurimath#514 (R-C1–C6) and plurimath#523 (refinements). The reference implementation is the next major build item; this part is its normative specification. Annex A carries the H.1.7 second-order derivation.
+
+== Abstract
+
+Evaluation is a pure function (AST, bindings) → result over the Plurimath math model. The evaluation surface: the bindings model (measured quantities, covariance/correlation channel, L2 dedicated-quantity metadata), the `convert` API (the UnitsML 5 law; factor-only for differences; gating per UnitsML 4), and the result taxonomy `value | indeterminate | error | lpu-not-validated`. GUM propagation: Type A (series statistics, ν = n−1) and Type B distributions (rectangular a/√3, triangular a/√6, U-shaped a/√2, normal U/k, exact-where-possible per UnitsML 2); the law of propagation with symbolic sensitivity coefficients and the GUM-6:2020 Annex F finite-difference fallback; correlated inputs; Welch–Satterthwaite ν_eff and t-coverage (versioned quantile algorithm per UnitsML 2); the LPU-ADEQUACY VERDICT as a first-class outcome (2N-point check or MCM validation — GUM-5 Ex 2.6.3: "blind adherence to either approach would be dangerous"); second-order terms per JCGM 100:2008/Amd.1:2026 4.1.4 NOTE 1 (estimate correction ½Σ f_ii·u²(x_i), H.10 correlated form, normal-inputs-only gating, Hessians). Monte Carlo per JCGM 101 (distribution families, adaptive δ = ½·10^ℓ, coverage intervals in both kinds, pinned Wichmann–Hill with seed stamps; reproducibility classes). Conformity decisions per JCGM 106 (conformance probability, Table 1 z-values, simple and guarded acceptance/rejection w = r·U, ISO 14253-1 ceiling, C_m = T/(4u_m), specific risks; global risks deferred). Expanded uncertainty propagates only through validated-linear models; coverage intervals without an underlying u are refused.
+
+== Clause plan
+
+- 5 The evaluation surface
+- 6 Type A and Type B evaluation
+- 7 Propagation (LPU), correlations, coverage
+- 8 The adequacy verdict
+- 9 Second-order terms (GUF₂)
+- 10 Monte Carlo evaluation
+- 11 Conformity decisions
+- 12 Reporting
+- Annex A (normative) the H.1.7 second-order derivation — the two terms elided by Amd.1:2026 H.1.7 ("…"), derived from the note to 5.1.2 applied to Equation (H.3), verified against JCGM 101 §9.4 and GUM-5:2026 Ex 8
+- Annex B (normative) vector set reference into UnitsML 8 Annex C
+
+== Conformance
+
+UnitsML 8 Annex C; byte-identical Ruby/TS(/Rust) replay.

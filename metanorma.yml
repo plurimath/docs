@@ -1,0 +1,15 @@
+---
+metanorma:
+  source:
+    files:
+      - sources/plurimath-1-math-model/document.adoc
+      - sources/plurimath-2-uncertainty/document.adoc
+      - sources/plurimath-3-format-interfaces/document.adoc
+      - sources/plurimath-4-evaluation/document.adoc
+      - sources/asciimath-1-language/document.adoc
+      - sources/asciimath-2-channels/document.adoc
+      - sources/pma-1-language/document.adoc
+
+  collection:
+    organization: "Plurimath"
+    name: "Plurimath specifications"

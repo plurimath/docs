@@ -1,0 +1,37 @@
+= asciimath — Part 2: Extension channels — quoted compatibility syntax and conformance
+:docnumber: 2
+:edition: 1
+:revdate: 2026-10-30
+:copyright-year: 2026
+:language: en
+:title-intro-en: asciimath
+:title-main-en: Part 2: Extension channels — quoted compatibility syntax and conformance
+:doctype: standard
+:docstage: 20
+:mn-document-class: iso
+:mn-output-extensions: xml,html,doc,pdf
+:imagesdir: images
+
+== Status of this draft
+
+The `"unitsml(...)"` channel is implemented and shipped; the uncertainty channel is specified (rendering side implemented in the merged uncertainty work). Formalizes the channel mechanism and the ledger discipline.
+
+== Abstract
+
+The only extension mechanism of the asciimath dialect: quoted compatibility syntax riding asciimath's own `"…"` string literal — every other asciimath processor sees a harmless text string; plurimath dispatches on the content namespace. Channels: `"unitsml(...)"` (content parsed by the UnitsML 6 artifact grammar) and `"ustd(10.3, 0.2)"` (the uncertainty channel; rendering uncertainty into asciimath is via this quoted form only). Malformed recognized-name channels raise `InvalidUncertainty`. Adding a namespace: `"<name>(...)"` + normative content grammar + ledger entry + edition. Bareword uncertainty call forms are absent — never released, re-homed as pma constructors.
+
+== Clause plan
+
+- 5 The quoted-channel mechanism
+- 6 The `"unitsml(...)"` channel
+- 7 The uncertainty channel
+- 8 Adding a namespace — procedure and ledger discipline
+- 9 Conformance — channel round-trip vectors; ledger audit
+
+== Normative references
+
+asciimath 1; UnitsML 6; Plurimath 2; UnitsML 1.
+
+== Conformance
+
+UnitsML 8 Annex A vectors (the asciimath column IS the quoted channel).

@@ -1,0 +1,32 @@
+= Plurimath — Part 3: Format interfaces — MathML, OMML, UnicodeMath, LaTeX and HTML
+:docnumber: 3
+:edition: 1
+:revdate: 2026-10-30
+:copyright-year: 2026
+:language: en
+:title-intro-en: Plurimath
+:title-main-en: Part 3: Format interfaces — MathML, OMML, UnicodeMath, LaTeX and HTML
+:doctype: standard
+:docstage: 20
+:mn-document-class: iso
+:mn-output-extensions: xml,html,doc,pdf
+:imagesdir: images
+
+== Status of this draft
+
+The renderers are implemented and corpus-frozen (`unitsml/unitsml-testsuite` render corpus); this part formalizes the general (non-uncertainty) interface contract. Uncertainty encodings are in Plurimath 2.
+
+== Abstract
+
+Per supported format, the model↔format contract: primitive mappings (`mn`/`mi`/`mo`, `mfrac`, `msqrt`, `mrow`); decimal-text verbatim emission (never reformatted, never float-normalized); the `unitsml(...)`/`unit(...)` rendering as visible symbol + `xref` into the UnitsML 7 `xml:id` space; and per-format readers. MathML 4: reader decodes `intent` markers (Plurimath 2); `$unit` re-reads as formula — recorded limit. OMML: `m:oMath` mapping; Word round-trip caveats. UnicodeMath: linear output; `ⓐ(...)` units. LaTeX: output-only. HTML: presentation fallback; `data-*` annotation proposed. Ambiguity between unit symbols and math identifiers is resolved exactly by the embedding constructors, never by heuristics.
+
+== Clause plan
+
+- 5 Emission rules common to all formats
+- 6 MathML interface · 7 OMML interface · 8 UnicodeMath interface · 9 LaTeX interface · 10 HTML interface
+- 11 Cross-references into UnitsML documents
+- Annex A (informative) lossiness summary (normative matrix: Plurimath 2)
+
+== Conformance
+
+UnitsML 8 render corpus (non-uncertainty fields, all format columns).

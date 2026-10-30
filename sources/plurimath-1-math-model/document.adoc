@@ -1,0 +1,38 @@
+= Plurimath — Part 1: General and the math model
+:docnumber: 1
+:edition: 1
+:revdate: 2026-10-30
+:copyright-year: 2026
+:language: en
+:title-intro-en: Plurimath
+:title-main-en: Part 1: General and the math model — primitives, registry and the formula tree
+:doctype: standard
+:docstage: 20
+:mn-document-class: iso
+:mn-output-extensions: xml,html,doc,pdf
+:imagesdir: images
+
+== Foreword
+
+The Plurimath series specifies the central math model of the stack and the languages and formats around it. Its center is the MODEL: a dialect-free formula tree into which every input language materializes and from which every output format renders. The companion UnitsML series (unitsml/docs) owns units, quantities, conversions, the register and the XML; this series references it at exactly three seams: the unit-expression content language (UnitsML 6), the units semantics (UnitsML 4, 5) and the conformance corpora (UnitsML 8).
+
+== Scope
+
+This document specifies: the formula tree and its primitive classes; the shared registry (vocabulary v2) — registered strings mapped to layout class and primitive binding, tagged by dialect, from which the input-language grammars are generated, with unit terminals composed from the UnitsML 6 artifact and reserved-word collision CI; model serialization via LML declarations (lutaml-model#1033 codegen contract); and the materialization contract — parse trees from any input language map into this one model.
+
+== Normative references
+
+* UnitsML 1 (procedures, terms), UnitsML 6 (unit expression content language)
+* MathML 4 (W3C), OOXML/OMML, UnicodeMath linear format
+
+== Clause plan
+
+- 5 The formula tree — primitives, Formula, the Uncertainty node (representation per Plurimath 2), the Unitsml node
+- 6 The registry — entry schema, dialect tags (`legacy`/`pma`/both), edition pinning
+- 7 Collision CI — reserved words vs registry ∪ unitsdb symbols/names
+- 8 LML serialization (codegen contract; no hand-rolled serialization)
+- Annex A (informative) program orientation and the input-language series map
+
+== Conformance
+
+Registry generation reproducibility; render corpus (model → every format).

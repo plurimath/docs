@@ -1,0 +1,33 @@
+= asciimath — Part 1: The asciimath language — grammar, vocabulary and semantics
+:docnumber: 1
+:edition: 1
+:revdate: 2026-10-30
+:copyright-year: 2026
+:language: en
+:title-intro-en: asciimath
+:title-main-en: Part 1: The asciimath language — grammar, vocabulary and semantics
+:doctype: standard
+:docstage: 20
+:mn-document-class: iso
+:mn-output-extensions: xml,html,doc,pdf
+:imagesdir: images
+
+== Status of this draft
+
+The language is implemented (the amath PARG artifact, generated from the shared registry) and corpus-frozen; this part formalizes it.
+
+== Abstract
+
+The asciimath compatibility dialect: the language surface (numbers; unary/binary operators; fractions, roots, scripts; the `legacy`-tagged symbol vocabulary from the shared registry) under the compatibility contract — every asciimath.org construct parses and renders with unchanged meaning; the closed deviation ledger (lenient fallback symbols; locale decimal rejection via `AmbiguousDecimalError`; nothing else, ever); the strict absence list (no uncertainty syntax, no `unit(...)` constructor, no measured literals — uncertainty rides the quoted channel of Part 2); and materialization — parse trees map through the registry's primitive bindings into the Plurimath math model (Plurimath 1). The checksummed artifact is the normative grammar.
+
+== Clause plan
+
+- 5 The compatibility contract
+- 6 Grammar surface (artifact-normative)
+- 7 The deviation ledger (closed)
+- 8 Materialization into the math model
+- 9 Conformance — the asciimath.org specimen corpus and ledger audit
+
+== Conformance
+
+UnitsML 8 render corpus (asciimath columns); ledger-audit gate.
