@@ -14,25 +14,50 @@
 
 == Foreword
 
-The Plurimath series specifies the central math model of the stack and the languages and formats around it. Its center is the MODEL: a dialect-free formula tree into which every input language materializes and from which every output format renders. The companion UnitsML series (unitsml/docs) owns units, quantities, conversions, the register and the XML; this series references it at exactly three seams: the unit-expression content language (UnitsML 6), the units semantics (UnitsML 4, 5) and the conformance corpora (UnitsML 8).
+Plurimath's center is the MODEL: a dialect-free formula tree. Input languages materialize into it; output formats render from it; the evaluator computes over it. This part defines the model and the machinery that makes the many-to-many mapping tractable: one registry from which all input-language grammars are generated, with every registered string bound to the model primitive it produces.
+
+The companion UnitsML series owns units, quantities, conversions, the register and the XML. The dependency direction is strict: input languages → math model → UnitsML semantics. Inter-series seams: the unit-expression content grammar (UnitsML 6), the units semantics (UnitsML 4/5), and the conformance corpora (UnitsML 8).
 
 == Scope
 
-This document specifies: the formula tree and its primitive classes; the shared registry (vocabulary v2) — registered strings mapped to layout class and primitive binding, tagged by dialect, from which the input-language grammars are generated, with unit terminals composed from the UnitsML 6 artifact and reserved-word collision CI; model serialization via LML declarations (lutaml-model#1033 codegen contract); and the materialization contract — parse trees from any input language map into this one model.
+This document specifies: the formula tree and its node classes, including the `Uncertainty` node's model-level identity (representation: Plurimath 2) and the `Unitsml` node; the shared registry (vocabulary v2) — entry schema, dialect tags, generation of input-language grammars, collision CI; and the LML serialization contract.
 
 == Normative references
 
-* UnitsML 1 (procedures, terms), UnitsML 6 (unit expression content language)
-* MathML 4 (W3C), OOXML/OMML, UnicodeMath linear format
+* UnitsML 1, UnitsML 6
+* MathML 4 (W3C); OOXML/OMML (ECMA-376); UnicodeMath linear format
+* lutaml-model#1033 (LML as cross-language schema)
 
-== Clause plan
+== The formula tree
 
-- 5 The formula tree — primitives, Formula, the Uncertainty node (representation per Plurimath 2), the Unitsml node
-- 6 The registry — entry schema, dialect tags (`legacy`/`pma`/both), edition pinning
-- 7 Collision CI — reserved words vs registry ∪ unitsdb symbols/names
-- 8 LML serialization (codegen contract; no hand-rolled serialization)
-- Annex A (informative) program orientation and the input-language series map
+The model is a tree of: `Formula` (the root list), `Symbol`, `Number`, operator and function nodes (`Function::Frac`, `Function::Sqrt`, `Function::Power`, …), grouping (`Fenced`), the `Unitsml` node (a unit expression embedded in math — UnitsML 6), and the `Uncertainty` node (Plurimath 2). Nodes carry:
+
+- **exact decimal text** wherever a number is held — preserved verbatim, never reformatted (`2.10 ≠ 2.1`);
+- **no semantic defaults**: a node records what the author wrote; evaluation semantics live behind the evaluator boundary (Plurimath 4);
+- **dialect freedom**: no node records which input language produced it.
+
+Materialization: parse trees from any input language map through the registry's primitive bindings into these nodes. The mapping is data (the binding column of the registry), not per-language code; a new input language is a new front end over the same bindings.
+
+== The registry (vocabulary v2)
+
+The registry is the series' terminal dictionary, evolved from the amath vocabulary (`format: amath-vocabulary/v1`, oracle-recorded). v2 entries are:
+
+[listing]
+{ string, layout_class (symbol | bold_fonts | binary_class | ternary_class |
+  sub_sup_class | …), primitive (the model node the string materializes to),
+  dialects: [legacy, pma] }
+
+Rules:
+
+- Both input-language grammars are GENERATED from the registry; the legacy snapshot is pinned by edition and never sees `pma`-only entries.
+- Unit terminals are composed from the UnitsML 6 artifact — referenced, never copied.
+- Reserved words (constructors of pma 1) are registry entries tagged `pma`; the build FAILS on any collision between reserved words and registry ∪ unitsdb symbols/names.
+- The registry records provenance (generating revision) as its oracle did.
+
+== LML serialization
+
+The model's serialization is declared with lutaml-model attribute + mapping declarations and exported as LML for codegen (lutaml-model#1033): Ruby realizes the declarations natively; TypeScript and Rust realizations are generated. No hand-rolled `to_h`/`from_h` anywhere in the stack.
 
 == Conformance
 
-Registry generation reproducibility; render corpus (model → every format).
+Render corpus: the model renders to every format column of UnitsML 8 from the same tree. Registry reproducibility: regeneration from the same inputs is byte-stable. Collision CI is a build gate, not a vector.

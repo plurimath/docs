@@ -12,30 +12,130 @@
 :mn-output-extensions: xml,html,doc,pdf
 :imagesdir: images
 
-== Status of this draft
+== Foreword
 
-Model and the ASCII/MathML/OMML/UnicodeMath representations are implemented (plurimath#495–#509, unreleased until the next plurimath release); this part formalizes them and the remaining surface (plurimath#524).
+Uncertainty is a RECORD of what the author wrote, represented across every format this series supports, and round-tripped wherever the host format can carry it. This part defines the record once, then one clause per representation. There is no cross-format standard for uncertainty; where a host format has no native mechanism, this series defines a novel extension and says so.
 
-== Abstract
+== Scope
 
-The uncertainty record: fields (value, category standard/expanded/coverage_interval, magnitude, coverage_factor, coverage_probability, lower/upper, interval_kind shortest/probabilistically_symmetric, notation absolute/concise, unit), exact-decimal text preservation, invariants — a record, never a computation; p never derived from k (JCGM 100 §6.3.2); the magnitude is a DIFFERENCE quantity, so conversion applies the factor and never the offset (UnitsML 4 difference law). Round-trip policy: markers win; the visible form is presentation; read-time disagreement raises `InvalidUncertainty`. Representations, one clause each: MathML 4 `intent` markers (`standard-uncertainty`, `expanded-uncertainty`, `coverage-interval`, `:concise`/`:shortest`/`:probabilistically-symmetric`, `$unit` references); OMML hidden-phantom encoding (risks documented); UnicodeMath `ⓘ("…")` with `〖…〗` negatives and `ⓐ(...)` units; LaTeX/HTML output-only with declared losses. Concise `10.3(2)` is a REPORTING convention (GUM §7.2.2 form 2): output-only; `n((d))` held in reserve; `+-` rejected everywhere (`3+-1` ambiguity); plain `±` remains the Pm symbol.
-
-== Clause plan
-
-- 5 The model — fields and invariants
-- 6 Round-trip policy and the lossiness matrix
-- 7 MathML 4 intent markers
-- 8 OMML hidden-phantom encoding
-- 9 UnicodeMath ⓘ annotation
-- 10 LaTeX and HTML presentation contracts
-- 11 ASCII channels (references: asciimath 2 quoted channel; pma 1 native literals)
-- Annex A (normative) the round-trip matrix
-- Annex B (informative) open maintainer decisions
+This document specifies: the uncertainty model and its invariants; the round-trip policy; the concrete representations for MathML 4, OMML, UnicodeMath, LaTeX, HTML; and the ASCII channel boundary (asciimath 2, pma 1). Evaluation of uncertainty is out of scope (Plurimath 4).
 
 == Normative references
 
-JCGM 100:2008+Amd.1:2026; JCGM 101:2008; VIM 2.30–2.38; GUM-5:2026 A.11 (never "confidence interval"); UnitsML 4; Plurimath 1.
+* Plurimath 1; UnitsML 1, UnitsML 4
+* JCGM 100:2008 Clauses 6 and 7 + Amd.1:2026; JCGM 101:2008; VIM 2.30–2.38
+* GUM-5:2026 Annex A (terminology rulings: coverage interval, never "confidence interval")
+* MathML 4 (intent); OOXML (OMML); UnicodeMath linear format
+
+== The model
+
+An `Uncertainty` node carries exactly:
+
+[cols="1,2,2"]
+|===
+|Field |Values |Notes
+
+|value
+|exact decimal text
+|the estimate; text verbatim (`2.10 ≠ 2.1`)
+
+|category
+|standard \| expanded \| coverage_interval
+|
+
+|magnitude
+|exact decimal text
+|u, or U for expanded
+
+|coverage_factor
+|exact decimal text
+|k; expanded only
+
+|coverage_probability
+|decimal in (0,1)
+|p; never derived from k (JCGM 100 §6.3.2)
+
+|lower, upper
+|exact decimal text
+|coverage_interval only
+
+|interval_kind
+|shortest \| probabilistically_symmetric
+|coverage_interval only
+
+|notation
+|absolute \| concise
+|standard only; set ONLY via lossless markers
+
+|unit
+|UnitsML unit or text
+|scopes value AND magnitude
+|===
+
+Invariants: malformed input raises `InvalidUncertainty`; the node never computes (GUM §7.2.2: rounding is the author's); the magnitude is a DIFFERENCE quantity — conversion applies the factor, never the offset (UnitsML 4, I4). Concise form `10.3(2)` is a reporting convention: output-only; `n((d))` is the held-in-reserve input fallback should transcription demand be proven. Rejected everywhere: `+-` (the `3+-1` reading), `pm`/`\pm` (picometre), bare `±` as uncertainty (it stays `Pm`; fenced sugar is a pma-1 decision).
+
+== Round-trip policy
+
+Markers win. The visible form is presentation; the marker (or native pma literal) is the lossless channel. Read-time disagreement between marker and visible form raises. Every lossless channel MUST carry every field of Clause "The model"; lossy channels declare their losses in the matrix (Annex A).
+
+== MathML 4 — intent markers
+
+Markers ride the standard `intent` mechanism with novel vocabulary:
+
+[listing]
+standard-uncertainty(1.230,0.004)
+standard-uncertainty:concise(1.230,0.004)
+expanded-uncertainty(10.0,0.3,2[,0.95][,$unit])
+coverage-interval[:shortest|:probabilistically-symmetric](10.0,9.7,10.3,0.95[,$unit])
+
+Names are NCName-shaped; `:property` lists follow the MathML 4 intent grammar; `$unit` references the `arg="unit"` element. A recognized name with a malformed shape raises; unknown names are left untouched (they are other vocabularies).
+
+== OMML — hidden phantom encoding
+
+Markers travel as invisible `m:phant` runs carrying the same marker text. Writers hide; readers decode; recognized-malformed raises. Documented risks: phantom-stripping consumers display the marker text; Word's edit behavior is untested. Non-goals: custom XML parts, content controls.
+
+== UnicodeMath — the ⓘ annotation
+
+`ⓘ("marker")` adjacent to the annotated expression; visible form `(value±magnitude)`; leading negatives wrapped in invisible `〖…〗`; units via `ⓐ(...)`; plain `±` remains `Pm`; recognized-malformed raises.
+
+== LaTeX and HTML — presentation contracts
+
+Output-only. LaTeX renders `value \pm magnitude` and siunitx-aligned concise forms; HTML renders the visible form. Both LOSE category, interval kind and machine-readable k/p — declared lossiness, not fixed by encoding. A lossless LaTeX reader would require a novel macro family (`\plrmuncert{…}`) — an open decision; siunitx is third-party and receives no filings from this series.
+
+== ASCII channels
+
+Dialect L (asciimath 2): quoted compatibility channel `"ustd(10.3, 0.2)"`. Dialect P (pma 1): native literals and constructors. Both reference this part for the model.
+
+[appendix]
+== Annex A (normative): the round-trip matrix
+
+(The "AsciiMath (L)" column is the quoted compatibility channel; pma carries every field natively.)
+
+|===
+|Field |AsciiMath (L) |MathML intent |OMML phantom |UnicodeMath |LaTeX |HTML |UnitsML XML
+
+|exact number text
+|✓ |✓ |✓ |✓ |visible |visible |no element
+
+|category
+|✓ |✓ |✓ |✓ |✗ |✗ |no element
+
+|k, p
+|✓ |✓ |✓ |✓ |visible |visible |no element
+
+|interval kind
+|✓ |✓ |✓ |✓ |✗ |✗ |no element
+
+|notation (`:concise`)
+|rendered only |✓ |✓ |✓ |visible |visible |no element
+
+|unit
+|exact via `"unitsml(...)"`; else lossy |`$unit` (re-read as formula) |rendered |rendered |rendered |rendered |unit in UnitsML; uncertainty not
+
+|read-back
+|✓ |✓ |✓ |✓ |none |none |—
+|===
 
 == Conformance
 
-UnitsML 8 Annex A: every model field survives every lossless channel byte-identically.
+UnitsML 8 Annex A replays this matrix; the property under test: every field survives every lossless channel byte-identically.

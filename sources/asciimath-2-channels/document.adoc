@@ -12,26 +12,40 @@
 :mn-output-extensions: xml,html,doc,pdf
 :imagesdir: images
 
-== Status of this draft
+== Foreword
 
-The `"unitsml(...)"` channel is implemented and shipped; the uncertainty channel is specified (rendering side implemented in the merged uncertainty work). Formalizes the channel mechanism and the ledger discipline.
+One mechanism keeps the compatibility dialect useful without breaking it: quoted compatibility syntax. Everything asciimath can say beyond the asciimath.org language travels inside a string literal — visibly foreign to humans, harmless text to every other processor, a dispatchable channel to conforming readers.
 
-== Abstract
+== Scope
 
-The only extension mechanism of the asciimath dialect: quoted compatibility syntax riding asciimath's own `"…"` string literal — every other asciimath processor sees a harmless text string; plurimath dispatches on the content namespace. Channels: `"unitsml(...)"` (content parsed by the UnitsML 6 artifact grammar) and `"ustd(10.3, 0.2)"` (the uncertainty channel; rendering uncertainty into asciimath is via this quoted form only). Malformed recognized-name channels raise `InvalidUncertainty`. Adding a namespace: `"<name>(...)"` + normative content grammar + ledger entry + edition. Bareword uncertainty call forms are absent — never released, re-homed as pma constructors.
-
-== Clause plan
-
-- 5 The quoted-channel mechanism
-- 6 The `"unitsml(...)"` channel
-- 7 The uncertainty channel
-- 8 Adding a namespace — procedure and ledger discipline
-- 9 Conformance — channel round-trip vectors; ledger audit
+This document specifies the channel mechanism, the two defined channels, the procedure for adding namespaces, and the channel conformance vectors.
 
 == Normative references
 
-asciimath 1; UnitsML 6; Plurimath 2; UnitsML 1.
+* asciimath 1; UnitsML 6 (content grammar); Plurimath 2 (uncertainty model); UnitsML 1
+
+== The mechanism
+
+A channel is a quoted string whose content begins `name(...)`. Every other asciimath processor sees a text string; conforming readers dispatch on the namespace. A recognized namespace with malformed content raises (`InvalidUncertainty` for the uncertainty channel); an unrecognized namespace is left as text — it is someone else's vocabulary.
+
+== The `"unitsml(...)"` channel
+
+Content parsed by the UnitsML 6 artifact grammar; materializes as the `Unitsml` node with the `xref` bond per UnitsML 7. The content grammar is referenced, never restated.
+
+== The uncertainty channel
+
+Rendering an `Uncertainty` node (Plurimath 2) into this dialect emits the quoted form:
+
+[listing]
+"ustd(10.3, 0.2)"        "uexp(10.0, 0.3, 2, 0.95)"
+"ucov(10.0, 9.7, 10.3, 0.95, shortest)"
+
+Reading decodes recognized forms back into the model with every field of the Plurimath 2 table; the unit rides the `"unitsml(...)"` channel when UnitsML-writable. This channel is the ENTIRE uncertainty capability of the dialect — there is no bareword form (asciimath 1, ledger).
+
+== Adding a namespace
+
+A new namespace `name` requires: a normative content grammar (an artifact reference or a clause of a part); a ledger entry in asciimath 1 with kind `additive`; an edition bump; and channel round-trip vectors in UnitsML 8 Annex A. Nothing else in this dialect changes.
 
 == Conformance
 
-UnitsML 8 Annex A vectors (the asciimath column IS the quoted channel).
+Channel round-trip vectors: every field of the carried model survives the channel byte-identically; ledger audit: no unledgered divergence; the render corpus replays the asciimath columns through these channels.
