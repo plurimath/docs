@@ -12,22 +12,60 @@
 :mn-output-extensions: xml,html,doc,pdf
 :imagesdir: images
 
-== Status of this draft
+== Foreword
 
-The language is implemented (the amath PARG artifact, generated from the shared registry) and corpus-frozen; this part formalizes it.
+This is the compatibility language: the dialect every existing asciimath document is written in, specified so that its behavior is fixed — including its prohibition on growth. Features do not land here; they land in pma. The extension mechanism that does exist (the quoted channel) is Part 2.
 
-== Abstract
+== Scope
 
-The asciimath compatibility dialect: the language surface (numbers; unary/binary operators; fractions, roots, scripts; the `legacy`-tagged symbol vocabulary from the shared registry) under the compatibility contract — every asciimath.org construct parses and renders with unchanged meaning; the closed deviation ledger (lenient fallback symbols; locale decimal rejection via `AmbiguousDecimalError`; nothing else, ever); the strict absence list (no uncertainty syntax, no `unit(...)` constructor, no measured literals — uncertainty rides the quoted channel of Part 2); and materialization — parse trees map through the registry's primitive bindings into the Plurimath math model (Plurimath 1). The checksummed artifact is the normative grammar.
+This document specifies the language surface, the compatibility contract, the closed deviation ledger, and the materialization of parsed trees into the math model.
 
-== Clause plan
+== Normative references
 
-- 5 The compatibility contract
-- 6 Grammar surface (artifact-normative)
-- 7 The deviation ledger (closed)
-- 8 Materialization into the math model
-- 9 Conformance — the asciimath.org specimen corpus and ledger audit
+* Plurimath 1 (the math model, the registry); asciimath 2 (extension channels)
+* The asciimath.org dialect (compatibility baseline)
+
+== The compatibility contract
+
+. Every asciimath.org construct parses and renders with unchanged meaning.
+. The ONLY permitted extensions ride the quoted channel of Part 2.
+. Every behavioral deviation from asciimath.org is enumerated in the ledger (Clause "The deviation ledger"); additions require a part edition.
+
+== Language surface
+
+Numbers (decimals); unary and binary + −, multiplication, division, fractions, superscript/subscript, `sqrt(...)`; grouping parentheses; juxtaposition; the symbol vocabulary — `legacy`-tagged registry entries (Greek, arrows, relations, named operators). `±` and `+-` parse to the plain `Pm` symbol with no uncertainty semantics. The artifact generated from the registry edition is the normative grammar; this clause orients.
+
+== The deviation ledger (closed)
+
+[cols="3,2,3"]
+|===
+|Deviation |Kind |Rationale
+
+|Quoted-string extensions (`"unitsml(...)"`, the uncertainty channel)
+|additive
+|Part 2; rides asciimath's own string literal
+
+|Lenient fallback symbols (unrecognized tokens → letters)
+|lenient
+|never breaks an asciimath.org document
+
+|Locale decimal rejection in ambiguity-prone contexts (`AmbiguousDecimalError`)
+|strict
+|prevents silent misreads; valid inputs unaffected
+
+|Bareword uncertainty call forms (`ustd`/`uexp`/`ucov`)
+|removed
+|never released; re-homed as pma constructors (pma 1); standard asciimath has no uncertainty, so no corpus depends on them
+|===
+
+== Materialization into the math model
+
+Parse trees map through the registry's primitive bindings into the Plurimath math model: one binding table, no per-language mapping code. A parser conforming to this part produces trees that the render corpus replays byte-identically across every format column.
+
+== Absences (normative)
+
+No uncertainty syntax, no `unit(...)` constructor, no measured literals, no `::` assertions, no conversion syntax. This list is exhaustive by construction: this dialect never grows.
 
 == Conformance
 
-UnitsML 8 render corpus (asciimath columns); ledger-audit gate.
+The asciimath.org specimen corpus renders byte-identically; the ledger-audit test proves no unledgered divergence; the render corpus (UnitsML 8) replays the asciimath columns.

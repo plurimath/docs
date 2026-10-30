@@ -12,27 +12,90 @@
 :mn-output-extensions: xml,html,doc,pdf
 :imagesdir: images
 
-== Status of this draft
+== Foreword
 
-Requirements: plurimath#514 (R-C1–C6) and plurimath#523 (refinements). The reference implementation is the next major build item; this part is its normative specification. Annex A carries the H.1.7 second-order derivation.
+Evaluation is where the stack computes: measured values in, GUM-conformant results out. This part is the normative specification of that computation — the pure function over the math model, the propagation law with its adequacy verdict, the second-order terms that Amd.1:2026 made normative, the Monte Carlo alternative of JCGM 101, and the conformity decisions of JCGM 106. Annex A derives, from primary sources, the two second-order terms that the amendment itself left elided.
 
-== Abstract
+== Scope
 
-Evaluation is a pure function (AST, bindings) → result over the Plurimath math model. The evaluation surface: the bindings model (measured quantities, covariance/correlation channel, L2 dedicated-quantity metadata), the `convert` API (the UnitsML 5 law; factor-only for differences; gating per UnitsML 4), and the result taxonomy `value | indeterminate | error | lpu-not-validated`. GUM propagation: Type A (series statistics, ν = n−1) and Type B distributions (rectangular a/√3, triangular a/√6, U-shaped a/√2, normal U/k, exact-where-possible per UnitsML 2); the law of propagation with symbolic sensitivity coefficients and the GUM-6:2020 Annex F finite-difference fallback; correlated inputs; Welch–Satterthwaite ν_eff and t-coverage (versioned quantile algorithm per UnitsML 2); the LPU-ADEQUACY VERDICT as a first-class outcome (2N-point check or MCM validation — GUM-5 Ex 2.6.3: "blind adherence to either approach would be dangerous"); second-order terms per JCGM 100:2008/Amd.1:2026 4.1.4 NOTE 1 (estimate correction ½Σ f_ii·u²(x_i), H.10 correlated form, normal-inputs-only gating, Hessians). Monte Carlo per JCGM 101 (distribution families, adaptive δ = ½·10^ℓ, coverage intervals in both kinds, pinned Wichmann–Hill with seed stamps; reproducibility classes). Conformity decisions per JCGM 106 (conformance probability, Table 1 z-values, simple and guarded acceptance/rejection w = r·U, ISO 14253-1 ceiling, C_m = T/(4u_m), specific risks; global risks deferred). Expanded uncertainty propagates only through validated-linear models; coverage intervals without an underlying u are refused.
+This document specifies: the evaluation surface (bindings, convert API, result taxonomy); Type A and Type B evaluation; the law of propagation of uncertainty; the adequacy verdict; second-order terms; the Monte Carlo method and its reproducibility classes; and conformity assessment decisions.
 
-== Clause plan
+== Normative references
 
-- 5 The evaluation surface
-- 6 Type A and Type B evaluation
-- 7 Propagation (LPU), correlations, coverage
-- 8 The adequacy verdict
-- 9 Second-order terms (GUF₂)
-- 10 Monte Carlo evaluation
-- 11 Conformity decisions
-- 12 Reporting
-- Annex A (normative) the H.1.7 second-order derivation — the two terms elided by Amd.1:2026 H.1.7 ("…"), derived from the note to 5.1.2 applied to Equation (H.3), verified against JCGM 101 §9.4 and GUM-5:2026 Ex 8
-- Annex B (normative) vector set reference into UnitsML 8 Annex C
+* UnitsML 1, 2, 4, 5; Plurimath 1, 2
+* **JCGM 100:2008 + Amd.1:2026** (Clause 4.1.4 NOTE 1; H.1.7; Annex G)
+* JCGM 101:2008; JCGM 106:2012; GUM-6:2020 (Annex F); GUM-5:2026 (Examples)
+
+== The evaluation surface
+
+Evaluation is a pure function (AST, bindings) → result. Bindings carry measured quantities (value, unit, asserted kind, uncertainty record), the covariance/correlation channel for correlated inputs, and L2 dedicated-quantity metadata ("length of rod AB at 09:15"). The `convert` operation applies the UnitsML 5 law (factor-only for differences, gating per UnitsML 4). Results carry the taxonomy: `value | indeterminate | error | lpu-not-validated` — an evaluator MUST NOT return a number where the method is unvalidated.
+
+== Type A and Type B evaluation
+
+Type A (JCGM 100 §4.2): mean ȳ; experimental variance of a single observation s²(q) (Eq. 3); of the mean s²(q̄) = s²(q)/n (Eq. 5); ν = n − 1. Type B (§4.3): from declared distributions — rectangular u = a/√3 (Eq. 7), triangular a/√6, U-shaped (arcsine) a/√2, normal U/k — with exact-where-possible arithmetic per UnitsML 2. Type A/B provenance is binding metadata, never syntax (Plurimath 2).
+
+== Propagation (LPU)
+
+The law of propagation of uncertainty (JCGM 100 Eq. 10–11) with sensitivity coefficients from the expression tree: symbolic where rational; otherwise the GUM-6:2020 Annex F finite-difference fallback c_i ≈ (f_i⁺ − f_i⁻)/(2u(x_i)) — exact for quadratic-in-x_i models, inapplicable to zero-uncertainty inputs. Correlated inputs per Eq. 13–14 through the declared covariance channel; shared-effect correlations follow GUM-6 §10.6 (r ≈ 1, not root-sum). Welch–Satterthwaite ν_eff (Eq. G.2b) and Student-t coverage at stated p, using the versioned quantile algorithm (UnitsML 2).
+
+== The adequacy verdict
+
+An LPU result MUST carry a validity verdict: the 2N-point comparison (GUM-6 Annex F) or MCM validation (JCGM 101 §8). On failure the result is `lpu-not-validated` — a first-class outcome, not an error. GUM-5 Ex 2.6.3: "blind adherence to either approach would be dangerous."
+
+== Second-order terms (Amd.1:2026)
+
+Where nonlinearity is significant (Amd.1 4.1.4 NOTE 1): either apply MCM, or add higher-order Taylor terms. For independent, normally distributed inputs, the estimate gains (Eq. addition to H-form) ½ Σ f_ii u²(x_i), generalized to correlated normals by Equation (H.10). Second-order evaluation (GUF₂) is gated on declared input normality — otherwise refuse to MCM — and REQUIRES second derivatives (Hessians); the Annex F first-order stencil cannot serve GUF₂.
+
+== Monte Carlo evaluation
+
+JCGM 101: PDF assignment per its Table 1 (and GUM-5 Annex B families: Cauchy, CTrap, Gamma, LN, N, R, U, t); adaptive procedure with δ = ½·10^ℓ; coverage intervals — probabilistically symmetric and shortest; reproducibility per UnitsML 8 (byte-exact under pinned Wichmann–Hill with recorded seed and trials; distributional class otherwise). Expanded U propagates only through validated-linear models; a coverage interval without an underlying u refuses evaluation.
+
+== Conformity decisions
+
+JCGM 106: conformance probability p_c = ∫_C g(η|y)dη (Eq. 4) with Table 1 normal one-sided z-values (p_c 0.80/0.90/0.95/0.99/0.999 at z 0.84/1.28/1.64/2.33/3.09); decision rules — simple acceptance (§8.2, shared risk), guarded acceptance/rejection (§8.3.2, w = r·U, r chosen per guard-band target), ISO 14253-1 default w = U (false-accept ≤ 2.3 %); measurement capability C_m = T/(4u_m) (§7.6); specific consumer/producer risks (Eq. 15–20); global risks deferred to a later edition (joint PDF required). The guarded-acceptance conditional zone is a first-class result.
+
+== Reporting
+
+Expanded reporting (U = k·u_c with stated k, p) is the terminal act; the record nodes (Plurimath 2) never compute. Vector publication uses fixed decimals per UnitsML 8.
+
+[appendix]
+== Annex A (normative): the H.1.7 second-order derivation
+
+**The gap.** Amd.1:2026 H.1.7 rewrites the GUM gauge-block example: "the application to Equation (H.3) of the expression given in the note to 5.1.2 yields in fact two distinct non-negligible second-order terms to be added to Equation (H.5). These terms, which arise from the quadratic term in the expression of the note, are …" — the amendment prints no further formula.
+
+**The model.** GUM H.3 (bilinear): l = f(l_S, d, α_S, θ, δα, δθ) = l_S + d − l_S(δα·θ + α_S·δθ), inputs uncorrelated, δα and δθ with zero estimates. Inputs (H.1.3): l_S = 50 mm, u(l_S) = 25 nm; u(d) = 9.7 nm; θ = −0.1 °C, u(θ) = 0.41 °C; α_S = 11.5×10⁻⁶ °C⁻¹, u(α_S) = 1.2×10⁻⁶ °C⁻¹; u(δα) = 0.58×10⁻⁶ °C⁻¹; u(δθ) = 0.029 °C. First order (H.1.6): u_c(l) = 32 nm.
+
+**Derivation.** The note to 5.1.2 augments u_c² with ½ Σ_i Σ_j (∂²f/∂x_i∂x_j)² u²(x_i)u²(x_j); its third-derivative term vanishes because H.3 is bilinear. The nonzero second partials at the estimates: ∂²f/∂θ∂δα = −l_S; ∂²f/∂α_S∂δθ = −l_S; ∂²f/∂l_S∂δα = −θ; ∂²f/∂l_S∂δθ = −α_S (the θ and α_S l_S-pairs vanish at the zero estimates of δα and δθ). Of the four candidate pairs, exactly two are non-negligible:
+
+[cols="3,2,2,1"]
+|===
+|Term |Expression |Value |Class
+
+|T₁
+|l_S² u²(θ) u²(δα)
+|141.37 nm²
+|non-negligible
+
+|T₂
+|l_S² u²(α_S) u²(δθ)
+|3.03 nm²
+|non-negligible
+
+|θ² u²(l_S) u²(δα)
+|(l_S, δα) pair
+|2.1×10⁻¹² nm²
+|negligible
+
+|α_S² u²(l_S) u²(δθ)
+|(l_S, δθ) pair
+|7.0×10⁻¹¹ nm²
+|negligible
+|===
+
+**Result.** u_c²(l) = (32 nm)² + T₁ + T₂ = 1168.4 nm², hence **u_c(l) = 34.2 nm**.
+
+**Verification.** JCGM 101 §9.5 (gauge block; Table 10): GUF u(δL) = 32 nm; MCM u(δL) = 36 nm; shortest 99 % intervals [745, 931] vs [745, 932] nm. The amended second-order u_c moves the GUF result from 32 to 34.2 nm — recovering 55 % of the GUF–MCM discrepancy. The residual is consistent with the non-Gaussian inputs of H.1 (rectangular δα and δθ; U-shaped Δ), which a Gaussian-input second-order expansion does not capture — precisely the limitation that Amd.1's NOTE 1 resolves by naming MCM as the alternative. The three-way agreement (32 / 34.2 / 36) is the versioned H.1 vector of UnitsML 8 Annex C.
 
 == Conformance
 
-UnitsML 8 Annex C; byte-identical Ruby/TS(/Rust) replay.
+UnitsML 8 Annex C; byte-identical replay per UnitsML 2 across the reference implementation and parity runtimes; Monte Carlo per the reproducibility classes.
