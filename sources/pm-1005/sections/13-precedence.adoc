@@ -1,0 +1,75 @@
+== Precedence and grouping
+
+=== The chain
+
+Precedence, tightest first:
+
+.Precedence, tightest first
+[cols="1,3,3", options="headers"]
+|===
+|Level |Constructs |Notes
+
+|1 |construct parentheses, fences |the argument grouping of clause 8
+|2 |scripts `^`, `_` |attach to the closed operand
+|3 |fractions `/` |token-or-group operands
+|4 |adjacency and unary application |`sin x`, `2x`
+|5 |multiplication, division |`*`, `/` (outside fractions)
+|6 |addition, subtraction |`+`, `-`
+|7 |relations |`=`, `<`, `<=`, and kin
+|===
+
+Each level binds tighter than the ones below it; the construct parentheses of level 1 override everything. The reader's behaviour is the definition, and the corpus pins the contested shapes explicitly — every row of the table has vectors where the levels interact.
+
+=== Groups override
+
+Parentheses group an expression into one operand: `x^(2+1)` scripts the whole sum; `sqrt(x+1)` roots the whole sum; `((n(n+1))/2)^2` scripts the whole fenced fraction. Grouping is the author's precedence tool and always wins.
+
+=== Ambiguity is resolved, never negotiated
+
+Where two readings are conceivable, the rules above decide — the reader does not pick the "intended" reading. The classic cases, with their rulings:
+
+.Rulings on the classic ambiguities
+[cols="2,4", options="headers"]
+|===
+|Input |Reading
+
+|`a/bc` |`a/b` times `c` — the fraction takes the token, not the run
+|`sin 2x` |`sin(2)` times `x` — adjacency after the unary application
+|`x^2y` |`x²` times `y` — the script takes one token
+|`e^-x` |refused — the script content starts with a bare operator
+|`x^(-x)` |`x` to the `−x` — grouped, it reads
+|===
+
+An author who means something else groups. This is the notation's contract with its users, and every row here is a corpus vector.
+
+=== Spaces end attachments
+
+Whitespace after a script or argument ends the attachment: `x^2 y` scripts only the `2`; `sum_(i=1)^n i^3` ends the nary's limits before the summand. Spaces are otherwise insignificant (clause 7).
+
+=== Unary application, precisely
+
+`name x` applies the unary to the adjacency operand — one token, or a group. `sin x y` is `sin(x)` times `y`; `sin xy` is `sin(x)` times `y` as well — the adjacency operand is one token, never a run. `sin (x y)` is the sine of the product. The corpus carries the three; the ruling is always "one operand, then adjacency".
+
+=== Relations and their low binding
+
+Relations bind loosest: `a = b + c` relates the whole sum. Chains — `a = b = c` — fold left as the relation evaluation of PM 1004 defines. A relation inside scripts or arguments is fine where grouping puts it: `x->0` inside `lim_(...)` is the limit's lower script content, read as the arrow token, not the relation level's property.
+
+=== The whitespace rule's edge
+
+A space inside construct parentheses is content spacing: `sqrt( x + 1 )` reads identically to `sqrt(x + 1)` — the construct's argument grammar, not the token grammar, governs inside. The whitespace-ends-attachment rule of clause 13 applies between tokens, not inside argument groups.
+
+=== The whole precedence, worked twice more
+
+`−x^2` — unary before power? The power binds tighter: the tree is `−(x²)`, the negation applied to the power. An author who means `(−x)²` groups: `(−x)^2`. The corpus carries both.
+
+`2^-3` — refused: the script content starts with a bare operator (clause 13's ruling table). `2^(-3)` reads. `2^−3` with the Unicode minus reads too — the tokeniser classifies the Unicode minus as the minus symbol, and the grouped script takes it.
+
+`a/b c d` — the fraction takes `b` (one token), then adjacency multiplies by `c` and `d` in sequence: `(a/b) · c · d`. Nothing about the slash reaches past its operand.
+
+=== The rule behind the rulings
+
+One rule generates the table: each construct and operator takes the smallest operand the grammar allows, and grouping is the only way to offer it more. Every ruling above is that rule applied; an author who internalises it needs no table. The table exists for implementers and for the corpus.
+
+=== The one-rule summary, once more
+
+Smallest operand, unless grouped. Every precedence question in this notation resolves to it: the fraction takes a token unless you group; the script takes a token unless you group; the unary takes a token unless you group; the nary's scripts take tokens unless you group. The reader has no other source of ambiguity, and grouping is always available. This is the clause most authors need, and it fits in one line.

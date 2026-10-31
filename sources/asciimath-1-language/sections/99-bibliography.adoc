@@ -1,5 +1,0 @@
-[bibliography]
-== Bibliography
-
-* [[[asciimath-org-b,nofetch(asciimath.org dialect documentation)]]]
-* [[[amath17,nofetch(plurimath/amath#17)]]] (dialect-L restriction)

@@ -1,0 +1,15 @@
+== Introduction
+
+AsciiMath writes mathematics the way mathematicians type it: `sum_(i=1)^n i^3 = ((n(n+1))/2)^2` is the sum of cubes, written with no markup at all — tokens for symbols, `^` and `_` for scripts, parentheses for grouping, `/` for fractions, and function names for the rest. The format's genius is that its text is already unambiguous to a trained eye; the reader's work is to make that reading mechanical.
+
+This document makes it mechanical. Every token the reader accepts is listed; every construct's shape, precedence and yielded tree is stated; the fences — including the multi-character and letter-pair fences the implementation adds — are tabulated; the quoted-string channels are defined; the uncertainty forms of PM 1002 are given their reading rules; and the whole surface is pinned by a corpus that replays byte-identically, generation after generation.
+
+The document is written to serve three readers at once: the implementer who needs the exact tables, the author who wants to know what they can write, and the tool builder deciding whether to accept or emit the notation. Each clause states its rules once, in the form the corpus tests.
+
+[example]
+`x^2 + y_1` — two scripts and an addition.
+*Expected outcome.* a power of `x` to the `Number` 2, an addition symbol, and a base of `y` with subscript `1`: the shape PM 1001's examples carry, read from nine characters of plain text.
+
+=== What this document is not
+
+It is not a tutorial — the examples teach the rules, not the mathematics. It is not the pma notation (that document is separate), and it is not the history of the format — the compatibility notes carry exactly as much of that as the rules need. It is the notation as Plurimath implements it, stated so that a careful reader can predict the reader's answer for any input before asking it.

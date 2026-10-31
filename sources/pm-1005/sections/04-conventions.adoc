@@ -1,0 +1,21 @@
+== Conventions
+
+=== General
+
+Input text is shown verbatim between backticks; trees are shown in the math-zone notation of PM 1001. Tokens are the reader's lexical units; this document writes them exactly as accepted.
+
+=== Examples
+
+Examples carry an *Expected outcome* paragraph. Where an example names a tree, the outcome names the node classes; where it names an error, the outcome names the error of PM 1003's Annex A.
+
+=== Compatibility notes
+
+Paragraphs beginning *Compatibility note* compare this surface with the asciimath.org baseline. They are informational; the rules of the clause are normative regardless.
+
+=== Tables
+
+The tables of clauses 6 to 12 and the annexes are generated from the reader's constants, and a mismatch between a table here and the constants fails the build of this document. The tables are the surface.
+
+=== The generated tables
+
+The tables of clauses 6 to 12 and Annexes A to D are generated from the reader's constants and the registry at build time of this document. An edit to the constants that a table here does not reflect fails the build; the tables and the implementation cannot drift apart silently. Edition 1's tables were generated from the 0.11 series implementation.

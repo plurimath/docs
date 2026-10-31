@@ -1,6 +1,0 @@
-== Language surface
-
-Numbers (decimals); unary and binary + −, multiplication, division, fractions, superscript/subscript, `sqrt(...)`; grouping parentheses; juxtaposition; the symbol vocabulary — `legacy`-tagged registry entries (Greek, arrows, relations, named operators). `±` and `+-` parse to the plain `Pm` symbol with no uncertainty semantics.
-
-[example]
-*Expected outcome.* `3 + (-1)` is arithmetic; `pm` is the picometre symbol or an identifier — never an uncertainty introducer; `u exp(...)` reads as application of `u` to `exp(...)`.

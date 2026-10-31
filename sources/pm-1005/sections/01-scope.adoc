@@ -1,0 +1,64 @@
+== Scope
+
+=== General
+
+This document specifies the AsciiMath notation as implemented by Plurimath:
+
+* the token surface: symbols, numbers, function names, fonts, fences;
+* the construct shapes: unary, binary, ternary and sub/sup classes, with their arguments;
+* tables and their bracket forms;
+* scripts and fractions, with the precedence that joins them;
+* quoted strings and the UnitsML channel;
+* the uncertainty forms of PM 1002 as they read and write in AsciiMath;
+* precedence and grouping;
+* the reading algorithm and its errors;
+* the corpus and conformance.
+
+This document does not specify: the other formats (PM 1003), the tree (PM 1001), the uncertainty model (PM 1002), evaluation (PM 1004), or the pma notation, which is its own document.
+
+=== Relationship to the series
+
+.Relationship to the series
+[cols="1,3", options="headers"]
+|===
+|Document |Relationship to this one
+
+|1001 Math model
+|the tree this notation reads into and writes from
+
+|1002 Uncertainty model
+|the uncertainty forms this notation reads and writes
+
+|1003 Format interfaces
+|the reader and writer contracts this notation satisfies
+
+|1006 The pma notation
+|the featureful notation that shares this one's registry
+
+|===
+
+=== Compatibility with asciimath.org
+
+Plurimath's AsciiMath descends from the asciimath.org public definition and extends it. This document specifies Plurimath's surface; where it extends or sharpens the public definition, the clause says so in a *Compatibility note*. The compatibility notes are informational; the rules are normative.
+
+=== Audience
+
+Implementers of Plurimath and of other AsciiMath processors, authors writing AsciiMath, and tool builders.
+
+=== Extensions over the baseline, in one table
+
+.The extensions this document adds to the asciimath.org baseline
+[cols="2,2,3", options="headers"]
+|===
+|Extension |Clause |Shape
+
+|the uncertainty calls and the reporting form |12 |`ustd`/`uexp`/`ucov`, `v(digits)`
+|the UnitsML channel |11 |`"unitsml(...)"`
+|the special bold alphabets |8 |`ZZ` `RR` `QQ` `NN` `CC`
+|the added font tokens |8 |`rm`, `ii`
+|the added fences |Annex C |`ᑕ`/`ᑐ`, `ℒ`/`ℛ`
+|the added symbols |6 |per the registry's superset
+|shared-exponent reporting |12 |the concise shift form
+|===
+
+Everything else in this document is the baseline as Plurimath reads it — sharpened, tabulated and pinned, but not changed.

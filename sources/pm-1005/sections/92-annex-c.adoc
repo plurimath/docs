@@ -1,0 +1,51 @@
+== Annex C: the fences
+
+=== The fence table
+
+The reader's parenthesis table, normative:
+
+.Fences
+[cols="2,2,3", options="headers"]
+|===
+|Opener |Closer |Content reading
+
+|`(` |`)` |ordinary grouping and construct arguments
+|`[` |`]` |bracket grouping; row delimiters inside table grids
+|`{` |`}` |brace grouping; brace-delimited matrices
+|`ᑕ` |`ᑐ` |the single-glyph bracket pair, content as ordinary
+|`ℒ` |`ℛ` |the script-letter bracket pair, content as ordinary
+|`(:` |`:)` |the angle-bracket pair of the public definition
+|bar pair |itself |the bar pair — `Vmatrix` delimiters and absolute-value-like grouping per context
+|===
+
+The multi-glyph pairs (`ᑕ`/`ᑐ`, `ℒ`/`ℛ`) and the letter pair `(:`/`:)` are Plurimath's additions to the public set; the plain three are the baseline's.
+
+*Compatibility note.* The public definition also carries the bare `:` closer; Plurimath's pairing is strictly two-sided per this table, and a bare closer is a reading error.
+
+=== Nesting
+
+Fences nest: `((a),(b))` is a parenthesised group containing a comma-adjacent pair — the table-reader sees the grid only in the bracketed forms of clause 9. The open stack tracks pairs by opener identity; the table forms are recognised at their own positions, not by the fence stack.
+
+=== Fences as constructs
+
+`abs(x)`, `norm(x)`, `floor(x)`, `ceil(x)`, `obrace(x)`, `ubrace(x)` are unary constructs, not bare fences: their delimiters come from the construct, and the bare fence characters group without a node of their own. The distinction matters for round trips: a construct's fence survives (the construct carries it), a bare group's fence survives as grouping.
+
+=== The pairs in use
+
+.Worked fence cases
+[cols="2,4", options="headers"]
+|===
+|Input |Reading
+
+|`(:a, b:)` |the angle fence around the pair — the public definition's inner product form
+|`ᑕaᑐ` |the single-glyph bracket pair, content ordinary
+|`ℒxℛ` |the script-letter pair, content ordinary
+|bar-x-bar |the bar pair grouping — or `abs x`, which carries its fence on the node
+|`((a),(b))` |two opens — adjacency, not a table; the grid reading needs the bracketed form
+|===
+
+The bar pair's dual role (grouping here, `Vmatrix` delimiter there) is resolved by position: around a bracketed grid it delimits the matrix, elsewhere it groups. The corpus carries both positions.
+
+=== Fences and round trips
+
+A bare group's fence is grouping, and grouping is not a node — so a round trip may re-spell the grouping (parentheses for brackets where the tree allows). The construct fences (`abs`, `norm`, and kin) ride their nodes and survive exactly. An author who needs a specific fence in the output uses the construct that owns it; an author who needs only grouping takes the round trip's re-spelling. The corpus freezes which cases re-spell and which do not.

@@ -1,0 +1,75 @@
+== The reading algorithm
+
+=== The stages
+
+The reader proceeds in four stages:
+
+. **Tokenise.** The input splits into tokens by longest match against the constants: construct names and fonts first (longest name wins), then symbol tokens, then numbers, then structure characters, then fences. A character sequence matching nothing is a reading error with its position.
+. **Resolve.** Tokens resolve through the constants' classification: unary, binary, ternary, sub/sup, font, special alphabet, symbol, number, fence, structure.
+. **Build.** The construct tree builds by the precedence of clause 13: classes take their arguments (parenthesised or adjacent), scripts attach, fractions bind, operators fold.
+. **Validate.** Uncertainty nodes construct through PM 1002's validation; the tree yields.
+
+The stages are separable only in description; the implementation interleaves them. What this document pins is the outcome: the tree a given input yields, and the error a malformed input raises.
+
+=== Longest match
+
+Longest match is the tokeniser's rule and the disambiguator: `==> ` is one arrow; `<=` is one relation; `(:` opens an angle fence; `ZZ` is the number-set token before `Z` could be a symbol. Construct names match before symbols share their letters — `sum` is the nary construct even though a symbol could begin with `s`.
+
+=== The fences
+
+Fences pair per Annex C's table. The pairing is by token: an opener matches its own closer, and nesting tracks the open stack. The unpaired cases — an opener without its closer, a closer without an opener — are reading errors naming the fence and its position.
+
+=== Errors
+
+The reading errors are PM 1003's, and this notation produces them thus:
+
+.AsciiMath reading errors
+[cols="2,3,3", options="headers"]
+|===
+|Fault |Error |Carries
+
+|unresolvable character sequence |`ParseError` |the sequence and its position
+|unpaired fence |`ParseError` |the fence token and position
+|construct arity fault |`ParseError` |the construct and its argument count
+|unknown interval kind |`ParseError` |the kind as written
+|concise place mismatch |`AmbiguousDecimalError` |the value and the digit string
+|unreadable channel expression |`ParseError` |the expression, from the unit reader
+|===
+
+=== What the reader never does
+
+It never guesses an intent for a malformed input, never skips a faulting token to continue, never normalises digits, never resolves a symbol outside the registry, and never returns a partially built tree. A reading is total or absent.
+
+=== A worked reading
+
+`uexp(10.3, 0.5, 2, 0.95) "unitsml(g)" + x`:
+
+. tokenise: the construct name, its fence, the number tokens, the channel string, the plus, the name;
+. resolve: `uexp` is a construct with its fixed arity; the channel matches;
+. build: the call takes four arguments; the channel is the unit operand following per PM 1002's placement; the addition joins the uncertainty node and `x` as operands;
+. validate: the uncertainty node constructs through PM 1002 — category expanded, fields complete, factor positive, probability in range.
+
+*Expected outcome.* an addition of an expanded uncertainty (with unit) and a name — reading total, tree valid, ready for any writer.
+
+=== Positional accuracy of errors
+
+Every error of clause 14 carries its input position: the tokeniser's offsets survive into the typed errors, so a caller can point at the offending character. The corpus pins the positions for its error vectors — a refusal without a position is not a conforming refusal.
+
+=== Tokenisation's edge cases, pinned
+
+* `(:` opens an angle fence only where a fence can open — inside a construct argument it is still a fence; the construct's argument grammar wraps it.
+* `((` is two opens, not one special token; the table recognition of clause 9 happens at the construct-argument level.
+* `2.10` is one number; `2.1.0` is a number then a fault; `..` is two faults in a row and the reader reports the first.
+* The reader is Unicode-native: symbol tokens are Unicode where the registry says so, and the letter-pair fences are ASCII. A lookalike character (a fullwidth parenthesis for `(`) is an unresolvable run, named and positioned.
+
+=== Recovery is not a feature
+
+The reader stops at the first fault. A specification of recovery — skip, resync, best-effort — is a specification of a second reader with different guarantees; this document specifies one reader with complete guarantees instead. Applications that want fault tolerance get it by splitting input and reading the pieces; the typed errors with positions make that practical.
+
+=== The reader against the writer
+
+The reader of this document and the writer of PM 1001's AsciiMath surface are one interface's two halves (PM 1003). The reader is the generous half — the surface is what it accepts, tokens, synonyms and all. The writer is the conservative half — canonical tokens, canonical forms, one encoding per construct. An author may write generously; a writer never does. Round trips pass through both halves and yield equal trees with re-spelled tokens where synonyms were written — the tree is the same even when the text is not.
+
+=== The reading algorithm, recited
+
+Tokenise by longest match; resolve through the constants' classification; build by the smallest-operand precedence with grouping as the override; validate the uncertainty nodes through PM 1002; yield the tree or the typed error with its position. Four stages, one pass, no second chances — the reader's entire behaviour is this recitation plus the tables, and the corpus is the proof that the recitation is complete.

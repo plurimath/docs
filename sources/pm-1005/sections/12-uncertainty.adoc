@@ -1,0 +1,93 @@
+== Uncertainty forms
+
+=== The calls
+
+The uncertainty forms read per PM 1002's AsciiMath encodings: `ustd(v, m)`, `uexp(v, m, k, p)`, `ucov(v, l, u, p, kind)` — the three categories with their argument orders, optional arguments omitted without empty positions.
+
+.Uncertainty reading
+[cols="2,4", options="headers"]
+|===
+|Input |Yields
+
+|`ustd(10.3, 0.2)` |standard, absolute
+|`uexp(10.3, 0.5, 2, 0.95)` |expanded with factor and probability
+|`uexp(10.3, 0.5, 2)` |expanded without probability
+|`ucov(10.3, 9.9, 10.7, 0.95, shortest)` |interval, shortest kind
+|`ucov(10.3, 9.9, 10.7, symmetric)` |interval, probabilistically symmetric
+|`10.3(2)` |standard, concise (the reporting form)
+|===
+
+The `symmetric` spelling reads to the model's `probabilistically-symmetric`; the reporting form reads per PM 1002's reconstruction rule — the digit string at the value's decimal places, `AmbiguousDecimalError` where the places cannot match.
+
+=== Units on uncertainty
+
+The unit follows in the channel: `ustd(10.3, 0.2) "unitsml(g)"` carries the unit in the embedding. A unit the reader refuses, written visibly after the call, is accepted as the visible placement (PM 1002's clause 10); the channel form is preferred and the corpus carries both.
+
+=== Shared exponents
+
+The shared-exponent reporting form — the concise form where the exponent digits apply to the value's magnitude — reads to the concise node with the exact decimal shifts the shared-exponent reading defines. The corpus carries the shared-exponent vectors; the rule they pin is that the shift happens at reading, producing the full magnitude, never at evaluation.
+
+=== Contexts and locale
+
+The uncertainty forms are locale-independent in their names (`ustd`/`uexp`/`ucov` are fixed tokens) and locale-sensitive in nothing else. Contexts — the surrounding construct an uncertainty appears in — do not change the reading: the node is the node wherever it sits.
+
+=== Errors
+
+The uncertainty reading errors are PM 1003's: arity faults and unknown kinds are `ParseError`; the concise place-count mismatch is `AmbiguousDecimalError`; a node that would violate PM 1002's field rules refuses at construction with `InvalidUncertainty`.
+
+[example]
+`uexp(10.3, 0.5)` — an expanded call without its factor.
+*Expected outcome.* `ParseError` naming the call: the expanded form requires the factor.
+
+[example]
+`10.3(25)`.
+*Expected outcome.* `AmbiguousDecimalError`: two digits cannot reconstruct at the value's one decimal place.
+
+=== The reporting form in expressions
+
+`10.3(2)` parses as one uncertainty node, not as `10.3` times `(2)`: the reader recognises the reporting form by its shape — a number directly followed by a parenthesised digit string — and claims it before the adjacency rule could. A genuine product of a number and a parenthesised number, `2(3)`, is therefore also read as the reporting form's shape — and refused, because `2(3)` cannot reconstruct (the digit string `3` at zero decimal places against a value with none — the corpus carries the vector). The author who means the product writes `2*(3)`.
+
+*Compatibility note.* The reporting form is a Plurimath extension; the baseline reads `10.3(2)` as an adjacency product. The extension is what PM 1002's concise notation needs, and the corpus carries both the acceptance and the refusal vectors.
+
+=== Reading the forms in context
+
+Uncertainty nodes compose: `(uexp(10.3, 0.5, 2) + uexp(4.1, 0.2, 2)) "unitsml(g)"` is an addition of two expanded nodes — evaluation refuses it per PM 1004's clause 12 until propagation exists, but reading and rendering carry it faithfully. The uncertainty forms are content, and everything this document says about composition applies to them.
+
+=== The complete reading table
+
+.Every uncertainty form
+[cols="2,4", options="headers"]
+|===
+|Input |Node
+
+|`ustd(10.3, 0.2)` |standard, absolute, magnitude `0.2`
+|`ustd(10.3, 0.2) "unitsml(g)"` |standard with unit `g`
+|`10.3(2)` |standard, concise
+|`10.3(0)` |standard, concise, magnitude `0` (the zero magnitude is well formed)
+|`uexp(10.3, 0.5, 2)` |expanded, factor `2`, no probability
+|`uexp(10.3, 0.5, 2, 0.95)` |expanded with probability
+|`ucov(10.3, 9.9, 10.7, 0.95, shortest)` |interval, shortest, with probability
+|`ucov(10.3, 9.9, 10.7, symmetric)` |interval, probabilistically symmetric, no probability
+|===
+
+=== The refusals, complete
+
+.Reading refusals
+[cols="2,3", options="headers"]
+|===
+|Input |Refusal
+
+|`ustd(10.3)` |`ParseError` — the standard call requires the magnitude
+|`uexp(10.3, 0.5)` |`ParseError` — the expanded call requires the factor
+|`ucov(10.3, 9.9)` |`ParseError` — the interval call requires both endpoints and the kind
+|`uexp(10.3, 0.5, 0)` |`InvalidUncertainty` — the factor must be positive
+|`ucov(..., fastest)` |`ParseError` — unknown kind
+|`10.3(25)` |`AmbiguousDecimalError` — the place mismatch
+|`2(3)` |`AmbiguousDecimalError` — the reporting shape claimed, reconstruction impossible
+|===
+
+`2(3)` deserves its note: the reporting-form recognition precedes adjacency (clause 12), so a number directly followed by a parenthesised number is claimed as the reporting form and refused on reconstruction. The author who means a product writes `2*(3)`; the corpus carries the pair.
+
+=== Why the uncertainty forms read here
+
+The uncertainty forms are AsciiMath extensions because uncertainty must be writable in a linear format: a laboratory reporting results in AsciiMath needs to state `10.3(2)` and have it survive. PM 1002 defines what the node means; this clause defines what the text does; PM 1003 wraps the pair in the reader contract. Three documents, one form, each stating its layer — the seam is deliberate and tested by the shared corpus.

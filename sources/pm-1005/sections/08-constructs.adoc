@@ -1,0 +1,122 @@
+== Constructs
+
+=== The four shapes
+
+The construct classes come in four argument shapes, and every name below belongs to exactly one:
+
+[cols="2,2,4", options="headers"]
+..The four construct shapes
+|===
+|Shape |Written |Yields
+
+|unary |`name(x)` or `name x` |one-operand function node
+|binary |`name(x)(y)` |two-operand function node
+|ternary |`name(x)(y)(z)` — or with scripts |the nary classes
+|sub/sup |`name` with `_`/`^` |`lim`, `log` with optional limits
+|===
+
+Parenthesised arguments group: `sqrt(x+1)` takes the whole sum; `sqrt x+1` takes only `x`. The parenthesis form is always available, and adjacency is always available for the last argument of a unary class.
+
+=== Unary classes
+
+The complete unary list, from the reader's constants:
+
+.The unary classes
+[cols="3,3,3,3,3", options="headers"]
+|===
+| | | | |
+
+|`underbrace` |`overbrace` |`underline` |`arccos` |`arcsin`
+|`arctan` |`ubrace` |`obrace` |`cancel` |`tilde`
+|`floor` |`ceil` |`ddot` |`coth` |`csch`
+|`sech` |`sinh` |`tanh` |`cosh` |`sqrt`
+|`norm` |`text` |`sec` |`sin` |`tan`
+|`cos` |`exp` |`gcd` |`glb` |`lcm`
+|`lub` |`cot` |`csc` |`det` |`dim`
+|`max` |`min` |`abs` |`bar` |`dot`
+|`hat` |`vec` |`ul` |`ln` |`log`
+|===
+
+Each reads to its function class of PM 1001's Annex A: the trigonometric and hyperbolic names to their classes, the accents (`bar`, `dot`, `hat`, `vec`, `tilde`, `ddot`) to the accent classes, the fences (`abs`, `norm`, `floor`, `ceil`, `obrace`, `ubrace`) to their fence classes, `cancel` to the strike-through class, `underline` and `ul` to the underbar forms, and the operator names to upright operator classes.
+
+=== Binary classes
+
+.The binary classes
+[cols="2,3,3", options="headers"]
+|===
+|Name |Arguments |Yields
+
+|`frac(a)(b)` |numerator, denominator |`Frac`
+|`root(a)(b)` |radicand, degree |`Root`
+|`underset(a)(b)` |base, under |`Underset`
+|`overset(a)(b)` |base, over |`Overset`
+|`stackrel(a)(b)` |bottom, top |`Stackrel`
+|===
+
+=== Ternary classes: the nary constructs
+
+`sum`, `prod`, `int` and `oint` take an operand with optional `_`/`^` scripts as the lower and upper limits: `sum_(i=1)^n`. Without scripts they read as the plain nary operator; with both they read to the nary class carrying its limits (PM 1001's nary family).
+
+=== Sub/sup classes
+
+`lim` and `log` take an operand with optional scripts: `lim_(x->0)`, `log_2 x`. They read to their classes with the limits attached; a bare `lim x` is the operator over its operand.
+
+=== Font style names
+
+.The font style tokens
+[cols="3,3,3,3,3", options="headers"]
+|===
+| | | | |
+
+|`mathfrak` |`mathcal` |`mathbb` |`mathsf` |`mathtt`
+|`mathbf` |`bbb` |`bb` |`rm` |`fr`
+|`cc` |`sf` |`tt` |`ii` |
+|===
+
+Each applies its variant to the operand (PM 1001's font styles). `rm` reads to the upright variant, `ii` to the italic — the shorthand spellings the implementation carries alongside the `math`-prefixed ones.
+
+*Compatibility note.* The public definition carries `mathfrak`, `mathcal`, `mathbb`, `mathsf`, `mathtt`, `mathbf` and the shorthands `fr`, `cc`, `bb`, `sf`, `tt`. Plurimath adds `rm` and `ii` for the upright and italic readings the set lacked.
+
+=== The special bold alphabets
+
+`ZZ`, `RR`, `QQ`, `NN`, `CC` read to the double-struck number-set letters — the natural, integer, rational, real and complex number symbols — as single tokens. They are the one place a bare uppercase pair is a token, and the reader's longest-match resolves them before any two-symbol reading.
+
+*Compatibility note.* These are a Plurimath addition to the public definition, which writes them as `bbZ` and kin.
+
+=== Adjacency vs parentheses
+
+Every unary class accepts both `name(x)` and `name x`; the parenthesised form is unambiguous and the adjacency form takes one operand — `sqrt x+1` roots `x` only. Binary and ternary classes require their parenthesised arguments: `frac(a)(b)` has no adjacency form, because two adjacency arguments would not be distinguishable. The rule is uniform: one-argument constructs may go bare; multi-argument constructs group.
+
+=== Overloading, deliberately absent
+
+No token serves two construct roles: `root` is always the binary root, never a radical sign; `text` is always the text function. The reader's classification is single-valued per token (clause 6), and the notation pays for that simplicity with a few explicit spellings (`obrace`/`ubrace` for the braces rather than overloading the accents).
+
+=== Worked readings per shape
+
+[example]
+`sqrt(x+1)` and `sqrt x+1`.
+*Expected outcome.* the root of the sum in the first; the root of `x` plus one in the second — the parenthesised form groups, the adjacency form takes one operand.
+
+[example]
+`frac(a)(b)`, `root(x)(3)`, `underset(a)(b)`, `overset(a)(b)`, `stackrel(a)(b)`.
+*Expected outcome.* `Frac`, `Root`, `Underset`, `Overset`, `Stackrel` — operand order per Annex A's binary table.
+
+[example]
+`sum_(i=1)^n f(i)` and bare `int f(x) dx`.
+*Expected outcome.* the nary with both limits in the first; the plain nary over its operand in the second — the `dx` is adjacency, not a second argument.
+
+[example]
+`lim_(x->0) x/ sin x` and `log_2 8`.
+*Expected outcome.* the limit class carrying its lower script; the logarithm with base `2` over `8` — the sub/sup readings with their scripts.
+
+[example]
+`mathbf(F) = m mathbf(a)` and `bbR`.
+*Expected outcome.* font style nodes over the names; the double-struck `R` from the special alphabet token.
+
+=== What the shapes do not do
+
+No class accepts keyword arguments, optional named forms or arity overloads: a name's shape is fixed by its class list membership. `sqrt` cannot take a degree (that is `root`), `frac` cannot take three arguments (nesting composes), and no unary class reads a second adjacency operand as part of itself — adjacency after a unary is the notation's product, always.
+
+=== The construct shapes at a glance
+
+One shape per class, from the constants, is the notation's whole economy: the reader classifies once and the argument grammar follows. The table of the four shapes, the complete class lists of this clause and Annex A, and the corpus's per-class vectors are three views of one fact. Nothing in this document introduces a construct that is not in the lists, and nothing in the lists is absent from this document.

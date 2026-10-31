@@ -1,0 +1,71 @@
+== Annex G: annotated readings
+
+Twenty inputs, their trees in brief, and the rule each exercises. These are the shapes to internalise; the corpus freezes all of them.
+
+.The readings
+[cols="2,4", options="headers"]
+|===
+|Input |Tree and the rule it shows
+
+|`x^2`
+|`Power` over `x` and 2 — scripts bind to the closed operand.
+
+|`x_1^2`
+|`PowerBase` — both scripts on one operand, either written order.
+
+|`a/b`
+|`Frac` — the fraction takes one token per side.
+
+|`(a+b)/(c-d)`
+|`Frac` over two groups — grouping offers the bigger operand.
+
+|`sqrt(x+1)`
+|`Sqrt` over the sum — construct parentheses group.
+
+|`sqrt x`
+|`Sqrt` over `x` — adjacency takes one token.
+
+|`sin 2x`
+|sine of `2`, times `x` — the unary adjacency rule.
+
+|`sum_(i=1)^n i^3`
+|limited `Sum`, then the summand — whitespace ends the attachment.
+
+|`lim_(x->0)`
+|the limit with its lower script — the arrow is script content.
+
+|`log_2 8`
+|the logarithm with base `2` — the sub/sup reading.
+
+|`[[1,2],[3,4]]`
+|plain `Matrix` — each inner bracket pair is a row.
+
+|`([1,2],[3,4])`
+|`Pmatrix` — the fence selects the class.
+
+|`text(hello)` and `"hello"`
+|two `Text` routes to equal content.
+
+|`"unitsml(g)"`
+|the channel — the unit embedding, not text.
+
+|`uexp(10.3, 0.5, 2, 0.95)`
+|the expanded uncertainty — category in the call name.
+
+|`10.3(2)`
+|the reporting form — the shape claimed before adjacency.
+
+|`ZZ`
+|the double-struck integers — the special alphabet before letters.
+
+|`x^(-x)`
+|`x` to the `−x` — the grouped script content.
+
+|`a/bc`
+|`a/b` times `c` — the smallest-operand rule.
+
+|`((n(n+1))/2)^2`
+|the fenced fraction, scripted — grouping offers the fraction, the script takes it.
+|===
+
+Each row is one corpus vector with its renderings frozen; this annex is the reading guide, the corpus is the contract.

@@ -1,0 +1,25 @@
+== Foreword
+
+=== General
+
+This document is the fifth document of the Plurimath specifications series. It specifies the AsciiMath notation as Plurimath reads and writes it: the complete accepted surface — every token, construct, fence and channel — and the rules that turn linear text into the formula tree of PM 1001.
+
+AsciiMath is a linear format for mathematics: plain text, readable and writable without markup, with mathematics' own conventions for precedence and grouping. Plurimath's implementation has grown specifics of its own — the uncertainty forms, the UnitsML channel, localized readings — and this document states the whole surface as it is, grounded in the reader's tables and pinned by the corpus. Where Plurimath's AsciiMath differs from the asciimath.org public definition, this document says so in the compatibility notes of each clause; the notation specified here is Plurimath's.
+
+=== Documents in the series
+
+.Documents in the series
+[cols="1,3,2", options="headers"]
+|===
+|Number |Title |Subject
+
+|1001 |Math model |The formula tree, the node classes, the registry, the rendering surfaces
+|1002 |Uncertainty model |The uncertainty node, its categories, its encodings
+|1003 |Format interfaces |The readers and writers per format
+|1004 |Evaluation |Numeric evaluation of trees
+|1005 |The AsciiMath notation |This document: the complete AsciiMath surface
+|===
+
+=== Maintainers
+
+This document is maintained by the Plurimath project at https://github.com/plurimath/plurimath.

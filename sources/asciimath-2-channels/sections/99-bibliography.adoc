@@ -1,5 +1,0 @@
-[bibliography]
-== Bibliography
-
-* [[[amath17-b,nofetch(plurimath/amath#17)]]] (dialect-L restriction)
-* [[[unitsml7-b,nofetch(UnitsML 7)]]] (xref targets)

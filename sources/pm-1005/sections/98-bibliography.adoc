@@ -1,0 +1,7 @@
+== Bibliography
+
+* Plurimath repository — https://github.com/plurimath/plurimath
+* asciimath.org — the public AsciiMath definition (the compatibility baseline)
+* PM 1001, PM 1002, PM 1003, PM 1004 of this series
+* UnitsML 6 — the asciiunits content language (the channel's content)
+* plurimath-testsuite — the pinned corpus repository and its generations

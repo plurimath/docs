@@ -1,0 +1,51 @@
+== The corpus
+
+=== The corpus and its generations
+
+The AsciiMath corpus is the pinned corpus of the plurimath testsuite: a frozen set of inputs with their frozen trees and renderings, replayed by digest. A corpus generation is immutable once published; generations extend, never rewrite — the first generation's 143 cases are present in every later one.
+
+=== What the corpus covers
+
+.Coverage
+[cols="2,4", options="headers"]
+|===
+|Area |Vectors
+
+|every symbol family |representative tokens per family, all formats' renderings
+|every construct class |plain and grouped arguments, scripts, nesting
+|fences |every pair of Annex C, nesting, the unpaired errors
+|tables |every bracket form, alignment, empty cells
+|uncertainty |all categories, notations, kinds; shared exponents; both unit placements
+|channel |expressible, inexpressible and refused units
+|precedence |every ruling of clause 13's tables
+|localization |the localized readings per supported locale
+|errors |one vector per error row of clause 14
+|===
+
+=== Provenance
+
+Each entry states its origin: a clause of this series, a defect fix, or a community report. Provenance is the corpus's memory — a vector's existence documents that the behaviour was deliberate, and the generation that froze it is named.
+
+=== Replay
+
+Replay is byte-identical: the corpus runner computes digests over the trees' canonical forms and the renderings, and a mismatch is a failure, not a warning. The runner itself is versioned with the corpus generation.
+
+=== The corpus and this document
+
+Every rule in this document has at least one corpus vector: the symbol tables (family representatives), the construct tables (each class plain and grouped), the fence table (each pair, nesting, unpaired), the channel (accepted, degraded, refused), the uncertainty forms (every category, notation, kind, unit placement), the precedence rulings (every row of clause 13's tables), the localization pairs, and every error row. A rule without a vector is a defect in one of the two — and the build of this document checks the correspondence for the generated tables.
+
+=== Size and shape
+
+The corpus generation carries its counts: cases per area of the coverage table, per format column, and per error row. The counts are facts about the generation, published with it; a generation that loses coverage in an area is not a successor, it is a different corpus — and this document's claims follow the generations, so the loss would be visible in the claim, not buried in the set.
+
+=== The replay contract
+
+Replay is part of CI, not a ceremony: the runner runs on every change to the implementation, and the digests are checked on every run. The corpus is the fastest way to know that a change moved behaviour, which is precisely its job.
+
+=== A generation's anatomy
+
+One generation, described concretely so the next is judged against something: the case files (input text, expected tree, expected bytes per surface), the manifest (per-area counts, model version, provenance), the runner version, and the digest set. All four travel together; a generation missing any of them is not publishable. The current generation's counts publish with the repository release that freezes it, and this document's claims reference that release by name.
+
+=== What the corpus is not
+
+It is not a test suite for the implementation's internals — it never imports code. It is not a sample of convenient inputs — the refusal vectors and the contested-precedence rows are deliberately uncomfortable. And it is not finished — generations append as the surface grows and as the world reports inputs the set lacked; the append-only rule is what makes every generation a permanent, checkable statement about the notation at its time.

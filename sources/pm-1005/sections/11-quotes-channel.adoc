@@ -1,0 +1,41 @@
+== Quoted strings and the channel
+
+=== The quoted string
+
+A double-quoted string reads verbatim as a `Text` node: no command processing, no entity decoding, no interpretation. Quotes inside a quoted string are escaped by doubling — the corpus pins the exact escape rule the reader applies.
+
+=== The channel
+
+One string form is reserved: `"unitsml(<expression>)"`, with no leading or trailing whitespace inside the outer quotes, reads as a `Unitsml` node carrying the expression (clause 10 of PM 1002's unit rules apply). The channel is the only way units enter AsciiMath machine-readably.
+
+.Channel rules
+[cols="2,4", options="headers"]
+|===
+|Input |Reading
+
+|`"unitsml(g)"` |the unit embedding of `g`
+|`"unitsml(m/s2)"` |the unit embedding of `m/s2`
+|`" unitsml(g)"` |a `Text` node — the leading space disqualifies the channel
+|`"unitsml(...)"` with an unreadable expression |a reading error naming the expression
+|`"hello"` |a `Text` node
+|===
+
+=== Why quotes are literal
+
+The channel's safety is the literalness: a quoted string never executes a command, so content the writer intends as data cannot become structure. This is what lets uncertainty encodings (PM 1002) place units in the channel — the unit expression is data by construction.
+
+=== Escapes, precisely
+
+Inside a quoted string, the only escape is the doubled quote for a quote. Backslashes are literal — a quoted string carries `\frac` as four characters plus text, never as a command. This is the channel's contract: verbatim means verbatim, and the corpus carries a string with a backslash, a doubled quote, and Unicode to pin all three.
+
+=== The channel's content grammar
+
+The channel's expression is the asciiunits content language (UnitsML 6), read by the unit reader at reading time. The reader's refusal propagates as a reading error — the channel never stores an expression it could not read, because the unit embedding is constructed, not deferred. A unit the language accepts but the registry lacks symbols for is a unit-reader matter, and its refusal names the missing piece.
+
+=== Placement in expressions
+
+A channel string is an operand: it sits in a product (`3 "unitsml(m)"`), attaches after uncertainty calls (PM 1002), and stands alone as a unit statement. It never opens or closes a construct — quotes inside construct arguments are text unless the argument's grammar says otherwise (the uncertainty calls accept the channel after the call, not inside its parentheses).
+
+=== The channel and PM 1002, in one place
+
+The uncertainty forms place units in the channel (`ustd(10.3, 0.2) "unitsml(g)"`); the visible placement is the fallback. The channel's grammar is the unit reader's, and the channel's authority is the same as every marker's in PM 1002: the machine-readable form wins, the visible form is regenerated. Nothing in this clause adds rules — it is where the two documents meet, stated once so no reader has to reconstruct the seam.

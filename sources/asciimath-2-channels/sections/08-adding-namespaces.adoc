@@ -1,3 +1,0 @@
-== Adding a namespace
-
-A new namespace `name` requires: a normative content grammar (an artifact reference or a clause of a part); a ledger entry in asciimath 1 with kind `additive`; an edition bump; and channel round-trip vectors in UnitsML 8 Annex A. Nothing else in this dialect changes.

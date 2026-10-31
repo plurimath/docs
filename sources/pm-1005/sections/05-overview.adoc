@@ -1,0 +1,64 @@
+== Notation overview
+
+=== The shape of the language
+
+AsciiMath input is a sequence of tokens. Tokens come from four sources: the symbol space (clause 6), the construct names (clause 8), the structure characters (`^`, `_`, `/`, `@`, parentheses), and quoted strings (clause 11). Whitespace separates tokens and never means anything by itself.
+
+[example]
+`sum_(i=1)^n i^3`
+*Expected outcome.* five token groups: the ternary class `sum` with its `_`/`^` scripts, and the operand `i^3`. Whitespace between the `^n` and the `i^3` ends the nary's upper script and starts the summand.
+
+=== A linear format
+
+The notation is linear: no environments, no begin/end pairs, no markup beyond the construct parentheses. Everything is characters. The fences pair by the table of Annex C — including the pairs the public definition lacks and Plurimath adds: the letter-pair fences `(:` and `:)` for angle-bracket content and the single-letter Unicode fences.
+
+=== What a reading yields
+
+A reading yields one formula tree per PM 1001: node classes with operands in class order, symbols resolved through the registry, uncertainty nodes constructed through PM 1002's validation. The tree carries nothing about the notation — the same tree can be written from pma, MathML or OMML (PM 1003).
+
+=== The reader's promises
+
+The reader of this notation (PM 1003, clause 8) is total on this surface: every text built from the constructs of this document reads; everything else is a typed error. The corpus of clause 15 pins both directions.
+
+=== A first reading, token by token
+
+The sum of cubes, `sum_(i=1)^n i^3 = ((n(n+1))/2)^2`, as the reader sees it:
+
+. `sum` — the ternary token; its scripts follow;
+. `_(i=1)` — the lower limit: an index definition `i = 1` (evaluation reads it per PM 1004; the tree carries the limit as written);
+. `^n` — the upper limit: the name `n`;
+. `i^3` — the summand: a power;
+. `=` — the relation symbol;
+. `((n(n+1))/2)^2` — the right side: a power over a fenced fraction — the inner fence holds the product `n(n+1)`, the fraction takes the fence and the `2`, the outer fence groups the fraction, and `^2` scripts it all.
+
+*Expected outcome.* one relation between a limited nary and a scripted fraction — the tree PM 1001's introduction carries, read from characters a mathematician typed without thinking about markup.
+
+=== The three extensions over the baseline
+
+Everything in this document that the asciimath.org baseline lacks is one of three extensions, each with its clause: the uncertainty forms (clause 12), the UnitsML channel (clause 11), and the added tokens and fences (clauses 6 and 8, noted per case). The baseline itself — its symbols, constructs, precedence and fences — reads unchanged.
+
+=== Whitespace
+
+Whitespace between tokens is a separator and nothing else: it ends attachments (clause 13) and never creates content. Inside construct argument groups, the argument's own grammar governs. Inside quoted strings, spaces are content verbatim. The reader normalises nothing about the input's spacing — `input_string` keeps it — but the tree records structure only.
+
+=== Two readings of one habit
+
+Mathematicians write `sin 2x` meaning `sin(2x)`. The notation reads `sin(2) · x` (clause 13's ruling). The gap between habit and ruling is not a defect to patch with a smarter reader; it is the reason grouping exists, and every AsciiMath author learns it once. The ruling is old, public, and pinned by the corpus — this document states it rather than relitigates it.
+
+=== The whitespace rules, in one table
+
+.Whitespace behaviour
+[cols="2,4", options="headers"]
+|===
+|Position |Effect
+
+|between tokens |separator; ends script and argument attachments
+|inside a construct's argument group |content spacing; the argument grammar governs
+|inside quoted strings |content, verbatim
+|leading and trailing on the input |insignificant; trimmed before tokenising
+|inside a number or token |impossible — a token never contains space
+|===
+
+=== Reading across the series
+
+An AsciiMath tree is a PM 1001 tree: PM 1002's uncertainty forms read to validated nodes, PM 1003's reader contract wraps this reader, PM 1004's evaluator consumes what the tree denotes, and the writer of clause 16 emits PM 1001's AsciiMath surface. This document is the notation; the series is the system.

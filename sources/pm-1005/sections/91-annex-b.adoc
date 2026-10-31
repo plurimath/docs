@@ -1,0 +1,56 @@
+== Annex B: fonts and the special alphabets
+
+=== Font tokens and their variants
+
+.Font tokens
+[cols="2,3,3", options="headers"]
+|===
+|Token |Variant |MathML `mathvariant`
+
+|`mathbf` |bold |`bold`
+|`ii` |italic |`italic`
+|`rm` |upright |`normal`
+|`mathsf` |sans-serif |`sans-serif`
+|`sf` |sans-serif |`sans-serif`
+|`mathtt` |monospace |`monospace`
+|`tt` |monospace |`monospace`
+|`mathfrak` |fraktur |`fraktur`
+|`fr` |fraktur |`fraktur`
+|`mathcal` |script |`script`
+|`cc` |script |`script`
+|`mathbb` |double-struck |`double-struck`
+|`bb` |double-struck |`double-struck`
+|`bbb` |double-struck |`double-struck`
+|===
+
+=== The special bold alphabets
+
+.Special alphabets
+[cols="2,3,3", options="headers"]
+|===
+|Token |Glyph |Means
+
+|`ZZ` |ℤ |the integers
+|`RR` |ℝ |the reals
+|`QQ` |ℚ |the rationals
+|`NN` |ℕ |the naturals
+|`CC` |ℂ |the complexes
+|===
+
+Both spellings exist for the double-struck set: the prefixed form (`bbZ`) from the public definition and the special token (`ZZ`). The tokens read to the same registry entries; the corpus pins both spellings in every rendering.
+
+=== Fonts in use
+
+.Worked font cases
+[cols="2,4", options="headers"]
+|===
+|Input |Reading
+
+|`mathbf(F)` and `bf F`-shaped shorthands where carried |the bold variant over the name
+|`mathfrak(g)` and `fr g` |the fraktur variant — prefixed and shorthand forms of one variant
+|`mathbb(R)` and `bb R` |the double-struck variant — distinct from the `RR` special alphabet token, which is a symbol
+|`rm x` |the upright variant — the added token
+|`ii x` |the italic variant — the added token
+|===
+
+`bb R` and `RR` read to different nodes — a font style over the letter versus the number-set symbol — and the corpus carries both, because the two readings are the classic confusion the special alphabets exist to end.

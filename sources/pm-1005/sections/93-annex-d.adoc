@@ -1,0 +1,51 @@
+== Annex D: symbol families in full
+
+=== The families and their counts
+
+The symbol surface at edition 1, by family, with representative members. The complete token listing is generated from the registry alongside the other tables.
+
+.Symbol families
+[cols="2,2,4", options="headers"]
+|===
+|Family |Members |Representatives
+
+|Greek lower |23 |`alpha` `beta` `gamma` `pi` `omega`
+|Greek upper |13 |`Gamma` `Delta` `Omega`
+|binary operators |16 |`times` `pm` `cdot` `oplus`
+|relations |10 |`approx` `equiv` `propto`
+|logic |9 |`forall` `exists` `neg` `iff`
+|sets |9 |`in` `subset` `cup` `cap` `emptyset`
+|arrows |10 |`->` `=>` `mapsto` `iff`
+|calculus |7 |`int` `oint` `sum` `prod` `partial` `nabla`
+|accents and miscellany |9 |`hbar` `ell` `Re` `Im` `wp` `aleph` `oo` `degree` `prime`
+|geometry |4 |`angle` `perp` `parallel` `triangle`
+|===
+
+=== Tokens with several spellings
+
+Some entries accept more than one token: the arrows carry their ASCII spellings (`->`, `-->`) alongside their named ones; the logic tokens carry words (`and`, `or`) alongside signs. Every spelling reads to the same entry and writes to the entry's canonical AsciiMath token — the round trip may re-spell, and the tree does not change.
+
+=== What is not a symbol
+
+Digits, the structure characters, the construct names, the font names and the quoted strings are not symbol tokens; the reader's classification is total and a token belongs to exactly one class. The boundary cases are decided by the constants and pinned by the corpus: `e` alone is a symbol; `e5` is nothing (a reading error); `2e5` is a number followed by an error.
+
+=== The smaller families, complete
+
+.Geometry
+[cols="3,3,3,3,3", options="headers"]
+|===
+| | | | |
+
+|`angle` |`perp` |`parallel` |`triangle` |`square`
+|===
+
+.Accents and miscellany
+[cols="3,3,3,3,3", options="headers"]
+|===
+| | | | |
+
+|`hbar` |`ell` |`Re` |`Im` |`wp`
+|`aleph` |`oo` |`degree` |`prime` |
+|===
+
+The largest families (Greek, operators, relations) carry their complete listings in clause 6; the counts in the family table above are the totals the generated listing holds, and this annex repeats only the families small enough to print in full.

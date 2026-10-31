@@ -1,6 +1,0 @@
-[bibliography]
-== Normative references
-
-* [[[plurimath-1,nofetch(Plurimath 1001)]]] (the math model, the registry)
-* [[[asciimath-2,nofetch(asciimath 2)]]] (extension channels)
-* [[[asciimath-org,nofetch(the asciimath.org dialect)]]] (compatibility baseline)

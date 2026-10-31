@@ -1,3 +1,0 @@
-== The `"unitsml(...)"` channel
-
-Content parsed by the UnitsML 6 artifact grammar; materializes as the `Unitsml` node with the `xref` bond per UnitsML 7. The content grammar is referenced, never restated.

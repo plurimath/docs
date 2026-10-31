@@ -1,0 +1,49 @@
+== Scripts and fractions
+
+=== Scripts
+
+`^` attaches a superscript and `_` a subscript to the preceding operand: `x^2`, `x_1`, `x_1^2`. The operand is the preceding group — a token, a parenthesised expression, or a construct's result — and the script content is the following group. Both orders of sub and superscript on one operand read to `PowerBase`; a lone script reads to `Power` or `Base`.
+
+[example]
+`x^2`, `x_1`, `x_1^2`, `x^2_1`.
+*Expected outcome.* the four readings: `Power`, `Base`, and two `PowerBase` nodes that are equal — the script order on one operand is not significant.
+
+=== Scripts on constructs
+
+Scripts attach to the construct that just closed: `sum_(i=1)^n`, `lim_(x->0)`, `log_2 x`. The sub/sup classes read the scripts as their limits; the ternary classes read them as the nary limits.
+
+=== Fractions
+
+`a/b` reads to `Frac`: the operand before the slash is the numerator, the operand after is the denominator, each being a token or a group. `((n(n+1))/2)` shows the idiom — groups on both sides of the slash. The slash binds tighter than addition and looser than scripts: `a/b^2` is a over `b²`, and `a^2/b` is `a²` over `b`.
+
+=== Precedence interplay
+
+The full precedence is clause 13; this clause states the local rules: scripts bind tightest, then fences and constructs, then fractions, then adjacency, then the operators. The reader's behaviour is the definition; the corpus pins the contested shapes vector by vector.
+
+=== Scripts on fences and constructs, worked
+
+`((n(n+1))/2)^2` — the worked case of clause 5 — and its kin:
+
+[cols="2,4", options="headers"]
+..Script attachments
+|===
+|Input |Reading
+
+|`sqrt(x)^3` |the root, cubed — the script attaches to the construct's result
+|`frac(a)(b)^2` |the fraction, squared
+|`x_1^2 + y^2_1` |two `PowerBase`s, script order insignificant
+|`sum_(i=1)^n` |the nary with both limits
+|`lim_(x->0) f(x)` |the limit with its lower script, then adjacency
+|===
+
+=== The fraction edge cases
+
+`a//b` — the double slash — is not a token; the reader sees two slashes and errors. `a/b/c` is `(a/b)/c` — fractions chain left-associatively. `a/b^2` puts the script inside the denominator: scripts bind tighter than the slash.
+
+=== Scripts on scripts
+
+A script's content may carry scripts: `x^(y_1)` nests the base inside the exponent. Nesting is unlimited and the tree carries it as written — the parser's levels describe sibling precedence, not a depth limit. The corpus carries the two-deep and three-deep cases.
+
+=== The empty script
+
+`x^()` — a script with an empty group — reads to a script node with an empty operand: the `None` node fills the slot, the same construct MathML uses for the empty half of a pair. The author who means "nothing here yet" has a notation; the corpus pins it.
