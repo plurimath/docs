@@ -1,3 +1,0 @@
-== Foreword
-
-Evaluation is where the stack computes: measured values in, GUM-conformant results out. This part is the normative specification of that computation — the pure function over the math model, the propagation law with its adequacy verdict, the second-order terms that Amd.1:2026 made normative, the Monte Carlo alternative of JCGM 101, and the conformity decisions of JCGM 106. Annex A derives, from primary sources, the two second-order terms that the amendment itself left elided.

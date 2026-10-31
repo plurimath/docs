@@ -1,0 +1,7 @@
+== Normative references
+
+The following documents are referred to in the text.
+
+* PM 1001 (math model) of this series — the tree, the node classes and their operand orders.
+* PM 1002 (uncertainty model) of this series — the nodes this edition does not compute with.
+* UnitsML 2 (numeric contract) of the UnitsML series — the exact-decimal discipline of the data, distinct from this evaluator's binding values.

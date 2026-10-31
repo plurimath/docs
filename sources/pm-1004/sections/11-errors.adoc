@@ -1,0 +1,50 @@
+== The error contract
+
+=== The eight errors
+
+.The typed errors of evaluation
+[cols="2,3,3", options="headers"]
+|===
+|Error |Raised when |Carries
+
+|`DivisionByZeroError` |a division or modulo by an evaluated zero |nothing beyond the platform's message where one exists
+|`InvalidBindingError` |a binding value is not a real number |the key and the value
+|`InvalidBindingKeyError` |a binding key is neither string nor symbol |the key
+|`MathDomainError` |an operation or function outside its real domain |the platform's message
+|`MissingVariableError` |a name the tree needs is unbound |the name
+|`NonFiniteResultError` |a result or intermediate is not real-and-finite |nothing
+|`UnsupportedExpressionError` |the tree contains a node evaluation does not define |the node
+|`Error` |the base class |—
+|===
+
+Catching the base class catches them all; catching a subclass catches the specific refusal. The errors are the contract's vocabulary: everything a caller can do about a refusal starts from one of these names.
+
+=== Refusal points
+
+Where each error can arise:
+
+. bindings — `InvalidBindingKeyError`, `InvalidBindingError`, at entry;
+. names — `MissingVariableError`, at first use;
+. unsupported content — `UnsupportedExpressionError`, at the node;
+. arithmetic and functions — `DivisionByZeroError`, `MathDomainError`, at the fold;
+. the boundary — `NonFiniteResultError`, at every fold and at the end.
+
+=== What the contract forbids
+
+No default values for missing names, no complex-number escape hatch, no unsigned infinity, no NaN, no evaluation of part of a tree, no second chance. Each of those would turn a refusal the caller can handle into a value the caller must guess about — the contract prefers the refusal.
+
+=== Messages
+
+Message shapes are stable within an edition. The identifying data travels in the message: the missing name, the offending binding, the node class refused. The corpus pins the shapes with one vector per error.
+
+=== Causes, not substitutes
+
+Where a typed error wraps a platform exception, the platform's error is the cause — preserved for diagnostics, never raised in its place. Callers match on the typed name; the cause answers "what exactly did the platform say".
+
+=== Catching guidance
+
+Handle the specific errors you can act on: retry with corrected bindings for `MissingVariableError`, report the input for `UnsupportedExpressionError`, treat `DivisionByZeroError` and `MathDomainError` as mathematical facts about the input. Catching the base class is for the boundary of a long pipeline; everywhere else, the specific name is the better match, and the corpus holds a vector for each name.
+
+=== Errors are results too
+
+A refusal is a well-defined outcome, deterministic as any number: the same tree and bindings produce the same error with the same message. The evaluation corpus treats errors exactly like results — frozen, replayed, drift-checked — because a caller's error handling is only as reliable as the errors are repeatable.

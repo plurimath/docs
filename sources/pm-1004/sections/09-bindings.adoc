@@ -1,0 +1,51 @@
+== Bindings
+
+=== The binding set
+
+Bindings are the evaluation's variables: a set of names, each with a real numeric value. Keys arrive as strings or symbols and normalise to strings; values must be real numbers.
+
+=== Validation at entry
+
+The binding set is validated before the tree is touched:
+
+. a key that is neither a string nor a symbol raises `InvalidBindingKeyError`, carrying the key;
+. a value that is not a real number raises `InvalidBindingError`, carrying the key and the value;
+. duplicate keys after normalisation — `:x` and `"x"` together — collapse to one binding, the last one given.
+
+An evaluation with an invalid binding refuses before any evaluation happens: the tree is not walked with a bad environment.
+
+[example]
+Bindings `{ x: 3, "y" => 4.5 }`.
+*Expected outcome.* accepted; the names `x` and `y` bind `3` and `4.5`.
+
+[example]
+The binding key `2` — a number offered as a name.
+*Expected outcome.* `InvalidBindingKeyError` carrying `2`, raised before evaluation.
+
+[example]
+The binding `x → "three"`.
+*Expected outcome.* `InvalidBindingError` carrying the key and the string: values must be real numbers, not their spellings.
+
+=== Missing names
+
+A name the tree mentions and the bindings lack raises `MissingVariableError`, carrying the name. The refusal happens at first use — evaluation does not pre-scan the tree for names, so an evaluation that dies early reports the first missing name it needed, not all of them.
+
+=== Shadowing
+
+The iteration index temporarily shadows an outer binding of the same name for the body's evaluation and restores the outer binding afterwards (clause 10). Shadowing is scoped to the body: outside the iteration, the outer binding is untouched.
+
+[example]
+The tree of `i + sum_(i=1)^3 i` with the binding `i → 10`.
+*Expected outcome.* the outer `i` contributes `10`; the iteration binds its own `i` over `1..3` and contributes `6`; the result is `16`. The outer binding survives the iteration unchanged.
+
+=== The numeric types accepted
+
+A binding value may be any real numeric type the platform offers — integers, rationals, floating-point numbers. The evaluator normalises nothing: an integer binding stays an integer in the arithmetic where the platform keeps it one, a rational stays exact while its operations do, and the corpus pins the type-observable outcomes (`sum_(i=1)^3 i` with an integer index folds in integers). Values that are complex, non-real or not numbers at all refuse per clause 9.
+
+=== Name shape
+
+A name is the identifier text a tree's symbols carry for evaluation. Names are case-sensitive and exact: `X` and `x` are different bindings, and a binding for one does not serve the other. There are no reserved names — the iteration indexes are ordinary names that shadow per clause 10.
+
+=== Binding once, evaluating many
+
+An evaluation binds its names once, at entry. There is no rebinding during evaluation, no environment mutation from inside the tree, and no callback through which the tree could observe or alter its own bindings.

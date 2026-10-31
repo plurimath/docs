@@ -1,0 +1,21 @@
+== Annex B: the error messages
+
+.Message shapes
+[cols="2,4", options="headers"]
+|===
+|Error |Message carries
+
+|`DivisionByZeroError` |the platform's division message, where one exists
+|`InvalidBindingError` |the key, and the inspection of the rejected value
+|`InvalidBindingKeyError` |the inspection of the rejected key
+|`MathDomainError` |the platform's domain message
+|`MissingVariableError` |the missing name, alone
+|`NonFiniteResultError` |nothing — the class is the message
+|`UnsupportedExpressionError` |the class of the refused node
+|===
+
+One vector per row exists in the corpus, so an implementation's messages are checked against the shapes, not against prose in this document.
+
+=== Refusal vectors in the corpus
+
+The message shapes of this annex carry one corpus vector each, plus: a missing name deep inside an iteration body (the name reported is the body's first use), an unsupported node inside a group (the group does not shield it), and a non-finite intermediate inside an argument (refused at the argument, before the call). The corpus, not this annex, is the checkable form; this annex is its key.

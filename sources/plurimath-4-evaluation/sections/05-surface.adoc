@@ -1,6 +1,0 @@
-== The evaluation surface
-
-Evaluation is a pure function (AST, bindings) → result over the math model. Bindings carry measured quantities (value, unit, asserted kind, uncertainty record), the covariance/correlation channel for correlated inputs, and L2 dedicated-quantity metadata ("length of rod AB at 09:15"). The `convert` operation applies the UnitsML 5 law (factor-only for differences, gating per UnitsML 4). Results carry the taxonomy: `value | indeterminate | error | lpu-not-validated` — an evaluator MUST NOT return a number where the method is unvalidated.
-
-[example]
-*Expected outcome.* Dividing by an interval-scale zero-magnitude sum yields `indeterminate` — distinct from `error`, which names rule violations; both name their rule.

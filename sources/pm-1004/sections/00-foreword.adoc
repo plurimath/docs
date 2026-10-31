@@ -1,0 +1,24 @@
+== Foreword
+
+=== General
+
+This document is the fourth document of the Plurimath specifications series. It specifies evaluation: the computation of a numeric value for a formula tree against variable bindings, under a strict error contract.
+
+The evaluator described here is implemented in the `plurimath` gem of the 0.11 series (`Plurimath::Math::Evaluation`). It evaluates arithmetic over the tree exactly as written: it never rewrites the tree, never rounds behind the caller's back, and never returns a value that is not a real, finite number — the alternative is one of the typed errors. Uncertainty propagation is not part of this edition: the model of PM 1002 carries uncertainty nodes, this document's evaluator does not compute with them, and the propagation rules will arrive in this document when they arrive in the implementation.
+
+=== Documents in the series
+
+.Documents in the series
+[cols="1,3,2", options="headers"]
+|===
+|Number |Title |Subject
+
+|1001 |Math model |The formula tree, the node classes, the registry, the rendering surfaces
+|1002 |Uncertainty model |The uncertainty node, its categories, its encodings
+|1003 |Format interfaces |The readers and writers per format
+|1004 |Evaluation |This document: numeric evaluation of trees
+|===
+
+=== Maintainers
+
+This document is maintained by the Plurimath project at https://github.com/plurimath/plurimath.

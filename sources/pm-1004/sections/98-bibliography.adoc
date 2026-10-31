@@ -1,0 +1,6 @@
+== Bibliography
+
+* Plurimath repository — https://github.com/plurimath/plurimath
+* `Plurimath::Math::Evaluation` implementation — the reference implementation of this document
+* PM 1001, PM 1002, PM 1003 of this series
+* JCGM 100:2008 — the metrological context the propagation rules of a future edition will formalise

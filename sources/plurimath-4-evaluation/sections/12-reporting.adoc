@@ -1,3 +1,0 @@
-== Reporting
-
-Expanded reporting (U = k·u_c with stated k, p) is the terminal act; record nodes (Plurimath 1002) never compute. Vector publication uses fixed decimals per UnitsML 8. U = 3×34.2 nm is reported per GUM 7.2.4 as ≈ 103 nm with the expanded form in parentheses.

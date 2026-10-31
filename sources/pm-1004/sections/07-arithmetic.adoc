@@ -1,0 +1,74 @@
+== Arithmetic
+
+=== The operations
+
+The evaluator's operations, their names, and their domains:
+
+.The arithmetic
+[cols="2,3,3", options="headers"]
+|===
+|Operation |Notation in the tree |Domain
+
+|addition |`a + b` |reals
+|subtraction |`a − b` |reals
+|multiplication |`a * b`, `a b` (implicit) |reals
+|division |`a / b` |reals, `b ≠ 0`
+|modulo |`a mod b` |reals per the platform's modulo
+|power |`a^b` |per clause 7's power rules
+|negation |`−a` |reals
+|positive sign |`+a` |reals
+|===
+
+Every operation consumes real, finite values and produces one; the contract of clause 5 applies at each fold.
+
+=== Division
+
+Division by zero raises `DivisionByZeroError` — including division by an expression that evaluated to zero, however far away the zero came from. There is no limiting behaviour, no infinity: the contract has no place to put one.
+
+=== Modulo
+
+Modulo follows the platform's modulo semantics for real operands; a zero divisor raises `DivisionByZeroError`. The sign behaviour is the platform's and the corpus pins it.
+
+=== Powers
+
+The power operation evaluates `a^b` for the domains the real numbers define: a positive base with any real exponent, a zero base with a positive exponent, a negative base only where the exponent is an integer or a rational with an odd denominator in lowest terms. Outside those domains the platform's domain error becomes `MathDomainError`. An exponent that would produce a non-finite magnitude raises `NonFiniteResultError` at the boundary.
+
+[example]
+`2^10`, `9^(1/2)`, `(−8)^(1/3)`.
+*Expected outcome.* `1024`; `3`; `−2` — the real cube root, in the odd-denominator domain.
+
+[example]
+`(−2)^(1/2)` and `0^(−1)`.
+*Expected outcome.* `MathDomainError` for the first; `DivisionByZeroError` for the second — the platform's reading of a zero base with a negative exponent.
+
+=== Negation and sign
+
+Negation flips the sign of its operand; a unary plus is the identity. Neither has side effects, and chains (`−−x`) negate once per sign as written.
+
+=== Results
+
+Every fold's result passes the real-and-finite check before it feeds the next. A non-finite intermediate — an overflow inside the platform's numbers — aborts the whole evaluation with `NonFiniteResultError` rather than propagating a poisoned value.
+
+=== Implicit products
+
+Adjacency means multiplication where the notation puts values side by side: a number before a name, a name before a group, a group before a group. It does not mean multiplication between two numbers (`2 3` is not a valid product — the corpus refuses it as a token fault) nor between a name and the keyword introducing an iteration. The normalisation of clause 6 makes every implicit product explicit before folding.
+
+=== Exactness
+
+The evaluator's arithmetic runs on the platform's real numbers with the platform's precision. This document does not promise decimal exactness — that discipline belongs to the data layer (UnitsML 2) and to a future exact-arithmetic backend. What this document promises is the contract: whatever the platform computes, the result is delivered as computed, refused when it is not real-and-finite, and never silently rounded at the boundary. The corpus records the expected values the contract requires, platform and version pinned.
+
+=== Order of folds
+
+Left-associative levels fold left: `a − b − c` is `(a − b) − c`, and `a / b / c` is `(a / b) / c`. Right-associativity belongs to powers alone. The distinction is observable in floating point even when exact arithmetic would agree; the corpus pins the fold order with vectors whose inputs differ by association.
+
+=== A precedence walk, concretely
+
+The tree of `−3 + 4 * 2^2 / (1 + 1)`:
+
+. the group folds first: `1 + 1` yields `2`;
+. the power: `2^2` yields `4`;
+. the multiplicative level folds left: `4 * 4` yields `16`, then `16 / 2` yields `8`;
+. the unary level negates `3` to `−3` for its operand;
+. the additive level folds: `−3 + 8` yields `5`.
+
+*Expected outcome.* `5` — each level once, in the chain's order, with the group overriding the written order.
