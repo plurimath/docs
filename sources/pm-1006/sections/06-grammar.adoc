@@ -1,89 +1,172 @@
-== The grammar surface
+== The grammar
 
-=== Tokens
+=== General
 
-The grammar's terminals are: the reserved words (the constructors and the modifiers), the structure tokens (parentheses, the comma, `+/-`, `%`, `::`, `~`, `e` in exponent position), numbers per the exact-decimal grammar (PM 1002), names for the iteration and binding forms the arithmetic carries over from AsciiMath's surface, and the unit expressions inside `unit(...)` — which are tokens of the UnitsML 6 grammar nested by reference, not copied.
+The grammar of pma is stated here in full, in PARG — the grammar language of the asciiunits artifact pattern (UnitsML 6) — as the normative source the pma artifact generates from. A developer implements the reader from this grammar, the materialization rules of clauses 7 and 8, and nothing else: every input is derivable to exactly one tree, or refused by exactly one error.
 
-.Reserved words
-[cols="2,4", options="headers"]
-|===
-|Reserved word |Role
+The unit expressions inside `unit(...)` are not re-stated here: the rule references the UnitsML 6 grammar (the `UnitsmlAscii` artifact), embedded by reference at compile time — one unit grammar, two notations.
 
-|`unit` |the unit constructor
-|`ustd`, `uexp`, `ucov` |the uncertainty constructors
-|`diff` |the difference constructor
-|`rect`, and the distribution tag names of clause 8 |the tag set
-|===
+=== The grammar
 
-The register is open by process (a new constructor is a new reserved word, checked against the symbol spaces at generation) and closed by edition (a released edition's register never grows).
-
-=== Whitespace
-
-Whitespace separates tokens; no rule of this notation depends on its presence or absence. `ustd (10.3, 0.2)` and `ustd(10.3, 0.2)` are the same form. Where a legacy notation used spacing as its grouping, this one uses parentheses, always.
-
-=== Statements
-
-A pma document is a sequence of statements, each an expression: arithmetic over values, names, constructors and literals, with the grouping and precedence the arithmetic core defines (PM 1004's chain applies to the forms pma shares with it). A statement is total or an error; the reader's guarantees are PM 1003's reader contract with this document's strict error rule.
-
-=== The unit grammar's position
-
-`unit(...)` does not inline a unit syntax of its own: its content is the asciiunits content language, carried by the checksummed artifact of that language (UnitsML 6), read by the same reader everywhere. One unit grammar serves both notations — this one unquoted, AsciiMath through its channel — and a unit accepted in one is accepted in the other.
-
-=== The surface as a model
-
-[source,lml]
+[source,parg]
 ----
-lml "1.0"
+# The pma grammar: arithmetic core, measurement constructors, measured
+# literals, quantity assertions. Edition 1. Generated into the pma
+# artifact; reserved words are checked against the registry's symbol
+# space and the UnitsDB symbol space at generation time.
 
-models Pma {
+grammar Pma version "0.1.0" edition 1 {
 
-  class Statement {
-    attribute expression, Expression[1]
-  }
+  # lexical terminals
+  ws = %x09 / %x0A / %x0B / %x0C / %x0D / %x20
+  spaces = 1*ws
+  digit = %x30-39
+  digits = 1*digit
+  lparen = "("
+  rparen = ")"
+  comma = ","
+  plus = "+"
+  minus = "-"
+  star = "*"
+  slash = "/"
+  caret = "^"
+  percent = "%"
+  e_mark = "e"
+  tilde = "~"
+  colon_colon = "::"
+  plus_slash_minus = "+/-"
+  plusminus = "±"
+  equals = "="
+  not_equals = "!="
+  lt = "<"
+  le = "<="
+  gt = ">"
+  ge = ">="
 
-  class ConstructorCall {
-    attribute keyword, ReservedWord[1]
-    attribute arguments, Expression { cardinality 0..n }
-  }
+  number = (["-"] digits ["." digits]) as number
 
-  class MeasuredLiteral {
-    attribute value, ExactDecimal[1]
-    attribute magnitude, ExactDecimal[1]
-    attribute modifier, Modifier
-    attribute trailing_unit, Unitsml
-  }
+  # names: identifiers for evaluation bindings. The name table is
+  # generated as the identifier shape minus the reserved words — the
+  # same generation-time subtraction the unit tables use.
+  letter = %x41-5A / %x61-7A
+  underscore = "_"
+  name = (letter 1*(letter / digit / underscore)) as name
 
-  class Modifier {
-    attribute kind, ModifierKind
-    attribute exponent, String
-    attribute distribution, String
-  }
+  # the reserved words: checked against registry ∪ unitsdb at generation
+  reserved_unit = "unit"
+  reserved_ustd = "ustd"
+  reserved_uexp = "uexp"
+  reserved_ucov = "ucov"
+  reserved_diff = "diff"
 
-  enum ModifierKind {
-    value canonical
-    value relative
-    value shared-exponent
-    value tagged
-    value sugar
-  }
+  # distribution tags: the closed set
+  tag_name = ("rect" / "tri" / "u") as distribution
 
-  class Assertion {
-    attribute unit_expression, String[1]
-    attribute kind, String[1]
-  }
+  # unit expressions: the UnitsML 6 grammar, embedded by reference
+  unit_expression = @UnitsmlAscii.expression
 
-  enum ReservedWord {
-    value "unit"
-    value "ustd"
-    value "uexp"
-    value "ucov"
-    value "diff"
+  kind_name = from_table "kinds" column "name" as kind
+
+  # ---- expressions ----
+
+  expression = relation
+
+  relation = additive [ (equals / not_equals / lt / le / gt / ge) additive ]
+
+  additive = multiplicative 1*((plus / minus) multiplicative)
+
+  multiplicative = unary 1*((star / slash / keyword_mod) unary)
+  keyword_mod = "mod"
+
+  unary = [plus / minus] power
+
+  power = primary [caret unary]
+
+  primary = number / literal / constructor_call / name / (lparen expression rparen)
+
+  # ---- measured literals ----
+
+  literal = lparen number plus_slash_minus magnitude rparen [exponent] [tag] [trailing_unit] as literal
+  literal_sugar = lparen number plusminus magnitude rparen [exponent] [tag] [trailing_unit] as literal
+  magnitude = (number [percent]) as magnitude
+
+  exponent = e_mark ["-"] digits as exponent
+  tag = tilde tag_name as tag
+
+  # ---- constructors ----
+
+  constructor_call = ustd_call / uexp_call / ucov_call / diff_call / unit_call
+
+  ustd_call = reserved_ustd lparen number comma [spaces] number rparen [trailing_unit]
+  uexp_call = reserved_uexp lparen number comma [spaces] number comma [spaces] number [comma [spaces] number] rparen [trailing_unit]
+  ucov_call = reserved_ucov lparen number comma [spaces] number comma [spaces] number [comma [spaces] number] comma [spaces] kind_name rparen [trailing_unit]
+  diff_call = reserved_diff lparen expression rparen
+  unit_call = reserved_unit lparen unit_expression [colon_colon kind_name] rparen
+
+  trailing_unit = unit_call
+
+  # ---- entry ----
+
+  entry pma: expression
+
+  test pma {
+    accept "(10.3 +/- 0.2) unit(m)"
+    accept "(10.3 +/- 2%) unit(m)"
+    accept "(3.85 +/- 0.23)e4 unit(m)"
+    accept "(0.5 +/- 0.01) ~rect unit(m)"
+    accept "(10.3 ± 0.2) unit(m)"
+    accept "ustd(10.3, 0.2) unit(m)"
+    accept "uexp(10.0, 0.3, 2, 0.95) unit(cm)"
+    accept "ucov(10.0, 9.7, 10.3, 0.95, shortest) unit(cm)"
+    accept "ucov(10.0, 9.7, 10.3, probabilistically-symmetric)"
+    accept "unit(kg m/s^2)"
+    accept "unit(Bq)::frequency"
+    accept "diff(5 unit(degC))"
+    accept "x^2 + 1"
+    accept "2 * (3 + 4)"
+    reject "10.3(2)"
+    reject "3+-1"
+    reject "10.3 +/- 0.2"
+    reject "(0.5 +/- 0.01) ~magic"
+    reject "2x"
+    reject "\"unitsml(g)\""
   }
 }
 ----
 
-The model is the surface's statement in the series' language: statements carry expressions; constructor calls pair a reserved word with its arguments; measured literals carry their fields and one optional modifier; assertions pair unit expressions with kinds. The grammar artifact generates from the same registry data this model states, and the two cannot disagree — the generation checks.
+=== Reading the grammar
 
-=== What the arithmetic inherits
+* The repetition, option and alternative operators are PARG's (`1*`, `[...]`, ordered `/`), as in the asciiunits artifact; the ordered choice makes the alternative order decisive, exactly as it is there.
+* The `as` captures name the tree positions the materializer consumes: `number`, `name`, `literal`, `magnitude`, `exponent`, `distribution`, `kind`.
+* The `name` rule's table is generated as the identifier shape minus the reserved words — the generation-time subtraction, the same discipline the unit tables use, so a reserved word can never read as a name.
+* `@UnitsmlAscii.expression` embeds the UnitsML 6 grammar by reference at compile time; the unit expressions carry that grammar's captures into the tree under the unit node.
+* The `test` block is normative: the artifact's conformance runs the accepts and rejects on every build, and this document's vectors extend them.
 
-The arithmetic forms of pma are the model's operators over pma operands: addition, subtraction, multiplication, division, powers, groups — the chain PM 1004 evaluates. pma adds no operators of its own; its additions to the notation are the constructors and the literals, and both are operands like everything else. This is why the evaluator comes free: the tree pma materialises is the tree PM 1004 already evaluates, and when propagation arrives, pma statements will evaluate without a new evaluation clause.
+=== What the grammar deliberately lacks
+
+* *No quoted strings.* There is no double-quote token; a quote anywhere is a lexical error (clause 10).
+* *No implicit multiplication.* Adjacency is not an operator: `2x` does not derive, and the test block rejects it. Multiplication is written `*`.
+* *No comments.* A pma input is one expression; there is nothing to comment.
+* *No statement terminators or sequences.* Edition 1's input is one expression; sequences are an edition's addition, with their separator.
+* *No subscript.* The `_` token does not exist; `^` is the power operator only.
+
+=== The tree, in one table
+
+What each derivation yields, for the materializer:
+
+.Productions to nodes
+[cols="2,3,3", options="headers"]
+|===
+|Production |Captures consumed |Node materialised
+
+|`literal` |number, magnitude, exponent, distribution, trailing unit |the desugared uncertainty record (clause 8)
+|`ustd_call`, `uexp_call`, `ucov_call` |the number captures, the kind |the uncertainty record per PM 1002
+|`unit_call` |the unit expression, the kind |the `Unitsml` node, assertion recorded
+|`diff_call` |the operand expression |the difference-typed quantity (clause 12)
+|`number`, `name` |the text |`Number`, the binding name
+|the operators |the folded operands |the model's operators (PM 1004's chain)
+|===
+
+=== Completeness, stated
+
+The grammar derives every input this document's clauses describe and nothing else. A form the clauses describe but the grammar does not derive is a defect in one of the two; a form the grammar derives but no clause describes is likewise. The test block, the vectors of Annex E, and the clause cross-checks are the mechanics of that statement — the statement itself is the standard this document is held to.
