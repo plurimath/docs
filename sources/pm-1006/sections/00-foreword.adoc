@@ -1,0 +1,26 @@
+== Foreword
+
+=== General
+
+This document is the sixth document of the Plurimath specifications series. It specifies pma: the notation Plurimath owns end to end, written for measured quantities and first-class features. Every token is reserved or registry-carried, every form is unambiguous, every error is strict, and nothing is sugar over another parser.
+
+This document is a forward specification: the notation is specified here for implementation, and its first edition as an implemented surface is its first release. Until that release pma carries no compatibility obligation; from it, the surface is editioned and change-controlled like every notation in this series. The grammar is carried by a checksummed artifact generated from the shared registry (clause 13), in the artifact pattern the asciiunits content language established.
+
+=== Documents in the series
+
+.Documents in the series
+[cols="1,3,2", options="headers"]
+|===
+|Number |Title |Subject
+
+|1001 |Math model |The formula tree, the node classes, the registry, the rendering surfaces
+|1002 |Uncertainty model |The uncertainty node, its categories, its encodings
+|1003 |Format interfaces |The readers and writers per format
+|1004 |Evaluation |Numeric evaluation of trees
+|1005 |The AsciiMath notation |The complete AsciiMath surface
+|1006 |The pma notation |This document: the featureful notation
+|===
+
+=== Maintainers
+
+This document is maintained by the Plurimath project at https://github.com/plurimath/plurimath.

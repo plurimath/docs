@@ -1,0 +1,8 @@
+== Bibliography
+
+* Plurimath repository — https://github.com/plurimath/plurimath
+* PM 1001, PM 1002, PM 1003, PM 1004, PM 1005 of this series
+* UnitsML 2, 4, 5, 6 of the UnitsML series
+* JCGM 100:2008 + Amd.1:2026; JCGM 101:2008
+* Python `uncertainties` package documentation (the `+-` precedent, Annex C)
+* asciiunits — the artifact pattern this notation's grammar follows (UnitsML 6)

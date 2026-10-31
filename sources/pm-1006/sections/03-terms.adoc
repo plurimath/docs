@@ -1,0 +1,36 @@
+== Terms and definitions
+
+For the purposes of this document, the following terms and definitions apply.
+
+=== constructor
+a reserved `keyword(args)` form that materialises as a single model node
+
+=== reserved word
+a constructor keyword or grammar terminal; the build fails on any collision between a reserved word and the registry's or the UnitsDB symbol space's names
+
+=== measured literal
+the `(v +/- u)` form with its modifiers: the relative form, the shared exponent, the distribution tag
+
+=== trailing unit
+a `unit(...)` following a value or a measured literal, scoping the unit of the whole quantity
+
+=== quantity assertion
+the `::` annotation binding a quantity kind to a unit expression
+
+=== distribution tag
+the `~name` modifier selecting an uncertainty distribution family from the closed JCGM-grounded set
+
+=== shared exponent
+the `(v +/- u)eE` form, where the exponent shifts the value and the uncertainty together
+
+=== relative form
+the `(v +/- n%)` form, where the uncertainty is a percentage of the value
+
+=== desugar
+the reduction of a literal or sugar form to its canonical constructor shape before materialization
+
+=== artifact
+the checksummed pma grammar artifact, generated from the shared registry, consumed by every runtime
+
+=== strict error
+a parse or validation error with no fallback reading; the only failure mode this notation has

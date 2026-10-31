@@ -1,0 +1,33 @@
+== Artifacts and runtimes
+
+=== The artifact pattern
+
+The pma grammar is carried by a checksummed artifact, generated from the shared registry — the pattern the asciiunits content language established (UnitsML 6): the grammar source lives with the registry, generation is deterministic, the artifact is committed with its checksum, and consumers verify the checksum before use. Artifact bytes are authoritative; nothing re-derives them at runtime.
+
+=== The runtimes
+
+The artifact serves every runtime in the artifact pattern: the Ruby reader first, and the TypeScript runtime from the same artifact. Byte-identical behaviour across runtimes is the pattern's guarantee — the same artifact, the same parse, the same tree, the same errors — and the corpora of clause 14 pin it cross-runtime as they pin it across versions.
+
+=== Editions
+
+The notation is editioned from its first release. Before that release, this document is the specification and the surface may still move; after it, the surface changes only at an edition, per the change discipline of the series: new constructors and literals join through the reserved-word process, the corpus extends, and nothing published changes. The registry's growth (PM 1001) flows into the unit expressions immediately — the unit grammar is the artifact's, and its growth is that artifact's editioning.
+
+=== The artifact lifecycle
+
+.The artifact's path from source to runtime
+[cols="2,4", options="headers"]
+|===
+|Stage |Content
+
+|source |the grammar source with the registry data it generates from
+|generation |the deterministic build: grammar and tables from the data
+|commit |the artifact and its checksum, committed together
+|consume |runtimes verify the checksum, then read the artifact
+|release |the edition pins the artifact; the corpus freezes against it
+|===
+
+The lifecycle is the asciiunits pattern's, and its guarantees transfer: the same checksum serves every runtime, a regenerated artifact that differs is a broken build, and the artifact a release names is the artifact forever.
+
+=== The TS runtime and the shared corpora
+
+The TypeScript runtime reads the same artifact and replays the same corpora; the cross-runtime class of clause 14 exists to make that a claim rather than a hope. The uncertainty, conversion and conformance sets of the testsuite run on both runtimes and their outputs compare byte for byte — the pattern's end-to-end statement, checked.

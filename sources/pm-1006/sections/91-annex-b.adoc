@@ -1,0 +1,24 @@
+== Annex B: the reserved-word register
+
+=== The register at this edition
+
+.Reserved words
+[cols="2,4,2", options="headers"]
+|===
+|Word |Role |Since
+
+|`unit` |the unit constructor |edition 1
+|`ustd` |standard uncertainty |edition 1
+|`uexp` |expanded uncertainty |edition 1
+|`ucov` |coverage interval |edition 1
+|`diff` |difference constructor |edition 1
+|`rect`, `tri`, `u` |distribution tags |edition 1
+|===
+
+=== The process
+
+A reserved word joins the register through proposal, collision check, and edition: the collision check runs against the registry's symbol space and the UnitsDB symbol space, and the word joins only if both are clean. The check is the build's, not a reviewer's memory. A word never leaves the register (editioned surfaces do not shrink), and a word's role never changes — a new role is a new word.
+
+=== Why the register is small
+
+Six words and three tags is the whole surface, because pma's features are composable rather than enumerable: the literals desugar to the constructors, the assertions ride the unit expressions, and the arithmetic is the model's. A notation that needed a keyword per feature would be a command language; this one is a notation.

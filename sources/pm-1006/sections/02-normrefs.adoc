@@ -1,0 +1,10 @@
+== Normative references
+
+The following documents are referred to in the text.
+
+* PM 1001 (math model), PM 1002 (uncertainty model), PM 1003 (format interfaces), PM 1004 (evaluation) and PM 1005 (the AsciiMath notation) of this series.
+* UnitsML 2 (numeric contract) — the exact-decimal discipline of the values the literals carry.
+* UnitsML 4 (units model) — the quantity kinds the assertions name.
+* UnitsML 5 (conversions) — the static semantics the assertions invoke.
+* UnitsML 6 (asciiunits content language) — the grammar inside `unit(...)`, and the artifact pattern of clause 13.
+* JCGM 100:2008 + Amd.1:2026 and JCGM 101:2008 — the metrological grounding of the uncertainty categories and the distribution families.

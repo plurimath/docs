@@ -1,0 +1,43 @@
+== The rejected syntaxes
+
+=== General
+
+Every rejected form is recorded with its replacement and its reason. The record is the decision: a proposal to admit one of these forms must argue with the reason, not rediscover it.
+
+=== The concise form as input
+
+`10.3(2)` is not an input form. The shape collides with the notation's own arithmetic — a number followed by parentheses is multiplication or application territory — and accepting it would make the parser guess between a reported result and a product. The concise form is a reporting convention (PM 1002): writers emit it for the standard category, and the reporting-form reader of AsciiMath (PM 1005) is the input path that exists for it, with its decimal-places rule. pma, which owns its tokens, declines the ambiguity instead.
+
+=== `+-` as the separator
+
+`+/-` is one token; `+-` is two characters with a life of their own: `3+-1` is genuinely ambiguous between "three plus minus one" and "three, plus-or-minus one" — the reading the Python `uncertainties` heritage made famous. This notation resolves it by never offering it: the canonical separator is `+/-`, and `+-` is a parse error inside a literal.
+
+=== Bare `pm` and the ± token outside fences
+
+`pm` is the picometre — a unit token inside `unit(...)`, never a separator. The ± character outside the fenced sugar is not a token: `10.3 ± 0.2` without the parentheses is a parse error, because an unfenced ± invites the same reading ambiguity the fenced form exists to close.
+
+=== Conversion syntax
+
+No form of pma converts: `(10.3 +/- 0.2) unit(m) -> unit(ft)` is not a notation, it is a wish. Conversion is `convert(quantity, target)` — an operation of evaluation (document 1004), with the conversion law, the exactness rules and the difference typing of the UnitsML series applied where they belong. A notation that converts inline drags those rules into its grammar; pma keeps its grammar a notation.
+
+=== Why the record exists
+
+Each rejection is a feature someone will ask for. The annex carries the full rationale (Annex C); this clause carries the rule: the rejected forms stay rejected until an edition argues them back in, with the corpus extended and the rationale answered.
+
+=== The rejections at a glance
+
+.Rejected forms and their replacements
+[cols="2,3,3", options="headers"]
+|===
+|Rejected |Replacement |The reason in one line
+
+|`10.3(2)` as input |the literal, or the AsciiMath reporting-form reader |the shape is arithmetic territory here
+|`+-` |`+/-` |`3+-1` is genuinely ambiguous
+|bare `pm` as separator |nothing — `pm` is the picometre |a unit token is never a separator
+|± outside fences |the fenced sugar |an unfenced ± reopens the reading
+|inline conversion |`convert(q, target)` at evaluation |the conversion rules live in the units model
+|===
+
+=== The one-line rule behind them all
+
+pma separates input syntax from output convention and from evaluation operations, and refuses any form that blurs the lines. The concise form is output; conversion is evaluation; the separator is input and must be unambiguous. Every rejection in this document is one of those lines held.

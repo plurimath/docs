@@ -1,0 +1,38 @@
+== Design rules
+
+=== The six rules
+
+Everything in this notation follows from six rules:
+
+. **Owned grammar.** The reserved words are terminals of the grammar; the grammar is generated from the shared registry, and the artifact is checksummed. Plurimath owns the notation, so there are no shims to write and none to maintain.
+. **Reserved-word safety.** The build fails on any collision between a reserved word and any name in the registry's symbol space or the UnitsDB symbol space. The failure happens at grammar generation — a collision never reaches a parser.
+. **Explicit input.** Values are typed explicitly: the constructors and literals carry their fields in their syntax. Reporting conventions — the concise form above all (PM 1002) — are output-only renderings, never input.
+. **Strict errors.** A malformed form is a parse error. There is no fallback-to-letters reading, no best-effort interpretation, no load-bearing whitespace trick.
+. **No strings as syntax.** The quoted-string channel is an AsciiMath device (PM 1005); this notation has none of it. `unit(...)` is unquoted — it is a constructor, and it can afford to be.
+. **No conversion syntax.** Converting a quantity is an operation evaluation performs (document 1004's `convert`), not document syntax. A notation that converts inline is a calculator; pma is a notation.
+
+[example]
+Adding `measure` as a constructor whose name collides with a UnitsDB symbol.
+*Expected outcome.* the build fails at grammar generation with the collision named. The parser never sees a doubled word, and no runtime resolves the ambiguity — because there is no ambiguity to resolve.
+
+=== What the rules buy
+
+The rules are why pma errors can be exact. A reader that owns its tokens knows every input is either one of its forms or an error; there is no third case where a spelling might be legacy content. PM 1003's typed errors become exhaustive here: every refusal names a rule of this document, and every acceptance materialises a tree the model fully defines.
+
+=== The rules against the features
+
+Each feature exists because a rule allows it, and each rule kills a class of mistakes:
+
+[cols="2,3,3", options="headers"]
+|===
+|Rule |Enables |Kills
+
+|owned grammar |the constructors as terminals |the shim layer
+|reserved-word safety |stable keywords forever |accidental collisions
+|explicit input |the literals and their fields |input-side guessing
+|strict errors |exhaustive error handling |silent misreads
+|no strings as syntax |the unquoted `unit(...)` |the quoted channel's limits
+|no conversion syntax |a grammar that stays a grammar |inline semantics creep
+|===
+
+The table is this document in miniature: the clauses that follow are the features, and every one of them sits inside a rule.

@@ -1,0 +1,11 @@
+== Introduction
+
+Measured quantities deserve first-class syntax. A metrology author should write `(10.3 +/- 0.2) unit(m)` and mean exactly that: a value, its uncertainty, its unit — not fight a mathematics notation's grouping rules, not mark uncertainty through strings, not lose the unit's quantity kind to positional accident. pma is the notation where that sentence is a program.
+
+AsciiMath (PM 1005) carries the world's existing linear mathematics, and carries it compatibly — which forbids it from owning its tokens: every extension is a compatibility negotiation. pma starts from the other end. Plurimath owns the grammar, so the reserved words are terminals, `+/-` is one token, the constructors are atomic, malformed input is a parse error, and there is no fallback-to-letters reading anywhere. The two notations share one registry and one tree; they differ in what they promise. AsciiMath promises compatibility; pma promises precision.
+
+The features that motivated pma are the measured literal, the `unit(...)` constructor with its quantity assertions, the difference typing of `diff(...)`, and the distribution tags of the uncertainty forms. Every one of them exists in exactly one shape here — the rejected-syntax annex records the shapes that lost, and why, so the decisions stay made.
+
+[example]
+`(10.3 +/- 0.2) unit(m)` — the canonical measured literal.
+*Expected outcome.* one uncertainty node (PM 1002): value `10.3`, magnitude `0.2`, category standard, unit the metre — materialised in one form, rendered everywhere, readable by evaluation when it arrives.

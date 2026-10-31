@@ -7,7 +7,7 @@ metanorma:
       - sources/pm-1003/document.adoc
       - sources/pm-1004/document.adoc
       - sources/pm-1005/document.adoc
-      - sources/pma-1-language/document.adoc
+      - sources/pm-1006/document.adoc
 
   collection:
     organization: "Plurimath"

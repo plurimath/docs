@@ -1,0 +1,60 @@
+== Materialization
+
+=== One tree
+
+pma materialises into the one math model (PM 1001): the constructors into their nodes, the literals into desugared constructors, the arithmetic into the model's operators. Nothing about pma survives into the tree — no syntax marker, no provenance flag — because every renderer and the evaluator consume the model, and a tree that remembered its notation would break that for everyone.
+
+The consequence is the system's economy: pma's features render to every surface PM 1001 defines with no per-format work beyond the encodings those documents already define. An uncertainty written in pma renders in OMML through PM 1002's marker convention exactly as one written in AsciiMath does.
+
+=== Rendering into AsciiMath
+
+Rendering a pma tree into AsciiMath emits the AsciiMath encodings: the uncertainty calls, the channel for units, the reporting form where the notation carries a concise node. The quoted channel is an AsciiMath device — a pma author never reads their own output through it as input, because pma's own forms are native; the channel is what the AsciiMath side consumes.
+
+*Compatibility relationship.* AsciiMath renders into pma natively: the shared tree is pma's input vocabulary too, and an AsciiMath-read tree writes as pma through the shared constructors. The reverse — pma into AsciiMath — goes through the encodings, and the shared-exponent and tag forms of the literals render into the AsciiMath forms that exist for them.
+
+=== The strict error surface
+
+pma's reader surfaces PM 1003's typed errors with this document's rules: parse errors from the grammar, construction errors from the model's validation, and nothing else. Every error names its clause here. The error corpus of clause 14 freezes the shapes.
+
+=== Materialization, worked
+
+`(10.3 +/- 0.2) unit(m) + uexp(4.1, 0.3, 2) unit(m)`:
+
+. the literal desugars: `ustd(10.3, 0.2) unit(m)`;
+. the constructor parses with its arguments and trailing unit;
+. both materialise: two uncertainty nodes, categories standard and expanded, both metres;
+. the addition builds over them — syntax, not semantics: the tree states the sum;
+. rendering: every surface encodes both nodes per PM 1002; evaluation will answer the sum when it can, per its rules.
+
+*Expected outcome.* a tree that says exactly what was written, in the model's terms, with the semantics pending in the documents that own them.
+
+=== What materialisation refuses
+
+The desugar's exactness (the relative form's product), the constructors' field rules, the assertions' gating, and the grammar's strictness — each refusal is a named rule of this document or of PM 1002, at parse or materialisation time, before any tree escapes. A pma reader yields only complete records; the half-built forms the legacy notations tolerated do not exist here because the rules run before the tree does.
+
+=== The two notations, side by side
+
+The same measured statement in both notations, and what each promises:
+
+.One statement, two notations
+[cols="2,3,3", options="headers"]
+|===
+| |AsciiMath (PM 1005) |pma (this document)
+
+|the statement |`ustd(10.3, 0.2) "unitsml(m)"` |`(10.3 +/- 0.2) unit(m)`
+|the tree |the uncertainty node |the same node
+|the unit channel |quoted string |the unquoted constructor
+|the tokens |compatibility-negotiated |owned and reserved
+|the errors |strict, with the channel's limits |strict, exhaustive
+|the promise |the world's AsciiMath reads unchanged |every token means one thing
+|===
+
+The tree is the shared centre, which is why the table has one identical row: everything below the notation is common. The notations are front doors; the system behind them is one system.
+
+=== The rendering relationship, precisely
+
+A pma tree writes to AsciiMath through the encodings: the uncertainty calls, the channel, the reporting form where a concise node exists. The forms pma has that AsciiMath's writer lacks — the distribution tags, the relative form — render into the encodings AsciiMath has (the tag as its statement, the relative as the computed absolute), because the tree carries the record, not the sugar. An AsciiMath tree writes to pma natively: the constructors are the AsciiMath encodings' native shapes, and the round trip AsciiMath→tree→pma is lossless by the shared model.
+
+=== Migration
+
+The unreleased uncertainty call forms that earlier plurimath work prototyped migrate into pma unchanged in meaning: `ustd(v, u)` and kin keep their shapes and gain the strict errors, the trailing-unit scoping and the artifact discipline. Nothing released changes — the forms were never released — and the migration note lives here so the history is stated once.

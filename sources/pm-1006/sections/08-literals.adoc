@@ -1,0 +1,73 @@
+== Measured literals
+
+=== The canonical form
+
+`(v +/- u)` is the measured literal: value `v`, uncertainty magnitude `u`, category standard. `+/-` is one terminal — the canonical ASCII spelling — and the literal desugars to `ustd(v, u)` before materialisation. The parenthesised form is the literal's whole shape; without the parentheses it is not a literal, it is arithmetic.
+
+.Literal forms
+[cols="2,4,3", options="headers"]
+|===
+|Form |Reads as |Desugars to
+
+|`(10.3 +/- 0.2) unit(m)` |canonical literal with trailing unit |`ustd(10.3, 0.2) unit(m)`
+|`(10.3 +/- 2%) unit(m)` |relative: 2 percent of the value |the magnitude computed at materialisation: `0.206`, exact per UnitsML 2
+|`(3.85 +/- 0.23)e4 unit(m)` |shared exponent: both shift |`ustd(38500, 2300) unit(m)`
+|`(0.5 +/- 0.01) ~rect unit(m)` |distribution tag attached |the standard literal with tag `rect`
+|`(10.3 ± 0.2) unit(m)` |the fenced sugar |the canonical literal, identically
+|===
+
+=== The relative form
+
+`+/- n%` states the magnitude as a percentage of the value. The magnitude is computed at materialisation — exactly, per the decimal discipline, never at render or evaluation time — so the tree carries the absolute magnitude and the category, and every surface renders the same record. A percentage that does not produce an exact decimal at the value's precision is a materialisation error naming both numbers.
+
+=== The shared exponent
+
+`(3.85 +/- 0.23)e4` shifts value and magnitude by the same exponent: `38500` and `2300`. The shift is exact — digit movement, no rounding — and the desugared record carries the shifted decimals. The exponent belongs to the literal, not to the unit: `(3.85 +/- 0.23)e4 unit(m)` states metres throughout.
+
+=== The distribution tag
+
+`~name` after a literal attaches the distribution family the uncertainty came from: a closed set grounded in the JCGM families (`rect` for the rectangular, `tri` for the triangular, `u` for the normal, and the set's remaining members as PM 1002's categories ground them). The tag rides the node as metadata; it changes no arithmetic in this edition, and evaluation (document 1004) will consume it when propagation arrives. A tag outside the closed set is a parse error naming the tag — the set is closed so that consumers can switch on it.
+
+=== The ± sugar
+
+`(10.3 ± 0.2)` is the canonical literal spelled with the fenced ±. It desugars identically; the sugar is fenced-only — the ± appears between the parenthesised literal's value and magnitude and nowhere else. Outside a fence, ± is not a token of this notation at all: `pm` names the picometre in unit expressions, and the notation will not overload it.
+
+=== What the literals are not
+
+The concise reporting form of PM 1002 is not an input form here (clause 10); the literals carry absolute magnitudes, and the concise rendering of a standard category is a writer's act. The literal is input-side syntax; the reporting form is output-side convention; the two meet only in the rendering surfaces.
+
+=== The literal grammar, precisely
+
+The literal is: `(`, the value, `+/-`, the magnitude, `)`, then in any order at most one shared exponent (`e` and an integer) and at most one distribution tag (`~` and a tag name), then optionally the trailing unit. The relative form replaces the magnitude with an integer-or-decimal and `%`. Each modifier appears at most once; two exponents or two tags are parse errors. The desugar order is fixed: relative resolution, then the shared exponent shift, then the tag attachment, then the trailing unit — so `(3.85 +/- 0.23)e4` and `(0.5 +/- 0.01) ~rect` compose unambiguously, and `(3.85 +/- 0.23)e4 ~rect unit(m)` is one literal carrying all three modifiers.
+
+=== The desugar table
+
+.Literal desugars
+[cols="2,3,3", options="headers"]
+|===
+|Literal |Desugars to |Notes
+
+|`(10.3 +/- 0.2) unit(m)` |`ustd(10.3, 0.2) unit(m)` |the canonical case
+|`(10.3 +/- 2%) unit(m)` |`ustd(10.3, 0.206) unit(m)` |the exact percentage product
+|`(3.85 +/- 0.23)e4 unit(m)` |`ustd(38500, 2300) unit(m)` |the shared shift
+|`(0.5 +/- 0.01) ~rect unit(V)` |the standard record with tag `rect` |the tag rides as metadata
+|`(10.3 ± 0.2) unit(m)` |`ustd(10.3, 0.2) unit(m)` |the sugar, identically
+|===
+
+=== Why the desugar is normative
+
+The desugar is the whole semantics of the sugar: a literal means exactly its desugared constructor shape, and nothing the surfaces do may distinguish a literal from its desugar. The corpus carries each row in both spellings, and a writer that renders the sugar form where the record was written canonically has not misbehaved — the record is the same — but the byte corpus freezes the canonical emission, because the canonical form is what the writer writes.
+
+=== Refusals
+
+.Literal refusals
+[cols="2,3", options="headers"]
+|===
+|Input |Refusal
+
+|`(10.3 +/- )` |parse error: the magnitude is missing
+|`(10.3 +/- 2%) unit(m)` with a value the percentage turns inexact |materialisation error naming both numbers
+|`(3.85 +/- 0.23)e4 e5` |parse error: one exponent at most
+|`(0.5 +/- 0.01) ~magic` |parse error: the tag set is closed
+|`10.3 +/- 0.2` |parse error: the literal is fenced; bare, the `+/-` has no literal to belong to
+|===

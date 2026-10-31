@@ -1,0 +1,89 @@
+== The grammar surface
+
+=== Tokens
+
+The grammar's terminals are: the reserved words (the constructors and the modifiers), the structure tokens (parentheses, the comma, `+/-`, `%`, `::`, `~`, `e` in exponent position), numbers per the exact-decimal grammar (PM 1002), names for the iteration and binding forms the arithmetic carries over from AsciiMath's surface, and the unit expressions inside `unit(...)` — which are tokens of the UnitsML 6 grammar nested by reference, not copied.
+
+.Reserved words
+[cols="2,4", options="headers"]
+|===
+|Reserved word |Role
+
+|`unit` |the unit constructor
+|`ustd`, `uexp`, `ucov` |the uncertainty constructors
+|`diff` |the difference constructor
+|`rect`, and the distribution tag names of clause 8 |the tag set
+|===
+
+The register is open by process (a new constructor is a new reserved word, checked against the symbol spaces at generation) and closed by edition (a released edition's register never grows).
+
+=== Whitespace
+
+Whitespace separates tokens; no rule of this notation depends on its presence or absence. `ustd (10.3, 0.2)` and `ustd(10.3, 0.2)` are the same form. Where a legacy notation used spacing as its grouping, this one uses parentheses, always.
+
+=== Statements
+
+A pma document is a sequence of statements, each an expression: arithmetic over values, names, constructors and literals, with the grouping and precedence the arithmetic core defines (PM 1004's chain applies to the forms pma shares with it). A statement is total or an error; the reader's guarantees are PM 1003's reader contract with this document's strict error rule.
+
+=== The unit grammar's position
+
+`unit(...)` does not inline a unit syntax of its own: its content is the asciiunits content language, carried by the checksummed artifact of that language (UnitsML 6), read by the same reader everywhere. One unit grammar serves both notations — this one unquoted, AsciiMath through its channel — and a unit accepted in one is accepted in the other.
+
+=== The surface as a model
+
+[source,lml]
+----
+lml "1.0"
+
+models Pma {
+
+  class Statement {
+    attribute expression, Expression[1]
+  }
+
+  class ConstructorCall {
+    attribute keyword, ReservedWord[1]
+    attribute arguments, Expression { cardinality 0..n }
+  }
+
+  class MeasuredLiteral {
+    attribute value, ExactDecimal[1]
+    attribute magnitude, ExactDecimal[1]
+    attribute modifier, Modifier
+    attribute trailing_unit, Unitsml
+  }
+
+  class Modifier {
+    attribute kind, ModifierKind
+    attribute exponent, String
+    attribute distribution, String
+  }
+
+  enum ModifierKind {
+    value canonical
+    value relative
+    value shared-exponent
+    value tagged
+    value sugar
+  }
+
+  class Assertion {
+    attribute unit_expression, String[1]
+    attribute kind, String[1]
+  }
+
+  enum ReservedWord {
+    value "unit"
+    value "ustd"
+    value "uexp"
+    value "ucov"
+    value "diff"
+  }
+}
+----
+
+The model is the surface's statement in the series' language: statements carry expressions; constructor calls pair a reserved word with its arguments; measured literals carry their fields and one optional modifier; assertions pair unit expressions with kinds. The grammar artifact generates from the same registry data this model states, and the two cannot disagree — the generation checks.
+
+=== What the arithmetic inherits
+
+The arithmetic forms of pma are the model's operators over pma operands: addition, subtraction, multiplication, division, powers, groups — the chain PM 1004 evaluates. pma adds no operators of its own; its additions to the notation are the constructors and the literals, and both are operands like everything else. This is why the evaluator comes free: the tree pma materialises is the tree PM 1004 already evaluates, and when propagation arrives, pma statements will evaluate without a new evaluation clause.
