@@ -1,0 +1,39 @@
+== Extensibility
+
+=== General
+
+== Extensibility
+
+The model grows by adding to it, not by modifying it. This clause states the extension points and the discipline each one carries.
+
+The model grows by adding to it, not by modifying it.
+
+=== Adding a node class
+
+A new construct enters the model as a new class with: its operands, its registry entry (if it names a symbol), its per-surface rendering rules, and — where a surface has no faithful form — its declared fallbacks. No existing class changes. The collision build of <<registry>> applies.
+
+=== Adding a registry entry
+
+A new symbol or constant joins the registry per the entry lifecycle of Annex B. Generated sources regenerate; existing byte sequences are unchanged.
+
+=== Adding a surface
+
+A new output format is a new set of per-class rendering rules behind one root entry point. The node classes are untouched: the per-format field printers on the base are extended with the new surface's printer, and each class supplies its rule. A surface that ships without a rule for a class fails the build — render totality (<<rendering>>) is enforced at build time, not discovered at run time.
+
+=== Adding an input format
+
+Readers are outside this document (document 1003). This document constrains them in one way: a reader ends at the tree. A reader that requires a change to a node class to accommodate its input is a model change and follows <<adding-a-node-class>>.
+
+=== Deprecation
+
+A node class or registry entry is deprecated by marking it in the registry and this document, keeping its behaviour byte-stable, and removing it at a stated edition. Nothing is removed silently and no published output changes between the deprecation and the removal.
+
+=== Worked extension
+
+[example]
+A new arrow symbol (a rightwards arrow with a bar) is added to the registry.
+*Expected outcome.* The entry carries its glyph and its four format renderings; generation produces the symbol class; the collision build confirms neither the name nor the glyph exists in the registry, the model class names, or the UnitsDB symbol space; a corpus entry freezing the six-surface rendering joins the render corpus; the next registry edition ships all of it. Trees that do not use the new symbol are untouched, and every previously published byte sequence is unchanged.
+
+[example]
+A new construct is needed for an upcoming OMML feature: a run-level alignment mark.
+*Expected outcome.* A new node class is added with its operands, its OMML rendering, and declared fallbacks for the surfaces without a faithful form; the render-totality build fails until every surface has a rule or a fallback; the class joins Annex A at the next edition. No existing class is modified.

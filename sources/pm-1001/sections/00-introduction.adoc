@@ -1,0 +1,12 @@
+== Introduction
+
+Plurimath reads mathematics written in one text or markup form and writes it in another: AsciiMath, UnicodeMath and LaTeX on the input side; MathML, OMML (Office Math Markup Language), LaTeX, UnicodeMath, HTML and AsciiMath on the output side. It also evaluates simple formula trees numerically and carries measurement uncertainty through them.
+
+Doing all of that through a single implementation would be impossible without a single representation in the middle. Every reader converts its input into one tree shape; every writer consumes that same shape. This document defines that shape: the formula tree, the node classes that compose it, the registry of symbols and functions the nodes refer to, and the rendering surfaces that produce each output format.
+
+The model is deliberately independent of any syntax. Nothing in the tree records which input notation produced it, and nothing in the tree is specific to one output notation. A tree built from an OMML document and a tree built from the equivalent AsciiMath source are the same object with the same content, and they render identically in every format. That property — one model, many representations — is the load-bearing wall of the whole system: correctness is stated once, here, instead of once per format pair.
+
+Three further documents build on this one. The uncertainty model (1002) defines the fields an uncertainty node carries; the format interfaces (1003) define how each reader and writer behaves at its boundary; evaluation (1004) defines what it means to compute with these trees. This document defines the thing they all operate on.
+
+[example]
+The AsciiMath source `sum_(i=1)^n i^3 = ((n(n+1))/2)^2` and the OMML document produced from rendering that source are two representations of one formula. Plurimath parses either into the same formula tree: a `Sum` (nary) node carrying sub/superscript limits and a power expression; an equality; a fenced fraction; a square. Rendering that tree to MathML, OMML, LaTeX, UnicodeMath, HTML or AsciiMath yields the six outputs with identical mathematical content.

@@ -1,0 +1,61 @@
+== Conformance
+
+=== General
+
+== Conformance
+
+Conformance to this document is claimed per class, and every claim is discharged by replaying frozen vectors. Nothing in this clause is satisfied by assertion alone.
+
+=== What conformance covers
+
+An implementation of this document is an implementation of the math model: the tree, the node classes of <<annex-a>>, the registry behaviour, and the writers of the six surfaces. Readers and the uncertainty and evaluation semantics are covered by documents 1003, 1002 and 1004; conformance to those documents is claimed separately.
+
+=== Conformance classes
+
+[cols="1,3,3", options="headers"]
+..Conformance classes
+|===
+|Class |Licenses the implementation to claim |Replay requirements
+
+|model
+|constructs, inspects and transforms trees per <<formula-tree>>
+|structural-equality and math-zone vectors of Annex C
+
+|render-mathml
+|emits MathML 4 per <<rendering>>
+|the MathML column of the render corpus, byte-identically
+
+|render-omml
+|emits OMML per <<rendering>>
+|the OMML column of the render corpus, byte-identically
+
+|render-latex
+|emits LaTeX per <<rendering>>
+|the LaTeX column of the render corpus, byte-identically
+
+|render-unicodemath
+|emits UnicodeMath per <<rendering>>
+|the UnicodeMath column of the render corpus, byte-identically
+
+|render-html
+|emits the HTML surface per <<rendering>>
+|the HTML column of the render corpus, byte-identically
+
+|render-asciimath
+|emits AsciiMath per <<rendering>>
+|the AsciiMath column of the render corpus, byte-identically
+
+|full-model
+|all of the above
+|all columns
+|===
+
+A conformance claim names the classes it makes. A claim of `render-<format>` carries `model` with it: no surface can be claimed without the tree it renders.
+
+=== The render corpus
+
+The render corpus is a frozen set of trees and, per surface, their expected bytes. A corpus entry states its provenance (the tree's construction, the model version that froze the bytes) and is replayed without modification. Corpus bytes change only at an edition: a new corpus entry joins frozen; a frozen entry never changes.
+
+=== Drift
+
+An implementation whose output for any frozen entry differs from the corpus bytes does not conform at the model version the corpus was frozen against, whatever its own version string says. Divergence is resolved by a model-version change and a new corpus entry, or by fixing the implementation.

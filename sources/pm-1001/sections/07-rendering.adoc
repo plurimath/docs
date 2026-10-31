@@ -1,0 +1,148 @@
+[[rendering]]
+== Rendering
+
+=== The surfaces
+
+The model renders to six surfaces:
+
+[cols="1,3,3", options="headers"]
+..Rendering surfaces
+|===
+|Surface |Entry point |Outer element
+
+|MathML 4
+|`to_mathml`
+|`<math>` (with intent options per MathML 4)
+
+|OMML
+|`to_omml`
+|`m:oMath` (office math namespace of ECMA-376)
+
+|LaTeX
+|`to_latex`
+|none (a LaTeX fragment)
+
+|UnicodeMath
+|`to_unicodemath`
+|none (a linear string)
+
+|HTML
+|`to_html`
+|none (an HTML fragment)
+
+|AsciiMath
+|`to_asciimath`
+|none (a linear string)
+|===
+
+Each surface has one entry point on the root and one rendering rule per node class. The math zone printer (`to_asciimath_math_zone` and its per-format siblings) is the diagnostic surface: it prints the tree as the indented notation of <<conventions>>-style examples.
+
+=== Stability
+
+Writers are deterministic. The same tree rendered by the same model version produces the same bytes, and a conforming implementation reproduces those bytes. Renderer output is covered by replay corpora: for each surface there is a frozen set of trees with frozen expected byte sequences, and a writer change that changes any of those bytes is a model-version change, not a patch.
+
+=== Fallbacks
+
+Some constructs have no faithful form in some surfaces. Each such pair has one declared fallback, recorded with the class in <<annex-a>>, and the writer emits the fallback and nothing else: no marker, no warning channel in the output. Typical fallbacks: colour is dropped in LaTeX output when no colour package context is present, intent annotations are dropped in surfaces without annotation mechanisms, `Mglyph` degrades to its alt text in OMML.
+
+=== Lossless and lossy directions
+
+A surface is lossless when reading its output back yields a tree equal to the rendered tree. AsciiMath, MathML, OMML, LaTeX and UnicodeMath are the lossless directions of the readers defined in document 1003, each with the exceptions that document enumerates. HTML is a display surface: reading it back is not part of the contract, and its renderings optimise presentation.
+
+[example]
+Rendering the tree of `((n(n+1))/2)^2` to all six surfaces and reading the MathML, OMML, LaTeX and UnicodeMath outputs back:
+*Expected outcome.* All four read back to a tree structurally equal to the original. The HTML output is not required to read back.
+
+=== Construct mapping
+
+The same tree renders through every surface. The mapping below is the normative correspondence between node families and the constructs each surface emits; the per-class notes of <<annex-a>> refine it.
+
+.Construct mapping by surface
+[cols="2,3,3,3,3", options="headers"]
+|===
+|Family |MathML |OMML |LaTeX |UnicodeMath
+
+|Fractions
+|`mfrac`
+|`m:f` with `m:num`, `m:den`
+|`\frac{}{}`
+|linear `()/()`
+
+|Roots
+|`msqrt`, `mroot`
+|`m:rad` with degree visibility
+|`\sqrt{}`, `\sqrt[]{}`
+|`√()`, `∛(x&n)`
+
+|Scripts
+|`msub`, `msup`, `msubsup`, `mmultiscripts`
+|`m:sSub`, `m:sSup`, `m:sSubSup`, `m:sPre`
+|`_{}`, `^{}`, `_{}^{}`
+|`_`, `^`
+
+|Nary operators
+|`mo` with `munder`/`mover` limit pairs
+|`m:nary` with `m:sub`, `m:sup`, `m:e`
+|`\sum_{}^{}`, `\int_{}^{}`
+|`∑_^^`, `∫_^^`
+
+|Tables
+|`mtable`, `mtr`, `mtd`, `mlabeledtr`
+|`m:m`, `m:mr`, `m:e` with delimiters per class
+|`matrix`, `pmatrix`, `cases`, `aligned`
+|`■(...)` with `@` row separators
+
+|Fences
+|`mrow` with `mo` delimiters
+|`m:d` with `m:dPr`
+|`\left..\right`
+|parenthesised grouping
+
+|Font styles
+|`mathvariant` on `mi`
+|`m:rPr` run properties
+|`\mathbf{}`, `\mathfrak{}`, `\mathcal{}`
+|mathematical alphanumeric code points
+
+|Accents
+|`mover` with accent `mo`
+|`m:acc` with `m:chr`
+|`\bar`, `\vec`, `\hat`, `\tilde`
+|combining characters
+
+|Text
+|`mtext`
+|`m:r` with upright run
+|`\text{}`, `\mbox{}`
+|quoted string
+
+|Units
+|UnitsML MathML form with `<UnitsML>` reference
+|UnitsML OMML form
+|UnitsML LaTeX form
+|UnitsML Unicode form
+
+|Uncertainty
+|per document 1002
+|per document 1002
+|per document 1002
+|per document 1002
+|===
+
+Where a family has no faithful construct in a surface, the declared fallback applies (<<fallbacks>>); the mapping above lists only the faithful forms.
+
+=== OMML specifics
+
+The OMML surface emits run properties (fonts, styles) from font style nodes, nary constructs from the nary classes, matrices from the table classes, and preserves linebreak semantics from `Linebreak` nodes and from the root's linebreak option. Display style: the root's display flag selects `m:oMathPara` wrapping; inline rendering omits it.
+
+=== MathML specifics
+
+The MathML surface emits MathML 4. Intent annotations carried by `Intent` nodes become `intent` attributes; `Semantics` nodes become `semantics` elements with their annotations as `annotation` children. Font style nodes become `mathvariant`. Tables become `mtable`/`mtr`/`mtd`, with labelled rows as `mlabeledtr`. Numbers become `mn`, symbols become `mi` or `mo` per their registry entry, and text becomes `mtext`.
+
+=== Display and inline
+
+The root's display style selects between the display and inline forms of each surface: MathML toggles `display="block"`; OMML toggles the `m:oMathPara` wrapper; LaTeX and UnicodeMath choose display-only constructs (display fractions, centred nary limits) over their inline forms; HTML applies the display style class. The tree content is identical in both forms; only the surface presentation changes.
+
+[example]
+The formula `sum_(i=1)^n i` rendered with display style set and unset.
+*Expected outcome.* Display form: MathML `display="block"`, LaTeX `\sum_{i=1}^{n}i` in display context with limits under and over; inline form: limits rendered beside the operator in LaTeX and UnicodeMath, and no block wrapper in MathML or OMML. The trees are identical.

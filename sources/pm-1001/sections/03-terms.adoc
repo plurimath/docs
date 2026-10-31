@@ -1,0 +1,81 @@
+== Terms and definitions
+
+For the purposes of this document, the following terms and definitions apply.
+
+=== formula tree
+the tree structure produced by every reader and consumed by every writer: a `Formula` root whose descendants are nodes
+
+=== node
+one element of the formula tree; an instance of a node class
+
+=== node class
+one of the classes enumerated in this document: `Formula`, `Symbol`, `Number`, `Text`, one of the function classes of <<annex-a>>, one of the font styles, one of the table classes, `Unitsml`, or `Uncertainty`
+
+=== container node
+a node whose role is structural: `Formula` itself, `Fenced`, `Left`, `Right`, `Table` and its variants, `Td`, `Tr`, `Mlabeledtr`, `Multiscript`, `Linebreak`
+
+=== symbol
+a node of the symbol space: one glyph or operator name drawn from the symbol registry
+
+=== symbol registry
+the versioned set of symbol entries; at edition 1 of this document it contains 1 438 symbol entries, one per symbol class of the implementation
+
+=== function node
+a node of one of the 103 function classes, carrying zero or more operand subtrees
+
+=== operand
+a subtree held by a function node; the number and order of operands is fixed by the function class
+
+=== font style node
+a node that applies one of the 14 font variants to its operand (`bold`, `italic`, `fraktur`, and so on)
+
+=== table node
+a node of one of the 10 layout classes (`matrix`, `bmatrix`, `pmatrix`, `vmatrix`, `cases`, `array`, `align`, `eqarray`, `split`, `multline`), holding rows of cells
+
+=== Unitsml node
+a node embedding a UnitsML unit expression together with the rendered forms the UnitsML system produces for it
+
+=== Uncertainty node
+a node attaching an uncertainty to a value expression: the estimate, the uncertainty magnitude, the category and the coverage, as defined in document 1002
+
+=== rendering surface
+one output format and the set of rules that produce it: MathML, OMML, LaTeX, UnicodeMath, HTML, AsciiMath
+
+=== reader
+a component that converts one input representation into the formula tree (specified in document 1003)
+
+=== writer
+a component that converts a formula tree into one rendering surface (specified here as to the contract each surface satisfies; format detail in document 1003)
+
+=== math zone
+the textual rendering of a tree used for diagnostics, one line per node, showing nesting by indentation
+
+=== byte-identical
+producing the same bytes for the same input tree and the same model version, on any conforming implementation
+
+=== model version
+the version of the implementation's model library (the `plurimath` gem version); render output is defined per model version
+
+=== rendering options
+the presentation flags carried by the root: display style, linebreak handling, and the per-surface options the root admits; never carried by descendant nodes
+
+=== nary value
+the operator glyph a nary function node carries (`∑`, `∏`, `∫`, `∮`), emitted on nary constructs by the MathML and OMML surfaces
+
+=== coverage
+the probability or factor attached to an uncertainty of the coverage category; content specified in document 1002
+
+=== fallback
+the one declared substitute rendering a surface emits when a construct has no faithful form in that format
+
+=== registry edition
+the published version of the registry data; entry renderings are immutable within an edition
+
+=== composition
+the ownership relation between a container node and the nodes it holds; a composed node has exactly one owner, and the tree is acyclic
+
+=== presentation option
+a root-level flag that changes surface presentation without changing tree content; display style is the primary example
+
+=== registry regeneration
+the deterministic generation of symbol classes and parser vocabulary from the registry data; byte-identical within an edition

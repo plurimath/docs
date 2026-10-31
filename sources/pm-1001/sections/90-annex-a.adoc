@@ -1,0 +1,441 @@
+[[annex-a]]
+== Annex A: node class reference
+
+=== General
+
+This annex enumerates=== General
+
+This annex enumerates every function class of the model at this edition: 103 function classes, 14 font styles and 10 table classes. The list is normative. A class's operands column uses `1`, `2`, `3`, or "rows" for the table containers.
+
+=== The inventory as a model
+
+[source,lml]
+----
+lml "1.0"
+
+models FunctionInventory {
+
+  package Elementary {
+    class Abs
+    class Arg
+    class Ceil
+    class Deg
+    class Det
+    class Dim
+    class Exp
+    class Floor
+    class Gcd
+    class Glb
+    class Hom
+    class Inf
+    class Ker
+    class Lcm
+    class Lub
+    class Max
+    class Min
+    class Mod
+    class Norm
+  }
+
+  package Trigonometric {
+    class Sin
+    class Cos
+    class Tan
+    class Cot
+    class Sec
+    class Csc
+    class Sinh
+    class Cosh
+    class Tanh
+    class Coth
+    class Sech
+    class Csch
+    class Arcsin
+    class Arccos
+    class Arctan
+  }
+
+  package Logarithmic {
+    class Ln
+    class Lg
+    class Log
+  }
+
+  package ScriptPlacement {
+    class Power
+    class PowerBase
+    class Base
+    class Sup
+    class Ul
+    class Underover
+    class Over
+    class Overleftrightarrow
+    class Overset
+    class Underset
+    class Stackrel
+    class Substack
+    class Limits
+    class Lim
+    class Liminf
+    class Limsup
+    class Multiscript
+  }
+
+  package Fractions {
+    class Frac
+    class Root
+    class Sqrt
+    class Longdiv
+    class Cancel
+    class Scarry
+    class Scarries
+  }
+
+  package Fences {
+    class Fenced
+    class Left
+    class Right
+    class Obrace
+    class Ubrace
+  }
+
+  package Accents {
+    class Bar
+    class Vec
+    class Hat
+    class Tilde
+    class Dot
+    class Ddot
+  }
+
+  package Calculus {
+    class Sum
+    class Prod
+    class Int
+    class Oint
+    class Nary
+  }
+
+  package Tables {
+    class Table
+    class Td
+    class Tr
+    class Mlabeledtr
+    class Matrix
+    class Bmatrix
+    class Pmatrix
+    class Vmatrix
+    class Cases
+    class Array
+    class Align
+    class Eqarray
+    class Split
+    class Multline
+  }
+
+  package TextAndAnnotation {
+    class Text
+    class Mbox
+    class Intent
+    class Semantics
+  }
+
+  package Presentation {
+    class Phantom
+    class Menclose
+    class Merror
+    class Mglyph
+    class Mpadded
+    class Ms
+    class Msgroup
+    class Msline
+    class None
+    class Linebreak
+    class Rule
+    class Color
+  }
+
+  package Measurement {
+    class Unitsml
+    class Uncertainty
+  }
+
+  package Bases {
+    class UnaryFunction
+    class BinaryFunction
+    class TernaryFunction
+  }
+}
+----
+
+The operand shape of each class is the family it belongs to in <<formula-tree>>: the `Elementary` and `Trigonometric` classes are unary with an optional limit where their input notation carries one; `Log` and `Lg` are unary with an optional base operand; the `ScriptPlacement` classes are binary (`Power`, `Over`, `Underset`, and the rest) or ternary (`PowerBase`, `Underover`); the `Calculus` classes are nary; the `Tables` containers hold rows. The tables below give the semantics and surface notes per class.
+
+=== Elementary functions and operators
+
+Elementary function classes:
+
+[cols="1,2,1,3", options="headers"]
+.Elementary function classes
+|===
+|Class |Meaning |Operands |Surface notes
+
+|Abs |absolute value \|x\| |1 |fence pair on every surface
+|Arg |arg `arg x` |1 |upright operator name
+|Ceil |ceiling `⌈x⌉` |1 |fence pair
+|Det |determinant `det` |1 |upright operator name
+|Dim |dimension `dim` |1 |upright operator name
+|Exp |exponential `exp` |1 |upright operator name
+|Floor |floor `⌊x⌋` |1 |fence pair
+|Gcd |greatest common divisor |1–2 |upright operator name
+|Glb |greatest lower bound `glb` |1 |upright operator name
+|Hom |homomorphism `hom` |1 |upright operator name
+|Inf |infimum `inf` |1 |upright with optional limit
+|Ker |kernel `ker` |1 |upright operator name
+|Lcm |least common multiple |1–2 |upright operator name
+|Lub |least upper bound `lub` |1 |upright operator name
+|Max |maximum |1–2 |upright operator name
+|Min |minimum |1–2 |upright operator name
+|Mod |modulo |2 |upright with spaced operands
+|Norm |norm `‖x‖` |1 |double fence pair
+|Deg |degrees `deg` |1 |upright operator name
+|===
+
+=== Trigonometric and hyperbolic
+
+Trigonometric and hyperbolic classes:
+
+[cols="1,2,1,3", options="headers"]
+.Trigonometric and hyperbolic classes
+|===
+|Class |Meaning |Operands |Surface notes
+
+|Sin, Cos, Tan, Cot, Sec, Csc |circular functions |1 |upright operator names
+|Sinh, Cosh, Tanh, Coth, Sech, Csch |hyperbolic functions |1 |upright operator names
+|Arcsin, Arccos, Arctan |inverse circular functions |1 |upright operator names
+|===
+
+=== Logarithmic and exponential
+
+Logarithmic and exponential classes:
+
+[cols="1,2,1,3", options="headers"]
+.Logarithmic and exponential classes
+|===
+|Class |Meaning |Operands |Surface notes
+
+|Ln |natural logarithm |1 |upright operator name
+|Lg |decadic logarithm |1–2 |upright operator name; second operand is the base where written
+|Log |logarithm |1–2 |upright operator name; second operand is the base where written
+|Exp |exponential |1 |upright operator name
+|===
+
+=== Script placement and limits
+
+Script placement and limit classes:
+
+[cols="1,2,1,3", options="headers"]
+.Script placement and limit classes
+|===
+|Class |Meaning |Operands |Surface notes
+
+|Power |superscript (`x^2`) |2 |`msup` / run properties / `^{}` / `^`
+|PowerBase |base with sub and superscript (`x_2^3`) |3 |`msubsup` / combined / `_{}^{}`
+|Base |subscript (`x_1`) |2 |`msub` / `_{}` / `_`
+|Underover |sub and superscript under/over a large operator |3 |`munderover` / `\sum_{}^{}`
+|Over |overscript |2 |`mover` / `\overset`
+|Overset |pairing over |2 |`mover` (accentless)
+|Underset |pairing under |2 |`munder`
+|Stackrel |binomial-style stack |2 |stacked pair
+|Substack |stacked limits under an operator |1 (rows) |stacked rows
+|Limits |limits placement declaration |1 |limits rendered under/over rather than beside
+|Lim |limit `lim` |1 |upright with optional limit
+|Liminf, Limsup |limit inferior/superior |1 |upright compound names
+|Multiscript |post-sub/superscript pairs (`mmultiscripts`) |rows |MathML construct; OMML pre-sub/superscript
+|===
+
+=== Fractions, roots and cancellation
+
+Fraction, root and cancellation classes:
+
+[cols="1,2,1,3", options="headers"]
+.Fraction, root and cancellation classes
+|===
+|Class |Meaning |Operands |Surface notes
+
+|Frac |fraction |2 |`mfrac` / `\frac{}{}` / linear `()/()`
+|Root |nth root |2 |`mroot`; first operand is the radicand, second the degree
+|Sqrt |square root |1 |`msqrt` / `\sqrt{}`
+|Longdiv |long division layout |1–2 |layout construct; fallback per surface
+|Cancel |strike-through of the whole operand |1 |`mcancel` / `\cancel`
+|Scarry, Scarries |carry strike-through pairs (digit arithmetic) |1–2 |`mscarry` / layout fallback
+|===
+
+=== Fences and delimiters
+
+Fence and delimiter classes:
+
+[cols="1,2,1,3", options="headers"]
+.Fence and delimiter classes
+|===
+|Class |Meaning |Operands |Surface notes
+
+|Fenced |content with an open and a close symbol |3 |`mrow` with delimiters / `\left..\right`
+|Left |left delimiter declaration |1 |pairs with Right in linear surfaces
+|Right |right delimiter declaration |1 |pairs with Left
+|Obrace |over brace `{}` |1 |`mover` with brace
+|Ubrace |under brace |1 |`munder` with brace
+|===
+
+=== Accents and decorations
+
+Accent and decoration classes:
+
+[cols="1,2,1,3", options="headers"]
+.Accent and decoration classes
+|===
+|Class |Meaning |Operands |Surface notes
+
+|Bar |bar over |1 |`\bar`
+|Vec |vector arrow over |1 |`\vec`
+|Hat |hat over |1 |`\hat`
+|Tilde |tilde over |1 |`\tilde`
+|Dot |dot over |1 |`\dot`
+|Ddot |double dot over |1 |`\ddot`
+|Overleftrightarrow |left-right arrow over |1 |`\overleftrightarrow`
+|===
+
+=== Calculus and nary operators
+
+Calculus and nary operator classes:
+
+[cols="1,2,1,3", options="headers"]
+.Calculus and nary operator classes
+|===
+|Class |Meaning |Operands |Surface notes
+
+|Sum |summation `∑` |1 + limits |nary on MathML/OMML
+|Prod |product `∏` |1 + limits |nary on MathML/OMML
+|Int |integral `∫` |1 + limits |nary on MathML/OMML
+|Oint |contour integral `∮` |1 + limits |nary on MathML/OMML
+|Nary |generic nary operator |1 + limits |carries its own nary element value
+|===
+
+=== Tables
+
+Table classes:
+
+[cols="1,2,1,3", options="headers"]
+.Table classes
+|===
+|Class |Meaning |Operands |Surface notes
+
+|Table |generic table container |rows |`mtable`
+|Td |table cell |1 |`mtd`
+|Tr |table row |cells |`mtr`
+|Mlabeledtr |labelled row |cells |`mlabeledtr`
+|Matrix |plain matrix |rows |parenthesised grid
+|Bmatrix |curly-brace matrix |rows |`\{..\}` grid
+|Pmatrix |parenthesis matrix |rows |`(..)` grid
+|Vmatrix |vertical-bar matrix |rows |\|..\| grid
+|Cases |case selection |rows |left brace, null right delimiter
+|Array |array with alignment |rows |`array` environment
+|Align |aligned equations |rows |alignment points preserved
+|Eqarray |equation array |rows |alignment at relations
+|Split |split equation |rows |line structure preserved
+|Multline |multiline equation |rows |line structure preserved
+|===
+
+=== Text and annotation
+
+Text and annotation classes:
+
+[cols="1,2,1,3", options="headers"]
+.Text and annotation classes
+|===
+|Class |Meaning |Operands |Surface notes
+
+|Text |upright text run |1 |`mtext` / `\text{}` / upright run
+|Mbox |text box |1 |`mtext` / `\mbox{}`
+|Intent |MathML 4 intent annotation |1 + value |`intent` attribute; dropped elsewhere
+|Semantics |annotated expression |1 + annotations |`semantics` element; fallback is the expression alone
+|===
+
+=== Presentation constructs
+
+Presentation construct classes:
+
+[cols="1,2,1,3", options="headers"]
+.Presentation construct classes
+|===
+|Class |Meaning |Operands |Surface notes
+
+|Phantom |space of the operand's measure |1 |`mphantom` / `\phantom{}`
+|Menclose |notations around content |1 + notations |`menclose`; boxed fallback
+|Merror |error marker |1 |`merror`; verbatim elsewhere
+|Mglyph |glyph reference |0 + attributes |image reference; alt text fallback
+|Mpadded |padded box |1 + attributes |`mpadded`; dropped elsewhere
+|Ms |string literal |1 |`ms` / quoted run
+|Msgroup |stack group |children |`msgroup`; layout fallback
+|Msline |fraction bar in a stack |0 |`msline`; rule fallback
+|None |empty slot |0 |`none` element; empty cell
+|Linebreak |line break |0 |`mbreaking` space / `\\`
+|Rule |rule element |0 + attributes |`mstyle`-rule fallback
+|Color |colour application |1 + value |`mathcolor` / `\textcolor`; dropped where unsupported
+|===
+
+=== Units and uncertainty
+
+Unit and uncertainty classes:
+
+[cols="1,2,1,3", options="headers"]
+.Unit and uncertainty classes
+|===
+|Class |Meaning |Operands |Surface notes
+
+|Unitsml |UnitsML unit embedding |0 + expression |per-format forms supplied by UnitsML (UnitsML 1005)
+|Uncertainty |uncertainty attachment |1 + fields |fields per document 1002
+|===
+
+=== Generic bases
+
+These are the abstract bases the concrete classes specialise. They appear in trees only when a reader needs a function with no concrete class, which is a defect to be fixed at the model level.
+
+[cols="1,3", options="headers"]
+.Abstract base classes
+|===
+|Class |Role
+
+|UnaryFunction |one-operand base
+|BinaryFunction |two-operand base
+|TernaryFunction |three-operand base
+|Nary |nary-operator base
+|Base |subscript-form base
+|Ul, Sup |linear-surface subscript/superscript bases
+|===
+
+=== Font styles
+
+The 14 font style classes apply a mathematical font variant to their operand. Each carries one operand; the surfaces carry the variant per the mapping.
+
+.Font style classes
+[cols="1,3,3,3", options="headers"]
+|===
+|Class |MathML |LaTeX |UnicodeMath
+
+|bold |mathvariant="bold" |mathbf{} |bold alphanumeric range
+|italic |mathvariant="italic" |mathit{} |italic alphanumeric range
+|bold-italic |mathvariant="bold-italic" |oldsymbol{} |bold-italic range
+|sans-serif |mathvariant="sans-serif" |mathsf{} |sans-serif range
+|sans-serif-italic |mathvariant="sans-serif-italic" |mathsfit{} |sans-serif-italic range
+|sans-serif-bold-italic |mathvariant="sans-serif-bold-italic" |mathsfbfit{} |sans-serif-bold-italic range
+|bold-sans-serif |mathvariant="bold-sans-serif" |mathsfbf{} |bold sans-serif range
+|monospace |mathvariant="monospace" |mathtt{} |typewriter range
+|fraktur |mathvariant="fraktur" |mathfrak{} |fraktur range
+|bold-fraktur |mathvariant="bold-fraktur" |mathbffrak{} |bold fraktur range
+|script |mathvariant="script" |mathcal{} |script range
+|bold-script |mathvariant="bold-script" |mathbfscr{} |bold script range
+|double-struck |mathvariant="double-struck" |mathbb{} |double-struck range
+|normal |mathvariant="normal" |mathrm{} |upright range
+|===
+
+Where an alphanumeric range does not exist for a character, the UnicodeMath surface renders the plain character with the variant dropped, per the fallback rule.

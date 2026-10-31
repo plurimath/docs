@@ -1,0 +1,113 @@
+[[registry]]
+== The registry
+
+=== General
+
+The registry is the versioned catalogue=== General
+
+The registry is the versioned catalogue of everything the model can name: the symbol entries (<<symbols-space>>) and the function entries (<<annex-a>>). It exists so that the vocabulary of the system is data, not code spread across readers and writers.
+
+=== Entry shape
+
+A registry entry names one thing the model can represent and carries its renderings. The entry is an LML model:
+
+[source,lml]
+----
+models Registry {
+
+  class SymbolEntry {
+    attribute name, String[1]
+    attribute glyph, String
+    attribute mathml, String[1]
+    attribute latex, String[1]
+    attribute omml, String[1]
+    attribute unicodemath, String[1]
+    attribute categories, Category { cardinality 1..n }
+    attribute status, EntryStatus[1]
+  }
+
+  class FunctionEntry {
+    attribute name, String[1]
+    attribute operands, String[1]
+    attribute fallbacks, String { cardinality 0..n }
+    attribute status, EntryStatus[1]
+  }
+
+  enum Category {
+    value greek
+    value operator
+    value arrow
+    value relation
+    value logic
+    value trigonometric
+    value nary
+    value accent
+  }
+
+  enum EntryStatus {
+    value active
+    value deprecated
+  }
+}
+----
+
+Prose restatement of the fields:
+
+[cols="1,3", options="headers"]
+..Registry entry fields
+|===
+|Field |Content
+
+|name
+|the class name of the entry (`Alpha`, `Frac`, `Matrix`, `Plusminus`)
+
+|glyph
+|the displayed Unicode character or character sequence where one exists
+
+|mathml
+|the MathML rendering (entity name, character, or construct)
+
+|latex
+|the LaTeX rendering (command or literal)
+
+|omml
+|the OMML rendering (run text or construct reference)
+
+|unicodemath
+|the UnicodeMath token or character
+
+|categories
+|grouping tags: `greek`, `operator`, `arrow`, `relation`, `logic`, `trigonometric`, `nary`, and so on
+|===
+
+Entries are immutable once published. A correction to an entry is a new registry edition, never a mutation.
+
+=== The symbol space
+
+[[symbols-space]]
+The symbol registry at this edition contains 1 438 entries, one implementation class each, generated from the registry data. The space covers the Greek alphabet (upper and lower), Latin letters in their mathematical roles, binary and relation operators, arrows, set and logic symbols, integrals and nary operators, accents and decoration forms, and the named constants of the input notations.
+
+The complete listing is generated from the registry; this document does not print it. Annex B shows representative entries per category and the lifecycle of an entry.
+
+=== Generation
+
+The symbol classes and the parser vocabulary of each input notation are generated from the registry data. Generation is deterministic: the same registry edition produces byte-identical generated sources. A build that regenerates and finds a diff fails.
+
+The generated artifacts are committed, and the build compares them against the registry as a drift check; a hand-edit to a generated file that survives regeneration is a defect.
+
+=== Collision discipline
+
+A new entry whose name or glyph collides with an existing entry, or with a name reserved by the model (`Formula`, `Symbol`, `Number`, `Text`, `Function`, the class names of <<annex-a>>), fails the build. The registry does not permit two entries to share a class name, and the model does not permit an entry to shadow a model class.
+
+=== Versioning
+
+The registry is editioned with this document series. An entry's renderings are stable within an edition: a writer using edition 1 entries produces the same bytes for the same tree across all model versions that declare edition 1. New entries join at the next edition; renderings of existing entries do not change within an edition.
+
+=== Unit terminals
+
+The unit expressions that may appear inside a `Unitsml` node are not registry entries of this document. They come from the UnitsDB dataset through the asciiunits artifact of the UnitsML series (UnitsML 1003, 1006), and the model consumes them as opaque validated content. Nothing in this registry duplicates a unit name, a prefix, or a quantity — the registry's single source of truth for units is the UnitsDB dataset.
+
+[example]
+Adding a symbol for a newly standardised operator to the registry:
+the entry is defined (name, glyph, four renderings, category), the registry data changes, regeneration produces the new symbol class, the collision build passes, and the next registry edition ships it.
+*Expected outcome.* Trees built after the edition render the new glyph in all four surfaces; trees built before are unaffected; no previously published byte sequence changes.

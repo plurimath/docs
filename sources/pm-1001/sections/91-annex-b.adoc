@@ -1,0 +1,115 @@
+== Annex B: registry entry lifecycle
+
+=== General
+
+== Annex B: registry entry lifecycle
+
+This annex walks a registry entry from definition to publication. The normative rules live in the registry clause; this annex shows them applied.
+
+This annex walks a registry entry from definition to publication, with representative entries per category. It illustrates <<registry>>; the normative rules are stated there.
+
+=== Defining an entry
+
+An entry is a row of the registry data: name, glyph, the four format renderings, categories. Two examples:
+
+[cols="1,1,2,2,2,2,1", options="headers"]
+..Representative registry entries
+|===
+|name |glyph |mathml |latex |omml |unicodemath |categories
+
+|Alpha |α |`&alpha;` |`\alpha` |run "α" |`α` |greek
+|Plusminus |± |`&plusmn;` |`\pm` |run "±" |`±` |operator, relation
+|===
+
+The generated symbol class is derived from the name: `Plurimath::Math::Symbols::Alpha`, `Plurimath::Math::Symbols::Plusminus`. The class holds the entry; the tree and the readers refer to the class.
+
+=== Adding an entry
+
+The steps of a new entry, in order:
+
+. The entry is added to the registry data with all fields filled; a field for which no rendering exists carries the declared empty rendering, not prose.
+. Generation runs; the new symbol class appears in the generated sources.
+. The collision build checks the name and the glyph against the existing registry, the model class names, and the UnitsDB symbol space. A collision fails the build.
+. The render corpus gains an entry exercising the new glyph in all six surfaces, frozen against the model version that ships it.
+. The registry edition is published; this document's symbol-space count (1 438 at edition 1) is updated.
+
+No step reorders: a glyph that fails collision never ships; a corpus entry is never retrofitted after publication.
+
+=== Function entries
+
+Function classes are not registry rows in the same sense — their semantics live in this document (<<annex-a>>) and their renderings in their class definitions — but they obey the same discipline: a new function class ships with its operand definition, its per-surface rules, its fallbacks, and a frozen corpus entry per surface.
+
+=== Deprecation path
+
+A deprecated entry keeps its class, its glyph and its renderings byte-stable. The registry marks it deprecated with the edition of removal. Readers that encounter the entry keep parsing it; writers keep writing it. At the removal edition, the class is deleted, the corpus entries that used it are superseded, and the registry count decreases.
+
+=== Counting
+
+The symbol-space count is asserted by the build against the registry data, so this document's count and the registry cannot disagree silently. Edition 1: 1 438 symbol entries, 103 function classes, 14 font styles, 10 table classes.
+
+=== Representative symbol entries
+
+The entries below are drawn from the registry at this edition; each row is one symbol entry with its input tokens and its LaTeX rendering as published.
+
+.Greek letters
+[cols="1,1,2,2,2", options="headers"]
+|===
+|Entry |Glyph |AsciiMath |UnicodeMath |LaTeX
+
+|Alpha |α |`alpha` |`alpha` |`\alpha`
+|Beta |β |`beta` |`beta` |`\beta`
+|Gamma |Γ |`Gamma` |`Gamma` |`\Gamma`
+|Delta |Δ |`Delta` |`Delta` |`\Delta`
+|Omega |Ω |`Omega` |`Omega` |`\Omega`
+|===
+
+.Nary operators
+[cols="1,1,2,2,2", options="headers"]
+|===
+|Entry |Glyph |AsciiMath |UnicodeMath |LaTeX
+
+|Sum |∑ |`sum` |`sum` |`\sum`
+|Prod |∏ |`prod` |`prod` |`\prod`
+|Int |∫ |`int` |`int` |`\int`
+|Oint |∮ |`oint` |`oint` |`\oint`
+|===
+
+.Relations and operators
+[cols="1,1,2,2,2", options="headers"]
+|===
+|Entry |Glyph |AsciiMath |UnicodeMath |LaTeX
+
+|Pm |± |`pm` |`pm` |`\pm`
+|Times |× |`times` |`times` |`\times`
+|Leq |≤ |`leq` |`le` |`\leq`
+|Geq |≥ |`geq` |`ge` |`\geq`
+|Neq |≠ |`neq` |`ne` |`\neq`
+|Approx |≈ |`approx` |`approx` |`\approx`
+|Equiv |≡ |`equiv` |`equiv` |`\equiv`
+|===
+
+.Logic and quantifiers
+[cols="1,1,2,2,2", options="headers"]
+|===
+|Entry |Glyph |AsciiMath |UnicodeMath |LaTeX
+
+|Forall |∀ |`forall` |`forall` |`\forall`
+|Exists |∃ |`exists` |`exists` |`\exists`
+|Neg |¬ |`neg` |`neg` |`\neg`
+|Land |∧ |`and` |`and` |`\land`
+|Lor |∨ |`or` |`or` |`\lor`
+|===
+
+.Derivations and miscellany
+[cols="1,1,2,2,2", options="headers"]
+|===
+|Entry |Glyph |AsciiMath |UnicodeMath |LaTeX
+
+|Partial |∂ |`partial` |`partial` |`\partial`
+|Infty |∞ |`oo` |`infty` |`\infty`
+|Rightarrow |⇒ |`=>` |`Rightarrow` |`\Rightarrow`
+|Cup |∪ |`cup` |`cup` |`\cup`
+|Cap |∩ |`cap` |`cap` |`\cap`
+|===
+
+An entry carries more than the table shows: each row's registry record also holds the MathML and OMML renderings and the additional input tokens (an entry may have several accepted tokens per notation; Alpha accepts `alpha` and the numeric character reference, for instance). The tables show the primary tokens.
