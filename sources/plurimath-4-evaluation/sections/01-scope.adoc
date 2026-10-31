@@ -1,0 +1,5 @@
+== Scope
+
+This document specifies: the evaluation surface (bindings, convert API, result taxonomy); Type A and Type B evaluation; the law of propagation of uncertainty; the adequacy verdict; second-order terms; the Monte Carlo method and its reproducibility classes; and conformity assessment decisions.
+
+Parsing and representation are Plurimath 1–3; conversion semantics are UnitsML 5; numeric discipline is UnitsML 2.

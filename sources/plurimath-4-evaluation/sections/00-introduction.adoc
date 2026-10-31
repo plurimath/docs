@@ -1,0 +1,3 @@
+== Introduction
+
+Three failure modes destroy evaluators: applying an offset to a difference, trusting a linearization that the model invalidated, and propagating an expanded uncertainty as if it were a standard one. This part closes each: difference typing and factor-only conversion from UnitsML 4/5, the adequacy verdict as a first-class result, and a taxonomy that refuses what it cannot justify.

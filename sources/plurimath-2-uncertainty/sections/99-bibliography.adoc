@@ -1,0 +1,3 @@
+== Bibliography
+
+* JCGM 100:2008 §7.2.2 (reporting forms) · GUM-5:2026 Annex A · Python `uncertainties` and Wolfram `Around` (rejected-syntax provenance)

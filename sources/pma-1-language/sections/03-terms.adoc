@@ -1,0 +1,13 @@
+== Terms, definitions and abbreviated terms
+
+constructor::
+a reserved `keyword(args)` form materializing as a single model node.
+
+measured literal::
+the `(v +/- u)` form with its modifiers (exponent, relative, distribution tag).
+
+quantity assertion::
+the `::` annotation binding an L1 kind (UnitsML 4) to a unit expression.
+
+reserved word::
+a constructor keyword, a grammar terminal; the build fails on vocabulary collisions.

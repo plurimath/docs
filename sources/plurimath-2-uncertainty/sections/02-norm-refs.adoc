@@ -1,0 +1,6 @@
+== Normative references
+
+* Plurimath 1; UnitsML 1, UnitsML 4
+* JCGM 100:2008 Clauses 6 and 7 + Amd.1:2026; JCGM 101:2008; VIM 2.30–2.38
+* GUM-5:2026 Annex A (terminology rulings: coverage interval, never "confidence interval")
+* MathML 4 (intent); OOXML (OMML); UnicodeMath linear format

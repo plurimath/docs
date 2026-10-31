@@ -12,52 +12,30 @@
 :mn-output-extensions: xml,html,doc,pdf
 :imagesdir: images
 
-== Foreword
+include::sections/00-foreword.adoc[]
 
-Plurimath's center is the MODEL: a dialect-free formula tree. Input languages materialize into it; output formats render from it; the evaluator computes over it. This part defines the model and the machinery that makes the many-to-many mapping tractable: one registry from which all input-language grammars are generated, with every registered string bound to the model primitive it produces.
+include::sections/00-introduction.adoc[]
 
-The companion UnitsML series owns units, quantities, conversions, the register and the XML. The dependency direction is strict: input languages → math model → UnitsML semantics. Inter-series seams: the unit-expression content grammar (UnitsML 6), the units semantics (UnitsML 4/5), and the conformance corpora (UnitsML 8).
+include::sections/01-scope.adoc[]
 
-== Scope
+include::sections/02-norm-refs.adoc[]
 
-This document specifies: the formula tree and its node classes, including the `Uncertainty` node's model-level identity (representation: Plurimath 2) and the `Unitsml` node; the shared registry (vocabulary v2) — entry schema, dialect tags, generation of input-language grammars, collision CI; and the LML serialization contract.
+include::sections/03-terms.adoc[]
 
-== Normative references
+include::sections/04-conventions.adoc[]
 
-* UnitsML 1, UnitsML 6
-* MathML 4 (W3C); OOXML/OMML (ECMA-376); UnicodeMath linear format
-* lutaml-model#1033 (LML as cross-language schema)
+include::sections/05-formula-tree.adoc[]
 
-== The formula tree
+include::sections/06-registry.adoc[]
 
-The model is a tree of: `Formula` (the root list), `Symbol`, `Number`, operator and function nodes (`Function::Frac`, `Function::Sqrt`, `Function::Power`, …), grouping (`Fenced`), the `Unitsml` node (a unit expression embedded in math — UnitsML 6), and the `Uncertainty` node (Plurimath 2). Nodes carry:
+include::sections/07-collision-ci.adoc[]
 
-- **exact decimal text** wherever a number is held — preserved verbatim, never reformatted (`2.10 ≠ 2.1`);
-- **no semantic defaults**: a node records what the author wrote; evaluation semantics live behind the evaluator boundary (Plurimath 4);
-- **dialect freedom**: no node records which input language produced it.
+include::sections/08-lml-serialization.adoc[]
 
-Materialization: parse trees from any input language map through the registry's primitive bindings into these nodes. The mapping is data (the binding column of the registry), not per-language code; a new input language is a new front end over the same bindings.
+include::sections/09-conformance.adoc[]
 
-== The registry (vocabulary v2)
+include::sections/aa-orientation.adoc[]
 
-The registry is the series' terminal dictionary, evolved from the amath vocabulary (`format: amath-vocabulary/v1`, oracle-recorded). v2 entries are:
+include::sections/ab-test-suite.adoc[]
 
-[listing]
-{ string, layout_class (symbol | bold_fonts | binary_class | ternary_class |
-  sub_sup_class | …), primitive (the model node the string materializes to),
-  dialects: [legacy, pma] }
-
-Rules:
-
-- Both input-language grammars are GENERATED from the registry; the legacy snapshot is pinned by edition and never sees `pma`-only entries.
-- Unit terminals are composed from the UnitsML 6 artifact — referenced, never copied.
-- Reserved words (constructors of pma 1) are registry entries tagged `pma`; the build FAILS on any collision between reserved words and registry ∪ unitsdb symbols/names.
-- The registry records provenance (generating revision) as its oracle did.
-
-== LML serialization
-
-The model's serialization is declared with lutaml-model attribute + mapping declarations and exported as LML for codegen (lutaml-model#1033): Ruby realizes the declarations natively; TypeScript and Rust realizations are generated. No hand-rolled `to_h`/`from_h` anywhere in the stack.
-
-== Conformance
-
-Render corpus: the model renders to every format column of UnitsML 8 from the same tree. Registry reproducibility: regeneration from the same inputs is byte-stable. Collision CI is a build gate, not a vector.
+include::sections/99-bibliography.adoc[]

@@ -1,0 +1,3 @@
+== Bibliography
+
+* plurimath/amath#17 (dialect-L restriction) · UnitsML 7 (xref targets)

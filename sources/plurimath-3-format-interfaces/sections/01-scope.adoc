@@ -1,0 +1,3 @@
+== Scope
+
+This document specifies the model↔format interface per supported format: primitive mappings, reader guarantees, decimal-text discipline, and the UnitsML cross-reference channel. Uncertainty encodings: Plurimath 2.

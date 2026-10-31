@@ -1,0 +1,3 @@
+== Scope
+
+This document specifies the language surface, the compatibility contract, the closed deviation ledger, and the materialization of parsed trees into the math model.

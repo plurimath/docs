@@ -1,0 +1,3 @@
+== Scope
+
+This document specifies the channel mechanism, the two defined channels, the procedure for adding namespaces, and the channel conformance vectors.

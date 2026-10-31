@@ -1,0 +1,47 @@
+[appendix]
+== Annex A (normative): the H.1.7 second-order derivation
+
+=== The gap
+
+Amd.1:2026 H.1.7 rewrites the GUM gauge-block example: "the application to Equation (H.3) of the expression given in the note to 5.1.2 yields in fact two distinct non-negligible second-order terms to be added to Equation (H.5). These terms, which arise from the quadratic term in the expression of the note, are …" — the amendment prints no further formula.
+
+=== The model
+
+GUM H.3 (bilinear): l = f(l_S, d, α_S, θ, δα, δθ) = l_S + d − l_S(δα·θ + α_S·δθ), inputs uncorrelated, δα and δθ with zero estimates. Inputs (H.1.3): l_S = 50 mm, u(l_S) = 25 nm; u(d) = 9.7 nm; θ = −0.1 °C, u(θ) = 0.41 °C; α_S = 11.5×10⁻⁶ °C⁻¹, u(α_S) = 1.2×10⁻⁶ °C⁻¹; u(δα) = 0.58×10⁻⁶ °C⁻¹; u(δθ) = 0.029 °C. First order (H.1.6): u_c(l) = 32 nm.
+
+=== Derivation
+
+The note to 5.1.2 augments u_c² with ½ Σ_i Σ_j (∂²f/∂x_i∂x_j)² u²(x_i)u²(x_j); its third-derivative term vanishes because H.3 is bilinear. The nonzero second partials at the estimates: ∂²f/∂θ∂δα = −l_S; ∂²f/∂α_S∂δθ = −l_S; ∂²f/∂l_S∂δα = −θ; ∂²f/∂l_S∂δθ = −α_S (the θ and α_S l_S-pairs vanish at the zero estimates of δα and δθ). Of the four candidate pairs, exactly two are non-negligible:
+
+[cols="3,2,2,1"]
+|===
+|Term |Expression |Value |Class
+
+|T₁
+|l_S² u²(θ) u²(δα)
+|141.37 nm²
+|non-negligible
+
+|T₂
+|l_S² u²(α_S) u²(δθ)
+|3.03 nm²
+|non-negligible
+
+|θ² u²(l_S) u²(δα)
+|(l_S, δα) pair
+|2.1×10⁻¹² nm²
+|negligible
+
+|α_S² u²(l_S) u²(δθ)
+|(l_S, δθ) pair
+|7.0×10⁻¹¹ nm²
+|negligible
+|===
+
+=== Result
+
+u_c²(l) = (32 nm)² + T₁ + T₂ = 1168.4 nm², hence **u_c(l) = 34.2 nm**.
+
+=== Verification
+
+JCGM 101 §9.5 (gauge block; Table 10): GUF u(δL) = 32 nm; MCM u(δL) = 36 nm; shortest 99 % intervals [745, 931] vs [745, 932] nm. The amended second-order u_c moves the GUF result from 32 to 34.2 nm — recovering 55 % of the GUF–MCM discrepancy. The residual is consistent with the non-Gaussian inputs of H.1 (rectangular δα and δθ; U-shaped Δ), which a Gaussian-input second-order expansion does not capture — precisely the limitation that Amd.1's NOTE 1 resolves by naming MCM as the alternative. The three-way agreement (32 / 34.2 / 36) is the versioned H.1 vector of UnitsML 8 Annex C.

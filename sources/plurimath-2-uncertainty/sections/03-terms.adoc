@@ -1,0 +1,16 @@
+== Terms, definitions and abbreviated terms
+
+uncertainty record::
+the model node of Clause 5: what the author wrote, with no computation applied.
+
+marker::
+a machine-readable annotation carrying the record's fields through a format.
+
+concise form::
+the GUM 7.2.2 form-2 reporting convention `1.230(4)`; output-only in this series.
+
+round-trip::
+parse → render → parse where every model field survives byte-identically.
+
+lossiness::
+the declared set of fields a format cannot carry (Annex A).

@@ -1,0 +1,3 @@
+== Bibliography
+
+* asciimath.org dialect documentation · plurimath/amath#17 (dialect-L restriction)

@@ -1,0 +1,12 @@
+== The uncertainty channel
+
+Rendering an `Uncertainty` node (Plurimath 2) into this dialect emits the quoted form:
+
+[listing]
+"ustd(10.3, 0.2)"        "uexp(10.0, 0.3, 2, 0.95)"
+"ucov(10.0, 9.7, 10.3, 0.95, shortest)"
+
+Reading decodes recognized forms back into the model with every field of the Plurimath 2 table; the unit rides the `"unitsml(...)"` channel when UnitsML-writable. This channel is the ENTIRE uncertainty capability of the dialect — there is no bareword form.
+
+[example]
+*Expected outcome.* `"ustd(10.3, 0.2)"` round-trips category, value, magnitude and attached unit byte-identically; `"ustd(10.3)"` raises `InvalidUncertainty` (missing magnitude) instead of guessing.

@@ -1,0 +1,3 @@
+== Introduction
+
+One model, five formats, zero drift: the render corpus proves that the same tree yields the same bytes in every format, every time. The clauses below specify what "same" means per format — and, for the lossy ones, exactly what is given up.

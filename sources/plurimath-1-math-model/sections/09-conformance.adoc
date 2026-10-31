@@ -1,0 +1,3 @@
+== Conformance
+
+Registry generation reproducibility (byte-stable regeneration) and the render corpus (model → every format) are the gates; class claims per UnitsML 8 Clause 8.

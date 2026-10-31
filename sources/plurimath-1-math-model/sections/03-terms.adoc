@@ -1,0 +1,19 @@
+== Terms, definitions and abbreviated terms
+
+math model::
+the dialect-free formula tree defined in Clause 5; the hub of the series.
+
+primitive::
+a node class of the math model (`Symbol`, `Number`, function and operator nodes, `Fenced`, `Uncertainty`, `Unitsml`).
+
+registry::
+the shared terminal dictionary (vocabulary v2) mapping registered strings to layout class and primitive binding, tagged by dialect.
+
+binding::
+the registry column naming the model primitive a registered string materializes to.
+
+materialization::
+the mapping of a parse tree into the math model through registry bindings.
+
+dialect tag::
+the registry marker (`legacy`, `pma`, both) controlling which generated grammar sees an entry.

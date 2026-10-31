@@ -1,0 +1,10 @@
+== Terms, definitions and abbreviated terms
+
+dialect L::
+the legacy asciimath dialect specified by this part.
+
+deviation ledger::
+the closed table of this dialect's permitted divergences from asciimath.org.
+
+fallback::
+the lenient behavior mapping unrecognized tokens to letters.

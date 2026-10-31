@@ -1,0 +1,3 @@
+== Bibliography
+
+* plurimath#513/#524 · plurimath/amath#16 · Python `uncertainties` (rejected-syntax provenance) · Wolfram `Around` · Pint delta units

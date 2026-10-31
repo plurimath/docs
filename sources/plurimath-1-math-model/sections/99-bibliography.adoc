@@ -1,0 +1,3 @@
+== Bibliography
+
+* lutaml-model#1033 · parsanol/docs (artifact format) · isq-smart concept-system methodology

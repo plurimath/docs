@@ -1,0 +1,11 @@
+[appendix]
+== Annex A (informative): additional test-suite examples
+
+[example]
+*Verbatim across five formats.* Input `2.10` renders identically in all five format columns; any column emitting `2.1` fails the render corpus.
+
+[example]
+*xref resolution.* Every `xref` emitted in a corpus document resolves to a `Unit` element within the same document; dangling bonds fail the replay.
+
+[example]
+*Lossy honesty.* The LaTeX column of a coverage-interval record renders the endpoints; the corpus simultaneously asserts (via the marker channel) that the kind survived — documenting, not hiding, the visible-form loss.

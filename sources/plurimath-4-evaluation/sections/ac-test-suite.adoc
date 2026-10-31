@@ -1,0 +1,11 @@
+[appendix]
+== Annex C (informative): additional test-suite examples
+
+[example]
+*Refusal discipline.* Propagating a coverage interval that carries no underlying u returns `error` citing I4 and the refusal rule — no interval is invented.
+
+[example]
+*Correlated standards.* GUM-6 §10.6's shared-reference case (two resistors traced to the same standard) combines as r ≈ 1: u = 1 Ω, not the root-sum 0.14 Ω — the vector pins the correlated result.
+
+[example]
+*Seed discipline.* Two MCM runs with the same seed and trials produce identical intervals byte-for-byte; a different seed claims the distributional class.

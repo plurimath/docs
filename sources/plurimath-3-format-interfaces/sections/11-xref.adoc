@@ -1,0 +1,6 @@
+== Cross-references into UnitsML documents
+
+Where the model carries a UnitsML unit, every format that can carry an IDREF emits the bond to the UnitsML 7 `xml:id` space; formats that cannot carry references emit the symbol only, and the loss is declared. Ambiguity between unit symbols and math identifiers is resolved exactly by the embedding constructors (asciimath 2, pma 1), never by heuristics.
+
+[example]
+*Expected outcome.* `parse('mg')` rendered to MathML carries the milligram `xref`; a hypothetical bare-text fallback without the bond is non-conforming whenever the model holds a UnitsML unit.

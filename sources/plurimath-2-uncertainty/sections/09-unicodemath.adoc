@@ -1,0 +1,3 @@
+== UnicodeMath — the ⓘ annotation
+
+`ⓘ("marker")` adjacent to the annotated expression; visible form `(value±magnitude)`; leading negatives wrapped in invisible `〖…〗`; units via `ⓐ(...)`; plain `±` remains `Pm`; recognized-malformed raises.

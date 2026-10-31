@@ -1,0 +1,8 @@
+== The compatibility contract
+
+. Every asciimath.org construct parses and renders with unchanged meaning.
+. The ONLY permitted extensions ride the quoted channel of Part 2.
+. Every behavioral deviation from asciimath.org is enumerated in the ledger; additions require a part edition.
+
+[example]
+*Expected outcome.* The asciimath.org specimen corpus renders byte-identically through the conforming implementation. The ledger-audit test proves no unlisted divergence.

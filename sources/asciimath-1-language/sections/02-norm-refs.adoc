@@ -1,0 +1,4 @@
+== Normative references
+
+* Plurimath 1 (the math model, the registry); asciimath 2 (extension channels)
+* The asciimath.org dialect (compatibility baseline)

@@ -1,0 +1,7 @@
+[appendix]
+== Annex B (informative): open maintainer decisions
+
+- Fenced `±` sugar in pma (in/out).
+- Coverage-interval `+a/−b` layout.
+- LaTeX macro family for lossless round-trip; HTML `data-*` annotation channel.
+- UnitsML XML measurement-result element (UnitsML 7 Annex B; WG path).

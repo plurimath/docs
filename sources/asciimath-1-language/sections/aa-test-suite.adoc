@@ -1,0 +1,11 @@
+[appendix]
+== Annex A (informative): additional test-suite examples
+
+[example]
+*Decimal-comma rejection.* `1,230` in an ambiguity-prone context raises `AmbiguousDecimalError`; `f(a,b)` (function argument) does not.
+
+[example]
+*Fallback behavior.* `qqq` renders as the letters q·q·q; it never fails and never becomes a new terminal.
+
+[example]
+*Pm discipline.* `a +- b`, `a ± b` both render the ± symbol; neither produces an Uncertainty node.

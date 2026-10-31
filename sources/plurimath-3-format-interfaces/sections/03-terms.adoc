@@ -1,0 +1,13 @@
+== Terms, definitions and abbreviated terms
+
+interface::
+the model↔format contract for one format (this part).
+
+emission::
+model → format rendering.
+
+reader::
+format → model decoding, where the format is one with a defined read path.
+
+lossy channel::
+a format that cannot carry every model field; its losses are declared in Plurimath 2 Annex A.

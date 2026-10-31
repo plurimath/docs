@@ -1,0 +1,49 @@
+== The model
+
+An `Uncertainty` node carries exactly:
+
+[cols="1,2,2"]
+|===
+|Field |Values |Notes
+
+|value
+|exact decimal text
+|the estimate; text verbatim (`2.10 ≠ 2.1`)
+
+|category
+|standard \| expanded \| coverage_interval
+|
+
+|magnitude
+|exact decimal text
+|u, or U for expanded
+
+|coverage_factor
+|exact decimal text
+|k; expanded only
+
+|coverage_probability
+|decimal in (0,1)
+|p; never derived from k (JCGM 100 §6.3.2)
+
+|lower, upper
+|exact decimal text
+|coverage_interval only
+
+|interval_kind
+|shortest \| probabilistically_symmetric
+|coverage_interval only
+
+|notation
+|absolute \| concise
+|standard only; set ONLY via lossless markers
+
+|unit
+|UnitsML unit or text
+|scopes value AND magnitude
+|===
+
+Invariants: malformed input raises `InvalidUncertainty`; the node never computes (GUM §7.2.2: rounding is the author's); concise form `10.3(2)` is a reporting convention — output-only, with `n((d))` held in reserve; `+-` rejected everywhere (`3+-1` ambiguity); plain `±` remains the `Pm` symbol.
+
+[example]
+*Expected outcome.* The record for `ustd(10.3, 0.2) unit(cm)` carries value `"10.3"`, magnitude `"0.2"`, category `standard`, unit cm — and converting the unit to millimetres yields value `"103"` magnitude `"2"` (factor-only; no offset ever applies).

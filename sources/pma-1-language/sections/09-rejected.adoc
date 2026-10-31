@@ -1,0 +1,6 @@
+== Rejected syntaxes
+
+- Concise `10.3(2)` as input (`n(d)` reads as multiplication/application; concise is output-only — Plurimath 2).
+- `+-` (the `3+-1` reading; Python `uncertainties` precedent), `pm`/`\pm` (picometre).
+- Conversion syntax (conversion is an evaluation API operation).
+- Implicit-multiplication readings of `n(d)`-shaped input.
