@@ -1,8 +1,0 @@
-[bibliography]
-== Normative references
-
-* [[[unitsml-1,nofetch(UnitsML 1)]]]
-* [[[unitsml-6,nofetch(UnitsML 6)]]]
-* [[[mathml4,nofetch(MathML 4)]]] (W3C)
-* [[[ecma376,nofetch(ECMA-376)]]] (OOXML/OMML)
-* [[[unicodemath,nofetch(UnicodeMath linear format)]]]

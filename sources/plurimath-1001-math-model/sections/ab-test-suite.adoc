@@ -1,9 +1,0 @@
-[[annex-test-suite]]
-[appendix]
-== Annex B (informative): additional test-suite examples
-
-[example]
-*Dialect isolation.* The legacy grammar generated from an edition containing a `pma`-only constructor MUST reject the constructor as an unknown identifier — the tag governs generation, not parsing.
-
-[example]
-*Binding stability.* The same input tree, materialized twice from the same registry edition, is identical — binding lookup is pure data.

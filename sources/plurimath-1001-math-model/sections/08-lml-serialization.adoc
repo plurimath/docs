@@ -1,6 +1,0 @@
-== LML serialization
-
-The model's serialization is declared with lutaml-model attribute + mapping declarations and exported as LML for codegen (lutaml-model#1033): Ruby realizes the declarations natively; TypeScript and Rust realizations are generated. No hand-rolled `to_h`/`from_h` anywhere in the stack.
-
-[example]
-*Expected outcome.* Adding a model field lands, in the same change, its LML declaration, its generated TS type, and its generated Rust field — with the serialization corpus verifying all three against the same bytes.

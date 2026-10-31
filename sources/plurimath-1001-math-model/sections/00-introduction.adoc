@@ -1,3 +1,0 @@
-== Introduction
-
-Many-to-many without a hub is quadratic: five input languages times six output formats is thirty parsers and renderers, each drifting. The math model is the hub: every input materializes into one tree, every format renders from it, and the registry that feeds the input grammars binds each string to the model primitive it produces. This part is that hub, specified.
