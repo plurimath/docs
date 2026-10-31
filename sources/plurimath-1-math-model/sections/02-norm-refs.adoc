@@ -1,5 +1,8 @@
+[bibliography]
 == Normative references
 
-* UnitsML 1, UnitsML 6
-* MathML 4 (W3C); OOXML/OMML (ECMA-376); UnicodeMath linear format
-* lutaml-model#1033 (LML as cross-language schema)
+* [[[unitsml-1,nofetch(UnitsML 1)]]]
+* [[[unitsml-6,nofetch(UnitsML 6)]]]
+* [[[mathml4,nofetch(MathML 4)]]] (W3C)
+* [[[ecma376,nofetch(ECMA-376)]]] (OOXML/OMML)
+* [[[unicodemath,nofetch(UnicodeMath linear format)]]]

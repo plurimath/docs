@@ -1,4 +1,9 @@
+[bibliography]
 == Normative references
 
-* Plurimath 1; UnitsML 7 (`xref` target space); UnitsML 1
-* MathML 4 (W3C); ECMA-376 (OOXML/OMML); UnicodeMath linear format
+* [[[plurimath-1,nofetch(Plurimath 1)]]]
+* [[[unitsml-7,nofetch(UnitsML 7)]]] (`xref` target space)
+* [[[unitsml-1,nofetch(UnitsML 1)]]]
+* [[[mathml4,nofetch(MathML 4)]]] (W3C)
+* [[[ecma376,nofetch(ECMA-376)]]] (OOXML/OMML)
+* [[[unicodemath,nofetch(UnicodeMath linear format)]]]

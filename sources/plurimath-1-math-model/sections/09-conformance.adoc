@@ -1,3 +1,3 @@
 == Conformance
 
-Registry generation reproducibility (byte-stable regeneration) and the render corpus (model → every format) are the gates; class claims per UnitsML 8 Clause 8.
+Registry generation reproducibility (byte-stable regeneration) and the render corpus (model → every format) are the gates; class claims per UnitsML 8 Clause 8. The annexes orient readers (<<annex-orientation>>) and provide additional test-suite examples (<<annex-test-suite>>).

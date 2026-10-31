@@ -1,3 +1,3 @@
 == Conformance
 
-Channel round-trip vectors: every field of the carried model survives the channel byte-identically; ledger audit: no unledgered divergence; the render corpus replays the asciimath columns through these channels. Class coverage: `parse/render` and `full-series`.
+Channel round-trip vectors: every field of the carried model survives the channel byte-identically; ledger audit: no unledgered divergence; the render corpus replays the asciimath columns through these channels. Class coverage: `parse/render` and `full-series`. Additional test-suite examples are given in <<annex-test-suite>>.

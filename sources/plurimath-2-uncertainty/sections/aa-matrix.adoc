@@ -1,8 +1,13 @@
+[[annex-matrix]]
 [appendix]
 == Annex A (normative): the round-trip matrix
 
 (The "AsciiMath (L)" column is the quoted compatibility channel; pma carries every field natively.)
 
+Every field must survive every lossless channel, as tabulated in <<tbl-matrix>>.
+
+[[tbl-matrix]]
+.Channel survival matrix
 |===
 |Field |AsciiMath (L) |MathML intent |OMML phantom |UnicodeMath |LaTeX |HTML |UnitsML XML
 

@@ -1,3 +1,7 @@
+[bibliography]
 == Normative references
 
-* asciimath 1; UnitsML 6 (content grammar); Plurimath 2 (uncertainty model); UnitsML 1
+* [[[asciimath-1,nofetch(asciimath 1)]]]
+* [[[unitsml-6,nofetch(UnitsML 6)]]] (content grammar)
+* [[[plurimath-2,nofetch(Plurimath 2)]]] (uncertainty model)
+* [[[unitsml-1,nofetch(UnitsML 1)]]]
