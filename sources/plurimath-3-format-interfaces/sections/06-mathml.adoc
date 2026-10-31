@@ -1,6 +1,6 @@
 == MathML interface
 
-Emission: `mn`/`mi`/`mo`/`mrow`/`mfrac`/`msqrt` per node class. Reading: the full model decodes back, including `intent` uncertainty markers (Plurimath 2); `$unit` references re-read as a formula, not a UnitsML reference — a recorded limit. Validation of emitted markup against a MathML 4 processor is an open test item; the intent vocabulary is a proposal until adopted upstream.
+Emission: `mn`/`mi`/`mo`/`mrow`/`mfrac`/`msqrt` per node class. Reading: the full model decodes back, including `intent` uncertainty markers (Plurimath 1002); `$unit` references re-read as a formula, not a UnitsML reference — a recorded limit. Validation of emitted markup against a MathML 4 processor is an open test item; the intent vocabulary is a proposal until adopted upstream.
 
 [example]
 *Expected outcome.* `ustd(1.230, 0.004)` renders the visible `1.230 ± 0.004` layout plus the `standard-uncertainty(1.230,0.004)` intent marker; re-reading the marker reconstructs the record byte-identically.

@@ -1,0 +1,10 @@
+== Bibliography
+
+* Plurimath repository — https://github.com/plurimath/plurimath
+* `Plurimath::Math::Function::Uncertainty` implementation — the reference implementation of this model
+* JCGM 100:2008, Evaluation of measurement data — Guide to the expression of uncertainty in measurement
+* JCGM 101:2008, Supplement 1 — Propagation of distributions using a Monte Carlo method
+* Pendrill, L. R. (2024), _Quantities and units: order amongst complexity_, De Gruyter
+* Python `uncertainties` package documentation (rejected design, Annex B)
+* Wolfram Language `Around` documentation (rejected design, Annex B)
+* UnitsML 2 — the exact-decimal discipline applied across the stack

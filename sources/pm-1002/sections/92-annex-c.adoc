@@ -1,0 +1,129 @@
+== Annex C: test-suite examples
+
+Vectors illustrative of the conformance classes of clause 11. Each states the node, the property under test, and the expected outcome. The uncertainty corpus carries the frozen versions.
+
+=== Construction and refusal (class `uncertainty-model`)
+
+[example]
+`ustd` node: value `10.3`, magnitude `0.2`, notation absolute.
+*Expected outcome.* constructed; `==` holds for an identically constructed node and fails when any field differs, including the notation.
+
+[example]
+A standard node also given a coverage factor.
+*Expected outcome.* `InvalidUncertainty`: "coverage_factor does not apply to a standard uncertainty".
+
+[example]
+An expanded node with coverage factor `0`.
+*Expected outcome.* `InvalidUncertainty`: "coverage factor 0 must be greater than 0".
+
+[example]
+An expanded node with coverage probability `1`.
+*Expected outcome.* `InvalidUncertainty`: "coverage probability 1 must lie strictly between 0 and 1". The comparison is exact: `0.999...9` with arbitrarily many nines is accepted, and no floating point is involved.
+
+[example]
+A standard node with concise notation, value `10.3`, magnitude `0.25`.
+*Expected outcome.* `InvalidUncertainty` naming the decimal-place mismatch (clause 7).
+
+[example]
+A value carried as a computed float or a `Number` with a base.
+*Expected outcome.* `InvalidUncertainty`: the value must be a plain signed decimal.
+
+[example]
+A unit holding an uncertainty.
+*Expected outcome.* `InvalidUncertainty`: "unit must not contain an uncertainty".
+
+=== Encodings, standard category (classes `encode-*`)
+
+[example]
+Value `10.3`, magnitude `0.2`, absolute, unit `g`.
+*Expected outcome.* AsciiMath `ustd(10.3, 0.2) "unitsml(g)"`; LaTeX `10.3(0.2) g`; HTML `10.3(0.2) g`; UnicodeMath `ⓘ("standard-uncertainty(10.3,0.2)"10.3(0.2)ⓐ(unit g))`; MathML `mrow` with `intent="standard-uncertainty(10.3,0.2)"` containing the value, fence, and unit; OMML with the marker run `standard-uncertainty(10.3,0.2)` before the shape runs and the unit boxed.
+
+[example]
+The same node with notation concise.
+*Expected outcome.* AsciiMath renders the reporting form `10.3(2)`; the marker qualifies to `standard-uncertainty:concise(10.3,0.2)`; every other surface's visible shape is unchanged (`10.3(0.2)`), because the carried magnitude is the same.
+
+=== Encodings, expanded category
+
+[example]
+Value `10.3`, magnitude `0.5`, coverage factor `2`, coverage probability `0.95`, unit `g`.
+*Expected outcome.* AsciiMath `uexp(10.3, 0.5, 2, 0.95) "unitsml(g)"`; LaTeX `(10.3 \pm 0.5) g~(k = 2, p = 0.95)`; HTML `(10.3 ± 0.5) g (k = 2, p = 0.95)`; UnicodeMath `ⓘ("expanded-uncertainty(10.3,0.5,2,0.95)"...)`; MathML intent `expanded-uncertainty(10.3,0.5,2,0.95)`; OMML marker run `expanded-uncertainty(10.3,0.5,2,0.95)`.
+
+[example]
+The same without the probability.
+*Expected outcome.* the probability argument and the `p = 0.95` statement are absent everywhere; no empty positions or empty statements remain.
+
+=== Encodings, coverage-interval category
+
+[example]
+Value `10.3`, lower `9.9`, upper `10.7`, probability `0.95`, kind `shortest`, unit `g`.
+*Expected outcome.* AsciiMath `ucov(10.3, 9.9, 10.7, 0.95, shortest) "unitsml(g)"`; LaTeX `10.3,~[9.9, 10.7] g~(shortest, p = 0.95)`-shaped output with the statements in kind-then-probability order; UnicodeMath with marker `coverage-interval:shortest(10.3,9.9,10.7,0.95)`; MathML intent likewise; OMML marker run matching.
+
+[example]
+The same with kind `probabilistically-symmetric`.
+*Expected outcome.* AsciiMath spells `symmetric`; the markers and statements spell `probabilistically-symmetric`; the model value round-trips either spelling back to the same kind.
+
+=== Unit handling (classes `encode-*`)
+
+[example]
+A unit the UnitsML reader rejects, in AsciiMath.
+*Expected outcome.* the call renders and the unit follows visibly after it; the quoted channel is absent; nothing is dropped.
+
+=== Round trips
+
+[example]
+Each corpus node's lossless encoding read back.
+*Expected outcome.* a node equal to the original in every field, including category, notation and interval kind; the unit equals the original unit.
+
+=== Round trips through the quoted channel
+
+[example]
+`ustd(10.3, 0.2) "unitsml(m/s2)"` read back by the AsciiMath reader of document 1003.
+*Expected outcome.* a node equal to the original: value `10.3`, magnitude `0.2`, absolute notation, unit the UnitsML embedding of `m/s2`; the quoted channel reconstructs the unit exactly.
+
+[example]
+`10.3(2)` read back.
+*Expected outcome.* a node with value `10.3`, magnitude `0.2`, notation `concise`; the concise digit string of the reconstructed node renders `10.3(2)` again.
+
+=== The refusal vectors, rule by rule
+
+One vector per validation rule, so the corpus pins every refusal message.
+
+[example]
+A `coverage_probability` field on a standard node.
+*Expected outcome.* refused: "coverage_probability does not apply to a standard uncertainty".
+
+[example]
+An `interval_kind` on an expanded node.
+*Expected outcome.* refused: "interval_kind does not apply to a expanded uncertainty".
+
+[example]
+A standard node without a magnitude.
+*Expected outcome.* refused: "magnitude is required for a standard uncertainty".
+
+[example]
+An expanded node without a coverage factor.
+*Expected outcome.* refused: "coverage_factor is required for a expanded uncertainty".
+
+[example]
+A coverage-interval node without an upper endpoint.
+*Expected outcome.* refused: "upper is required for a coverage interval uncertainty" — the node names its category as it does in the markers, with hyphens.
+
+[example]
+A negative magnitude.
+*Expected outcome.* refused: the magnitude must be an unsigned plain decimal.
+
+[example]
+A value `1.5e3`.
+*Expected outcome.* refused: exponent forms are not plain decimals; the author writes `1500` or reports in a smaller unit.
+
+[example]
+A notation `concise` argument on an expanded node.
+*Expected outcome.* refused: "notation :concise applies only to a standard uncertainty".
+
+[example]
+An empty unit formula.
+*Expected outcome.* refused: "unit must not be empty".
+
+[example]
+A value that is not a `Number` node at all.
+*Expected outcome.* refused: "value must be a Math::Number holding a plain decimal, got ..." — the message carries the offending object's inspection.

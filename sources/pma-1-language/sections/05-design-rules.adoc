@@ -1,7 +1,7 @@
 == Design rules
 
 . **Owned grammar** — reserved words are terminals; the build fails on any collision between reserved words and registry ∪ unitsdb symbols/names (verified empty for `unit`, `ustd`, `uexp`, `ucov`, `diff`, `quantity`).
-. **Explicit input** — values are typed explicitly; reporting conventions are output-only (concise: Plurimath 2).
+. **Explicit input** — values are typed explicitly; reporting conventions are output-only (concise: Plurimath 1002).
 . **Strict errors** — malformed forms are parse errors; there is no fallback-to-letters and no load-bearing whitespace.
 . **No strings-as-syntax** — the legacy quoted-channel trick does not exist here; `unit(...)` is unquoted.
 . **No conversion syntax** — conversion is an evaluation operation (Plurimath 4).

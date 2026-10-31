@@ -1,0 +1,180 @@
+== Per-format encodings
+
+=== The encoding matrix
+
+Each format has one encoding per category. The matrix states which formats carry the semantics machine-readably (via the marker) and which carry the reported shape only.
+
+.Encoding matrix
+[cols="2,2,2,2,2", options="headers"]
+|===
+|Format |standard |expanded |coverage-interval |Semantics carrier
+
+|AsciiMath |`ustd(v, m)` |`uexp(v, m, k, p)` |`ucov(v, l, u, p, kind)` |the call itself
+|LaTeX |`v(m)` |`(v \pm m)` + statements |`v, [l, u]` + statements |shape only
+|HTML |`v(m)` |`(v ± m)` + statements |`v, [l, u]` + statements |shape only
+|UnicodeMath |intent wrapper |intent wrapper |intent wrapper |`ⓘ("marker"...)`
+|MathML |`intent` on the enclosing `mrow` |same |same |intent attribute
+|OMML |marker run + shape |same |same |marker convention
+|===
+
+=== AsciiMath
+
+The category call names are `ustd`, `uexp`, `ucov`. Arguments are the node's numbers in category order, comma-space separated. The interval kinds are spelled `shortest` and `symmetric` in AsciiMath (the model's `probabilistically-symmetric`, respelled because AsciiMath reads `-` as minus). The concise notation renders the reporting form `v(digits)` instead of a call. The unit travels in the quoted UnitsML channel `"unitsml(...)"` when the unit is expressible there (clause 10).
+
+[example]
+The four standard-uncertainty shapes.
+*Expected outcome.* value `10.3` magnitude `0.2` absolute: `ustd(10.3, 0.2)`; the same with notation concise: `10.3(2)`; expanded with k = 2, p = 0.95: `uexp(10.3, 0.5, 2, 0.95)`; interval `shortest` with p = 0.95: `ucov(10.3, 9.9, 10.7, 0.95, shortest)`; the symmetric kind spells `symmetric` in the same position.
+
+=== LaTeX
+
+The standard category renders the reporting form `v(m)` — the full magnitude in the parentheses, whatever the notation. The expanded category renders `(v \pm m)` followed by the statements `~(k = K)` and `(p = P)` for the fields present. The interval category renders `v,~[l, u]` followed by the kind and probability statements. Statements are appended after the unit.
+
+[example]
+The expanded node of clause 6 in LaTeX.
+*Expected outcome.* `(10.3 \pm 0.5) g~(k = 2, p = 0.95)` — shape, unit, then the statements, in that order.
+
+=== HTML
+
+The HTML encoding is the LaTeX encoding with the Unicode ± (U+00B1), plain spaces, and no TeX-specific spacing. Interval and statement shapes are identical.
+
+=== UnicodeMath
+
+The whole node is wrapped in an intent: `ⓘ("marker" visible)`, where marker is the full marker string of clause 5 and visible is the display shape — the reporting form for standard, `(v±m)` plus statement text for expanded, `v, [l, u]` plus statement text for the interval. A unit travels in `ⓐ(unit ...)` inside the wrapper.
+
+[example]
+The standard node in UnicodeMath.
+*Expected outcome.* `ⓘ("standard-uncertainty(10.3,0.2)"10.3(0.2))` — marker with arguments, then the visible shape.
+
+=== MathML
+
+The node renders as an `mrow` carrying the `intent` attribute with the marker string. Its content: `mn` for the value, a fenced group for the magnitude (`(m)`), `(v ± m)` for expanded, `mn(v), mfenced[l, u]` for the interval, followed by the unit's MathML form when present.
+
+=== OMML
+
+The OMML surface carries the marker as a convention: a run holding the marker string precedes the shape runs (value run, fence with magnitude run, and so on), and the unit, when present, is boxed. OMML has no intent mechanism; the marker run is the machine-readable channel, and consumers that do not understand it ignore one run of text.
+
+=== Statements
+
+The appended statements of LaTeX, HTML and UnicodeMath state the fields the shape cannot show: the coverage factor as `k = K`, the coverage probability as `p = P`, the interval kind as its spelled name. Statements appear in one fixed order — kind, factor, probability — after the unit.
+
+=== Emission algorithms
+
+The encodings are stated as algorithms so that two implementations cannot diverge over punctuation or order.
+
+==== AsciiMath emission
+
+. Begin the call: the category name (`ustd`, `uexp`, `ucov`) and `(`.
+. Append the arguments in the order of Annex A, comma-space separated, omitting absent optional arguments.
+. Close the call with `)`.
+. For a standard node with concise notation, emit instead the reporting form: the value, `(`, the concise digit string, `)`.
+. If the unit is expressible in UnitsML, append a space and `"unitsml(<expression>)"`; otherwise append a space and the unit's own AsciiMath rendering.
+
+==== LaTeX emission
+
+. Standard: the value, `(`, the full magnitude, `)`.
+. Expanded: `(`, the value, ` \pm `, the magnitude, `)`.
+. Interval: the value, `,~[`, the lower, `, `, the upper, `]`.
+. Append the unit's LaTeX rendering, preceded by a space, when present.
+. Append the statements (Annex A order), each preceded by `~` in LaTeX.
+
+==== HTML emission
+
+Identical to LaTeX with three substitutions: `±` (U+00B1) for `\pm`, plain spaces for the tildes, and no TeX spacing inside the interval.
+
+==== UnicodeMath emission
+
+. Begin `ⓘ("` and the marker string (clause 5), then `"`.
+. Append the visible shape: the reporting form for standard (absolute shape regardless of notation), `(v±m)` for expanded with the statement texts appended as plain text, `v, [l, u]` for the interval likewise.
+. If the unit is present, append `ⓐ(unit ` and the unit's UnicodeMath rendering and `)`.
+. Close with `)`.
+
+==== MathML emission
+
+. Open an `mrow` with the `intent` attribute set to the marker string.
+. Standard: `mn` with the value, then an `mfenced` open and close parenthesis containing `mn` with the full magnitude.
+. Expanded: `mfenced` containing `mn`(value), `mo`(±), `mn`(magnitude).
+. Interval: `mn`(value), `mo`(,), `mfenced` with open bracket and close bracket containing `mn`(lower), `mo`(,), `mn`(upper).
+. Append the unit's MathML form when present. Close the `mrow`.
+
+==== OMML emission
+
+. Emit a run containing the marker string.
+. Emit the shape runs: the value, then a fenced group for the magnitude (standard) or the parenthesised ± group (expanded) or the bracketed interval (interval).
+. If the unit is present, emit it boxed after the shape.
+
+=== Reading contracts
+
+The reading contracts of the lossless encodings belong to document 1003. This document constrains them with one rule each:
+
+* AsciiMath: the call forms and the concise reporting form read back to the node with the fields the arguments carry;
+* UnicodeMath: the `ⓘ` wrapper is authoritative for the fields; the visible shape is regenerated;
+* MathML: the `intent` attribute is authoritative;
+* OMML: the marker run is authoritative;
+* LaTeX and HTML: display surfaces, not read.
+
+A reader that finds a marker and a visible shape disagreeing follows the marker.
+
+=== Encodings by category, format by format
+
+==== AsciiMath
+
+.Encoding table, AsciiMath
+[cols="2,4", options="headers"]
+|===
+|Node |Encoding
+
+|standard, absolute, no unit |`ustd(10.3, 0.2)`
+|standard, concise |`10.3(2)`
+|standard, absolute, unit `g` |`ustd(10.3, 0.2) "unitsml(g)"`
+|expanded with k and p |`uexp(10.3, 0.5, 2, 0.95)`
+|expanded without p |`uexp(10.3, 0.5, 2)`
+|interval, shortest, with p |`ucov(10.3, 9.9, 10.7, 0.95, shortest)`
+|interval, symmetric, without p |`ucov(10.3, 9.9, 10.7, symmetric)`
+|===
+
+==== LaTeX
+
+.Encoding table, LaTeX
+[cols="2,4", options="headers"]
+|===
+|Node |Encoding
+
+|standard, absolute |`10.3(0.2)`
+|standard, concise |`10.3(0.2)` — the carried magnitude, never the digit string
+|expanded with k and p |`(10.3 \pm 0.5)~(k = 2,~(p = 0.95))`
+|expanded without p |`(10.3 \pm 0.5)~(k = 2)`
+|interval, shortest, with p |`10.3,~[9.9, 10.7]~(shortest,~(p = 0.95))`
+|===
+
+==== UnicodeMath
+
+The wrapper makes the shape visible and the fields authoritative:
+
+.Encoding table, UnicodeMath
+[cols="2,4", options="headers"]
+|===
+|Node |Encoding
+
+|standard, absolute |`ⓘ("standard-uncertainty(10.3,0.2)"10.3(0.2))`
+|standard, concise |`ⓘ("standard-uncertainty:concise(10.3,0.2)"10.3(0.2))`
+|expanded with k and p |`ⓘ("expanded-uncertainty(10.3,0.5,2,0.95)"(10.3±0.5)(k = 2)(p = 0.95))`
+|interval, shortest, with p |`ⓘ("coverage-interval:shortest(10.3,9.9,10.7,0.95)"10.3, [9.9, 10.7](shortest)(p = 0.95))`
+|===
+
+==== MathML and OMML
+
+Both carry the marker of clause 5 as the authoritative channel and the same visible shapes as HTML, with the construction rules of the emission algorithms. The marker argument list is identical in both.
+
+=== Statement grammar
+
+The statement texts are a small fixed grammar, so that a reader can recover k, p and the kind from the shape-only encodings:
+
+----
+statement = kind-statement | factor-statement | probability-statement
+kind-statement        = "(" kind ")"
+factor-statement      = "(" "k" "=" unsigned-decimal ")"
+probability-statement = "(" "p" "=" unsigned-decimal ")"
+kind = "shortest" | "probabilistically-symmetric"
+----
+
+Statements appear in the order kind, factor, probability, separated by a space in HTML and by `~` in LaTeX. The readers of document 1003 use this grammar to recover the fields; a statement outside the grammar is not part of a node's encoding.

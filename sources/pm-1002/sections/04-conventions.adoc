@@ -1,0 +1,37 @@
+== Conventions
+
+=== General
+
+Encodings are written as literal output: `10.3(0.2)` is the two-character-group rendering with a full-width-free ASCII parenthesis pair; ± is the Unicode character U+00B1. Format names follow PM 1001: MathML, OMML, LaTeX, UnicodeMath, HTML, AsciiMath.
+
+=== Examples
+
+Examples appear in blocks titled *Example* and end with an *Expected outcome* paragraph stating the observable behaviour of a conforming implementation. Where an example shows per-format output, the outcome lists the rendering of every format the example names.
+
+=== Numbers
+
+Number fields carry exact decimals as text. This document never rounds: where a rule compares decimals it compares them exactly, digit by digit, without converting to floating point.
+
+=== Model references
+
+The node model is written in LML (clause 5) as in PM 1001; the LML blocks are normative and compile with the LutaML toolchain.
+
+=== The formats
+
+.Format names and roles in this document
+.Format names and roles
+[cols="2,3,3", options="headers"]
+|===
+|Format |Role |Carries semantics via
+
+|AsciiMath |lossless linear form |the category call
+|LaTeX |output; display |shape and statements
+|HTML |output; display |shape and statements
+|UnicodeMath |lossless linear form |the `ⓘ` intent wrapper
+|MathML |lossless markup form |the `intent` attribute
+|OMML |lossless office form |the marker run
+|===
+
+=== Marker rendering in prose
+
+Marker strings are shown in `monospace`; ± denotes U+00B1; the `ⓘ` and `ⓐ` characters are U+24D8 and U+24D0. Encodings in tables are literal: what the table shows is what a conforming writer emits, byte for byte, apart from the number slots.

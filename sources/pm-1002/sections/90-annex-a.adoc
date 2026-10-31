@@ -1,0 +1,68 @@
+== Annex A: encoding details
+
+=== General
+
+This annex fixes the remaining details the clause 9 tables summarise: argument orders, statement texts, spelling tables and the marker grammar. The encodings here are normative to the byte for the fixed parts (call names, punctuation, marker strings); the numbers are verbatim by clause 8.
+
+=== Argument orders
+
+.Call argument orders
+[cols="2,4,2", options="headers"]
+|===
+|Call |Arguments in order |Optional
+
+|`ustd(v, m)` |value, magnitude |none
+|`uexp(v, m, k, p)` |value, magnitude, coverage factor, coverage probability |p
+|`ucov(v, l, u, p, kind)` |value, lower, upper, coverage probability, kind |p
+|===
+
+Omitted optional arguments do not leave empty positions: `uexp(10.3, 0.5, 2)` is the encoding of an expanded node without probability, and `ucov(10.3, 9.9, 10.7, shortest)` of an interval without one.
+
+=== Statement texts
+
+.Statements appended after the unit
+[cols="2,3,3", options="headers"]
+|===
+|Field |LaTeX text |HTML text
+
+|interval kind |`~(shortest)` |`(shortest)`
+|coverage factor |`~(k = 2)` |`(k = 2)`
+|coverage probability |`~(p = 0.95)` |`(p = 0.95)`
+|===
+
+Statements appear in the order kind, factor, probability. The kind statement appears only for the interval category, the factor statement only for the expanded category, the probability statement for either when the field is present.
+
+=== Interval kind spelling
+
+.Interval kind by surface
+[cols="2,2,3", options="headers"]
+|===
+|Model value |AsciiMath |Markers and statements
+
+|shortest |`shortest` |`shortest`
+|probabilistically-symmetric |`symmetric` |`probabilistically-symmetric`
+|===
+
+The AsciiMath respelling exists because `-` reads as minus there. Every other surface uses the full model name.
+
+=== Concise digit string
+
+The concise digit string is computed from the magnitude's text: remove the decimal point, remove the leading zeros of the result. An empty result renders as `0`.
+
+[example]
+Magnitudes and their concise digit strings at value `10.3`.
+*Expected outcome.* `0.2` gives `2`; `0.20` gives `20` — and the node is refused, because `0.20` has two decimal places against the value's one; `2` gives `2` at value `10` (decimal places zero on both sides); `0.0` gives `0` at value `10.0`.
+
+=== Marker grammar
+
+----
+marker          = category-marker [ ":concise" ] [ ":" kind ]
+category-marker = "standard-uncertainty" | "expanded-uncertainty" | "coverage-interval"
+kind            = "shortest" | "probabilistically-symmetric"
+----
+
+The `:concise` qualifier appears only on the standard marker, the `:kind` qualifier only on the coverage-interval marker. Where the enclosing format shows marker arguments, they are the numbers in the call argument order of this annex, comma-separated without spaces.
+
+[example]
+Markers and their argument shapes.
+*Expected outcome.* `standard-uncertainty(10.3,0.2)`; `standard-uncertainty:concise(10.3,0.2)`; `expanded-uncertainty(10.3,0.5,2,0.95)`; `coverage-interval:shortest(10.3,9.9,10.7,0.95)`; `coverage-interval:probabilistically-symmetric(10.3,9.9,10.7)`.

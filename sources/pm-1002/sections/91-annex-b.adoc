@@ -1,0 +1,43 @@
+== Annex B: rejected designs
+
+This annex records the designs this model rejected and why, so that the decisions do not relitigate themselves.
+
+=== Uncertainty as arithmetic affinity
+
+Carrying uncertainty as an arithmetic property that propagates through every operator automatically (the design of Python's `uncertainties` package, where `ufloat(10.3, 0.2) * 2` yields a value with a propagated uncertainty) was rejected. Plurimath's tree is a formula tree, not an evaluation graph: propagation happens in evaluation (document 1004), on demand, with the GUM rules applied where the author asked for them. Attaching propagation to the node would force every rendering to be an evaluation and would give reported results and computed results different semantics in the same tree.
+
+=== Uncertainty as a first-class linear token
+
+Wolfram's `Around[10.3, 0.2]` renders `10.3 ± 0.2` and reads back symmetrically. The ± form was rejected as the model's carrier because it is ambiguous between the standard-uncertainty reading (± one standard uncertainty, the GUM convention) and the expanded reading (± U with a coverage factor) — the ambiguity the GUM itself warns about when the form is used without qualification. The ± shape remains a rendering of the expanded category, never the carrier.
+
+=== Concise as an input notation for reporting-shaped readers
+
+Accepting `10.3(2)` as an input shorthand everywhere was rejected: the concise rule needs the value's decimal-place count, and a reader that accepts it must silently reconstruct the magnitude — a transformation that belongs to a defined reading contract, not to every surface. The concise form is a reporting form the AsciiMath encoding emits and the AsciiMath reader of document 1003 reads under its stated rule.
+
+=== `+-` as an infix input
+
+The AsciiMath-style `+-` infix was rejected outright: `3+-1` is genuinely ambiguous, and the node model has no operation it could denote. The ± character is output-only, inside the encodings of clause 9.
+
+=== Per-format uncertainty markup families
+
+Encoding uncertainties as format-native layout per format (say, OMML phantom boxes that simulate reporting forms without any marker) was rejected: the semantics would live nowhere machine-readably. Every format's encoding carries the marker where the format has any machine-readable channel at all (intent in MathML and UnicodeMath, the marker run in OMML, the call in AsciiMath).
+
+=== Why three categories and no more
+
+The GUM family gives exactly three reported shapes: the standard uncertainty (one number), the expanded uncertainty (magnitude with a factor and optionally a probability), and the coverage interval (endpoints with a kind and optionally a probability). A fourth category — "coverage factor with asymmetric magnitudes", say — would need a shape no encoding defines and a semantics no JCGM document states; when such a category appears in practice, this document gains it at an edition, with its fields, its encodings and its corpus, rather than by stretching an existing one.
+
+=== Why the model carries the reporting notation
+
+A stricter design would carry only absolute magnitudes and let writers choose the reporting form. The concise notation is carried because the reporting form is part of how the author reported the result: `10.3(2)` and `10.3(0.2)` are the same measurement but not the same document. The model carries the distinction; the encodings honour it.
+
+=== Why statements and not subscripts or footnotes
+
+The k and p statements of the LaTeX and HTML encodings could be typeset as subscripts or marginal notes. Statements were chosen because they round-trip: a subscript would need parsing conventions in every reader to recover k and p, while the statement text is recoverable by the readers of document 1003 from the fixed statement grammar of this document's encodings.
+
+=== Why markers rather than format profiles
+
+A cleaner-looking alternative to the OMML marker run and the UnicodeMath wrapper is a "profile" convention: publish per-format stylesheets that recognise uncertainty shapes by their layout. Rejected: layout recognition is ambiguous exactly where the shapes overlap ((v ± m) is a legitimate ordinary expression), and a profile makes every consumer trust typesetting for semantics. The marker is explicit, travels inside the document, and needs no stylesheet.
+
+=== Why the category names the call
+
+`ustd`, `uexp` and `ucov` name the category in the AsciiMath encoding itself. A single call with a category argument (`unc(std, 10.3, 0.2)`) was rejected: the three forms differ in arity and argument meaning, so the argument list is only interpretable once the category is known — putting the category in the name keeps every call self-describing and keeps the concise reporting form a natural special case rather than a branch.

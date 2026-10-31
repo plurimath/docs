@@ -1,0 +1,75 @@
+== The three categories
+
+=== Standard uncertainty
+
+The standard uncertainty (JCGM 100 7.2.1) reports the result `v` with its standard uncertainty `m`. It carries `value` and `magnitude`, and its notation distinguishes the absolute form from the concise form (clause 7). It carries no coverage factor, no coverage probability and no endpoints.
+
+[example]
+"10.3 g, standard uncertainty 0.2 g".
+*Expected outcome.* a node with value `10.3`, magnitude `0.2`, notation absolute, unit `g`; rendering per clause 9 gives `ustd(10.3, 0.2) "unitsml(g)"` in AsciiMath and `10.3(0.2) g` in LaTeX and HTML.
+
+=== Expanded uncertainty
+
+The expanded uncertainty (JCGM 100 6.2.1, 7.2.3) reports the result `v` with uncertainty magnitude `m` and coverage factor `k`, optionally with the coverage probability `p` that was used to choose `k`. The magnitude here is the expanded uncertainty itself, not a standard uncertainty.
+
+The coverage factor is a positive unsigned decimal: `0`, `0.5` and negative factors do not describe coverage factors and are refused. The coverage probability, when present, lies strictly between 0 and 1; both bounds are exact decimal comparisons, not float comparisons.
+
+[example]
+"U = 0.5 g at k = 2, p = 95%".
+*Expected outcome.* a node with value `10.3`, magnitude `0.5`, coverage factor `2`, coverage probability `0.95`, unit `g`; rendering per clause 9 gives `uexp(10.3, 0.5, 2, 0.95) "unitsml(g)"` in AsciiMath and `(10.3 ± 0.5) g (k = 2, p = 0.95)`-shaped output in LaTeX and HTML with the statements appended.
+
+=== Coverage interval
+
+The coverage interval (JCGM 101 5.3, 5.5) reports the result `v` with the interval `[l, u]` and its kind: `shortest` or `probabilistically-symmetric`, optionally with the coverage probability `p`. The magnitude and coverage factor fields do not apply.
+
+The interval kind is carried because the two kinds differ semantically — the shortest interval of a distribution need not be its probabilistically symmetric one — and the distinction survives every encoding that can carry it. In AsciiMath the symmetric kind is spelled `symmetric` (the `-` of `probabilistically-symmetric` would read as minus); the model carries the one kind and each format spells it its own way.
+
+[example]
+"10.3 g, 95% coverage interval [9.9, 10.7], shortest".
+*Expected outcome.* a node with value `10.3`, lower `9.9`, upper `10.7`, interval kind `shortest`, coverage probability `0.95`, unit `g`; rendering per clause 9 gives `ucov(10.3, 9.9, 10.7, 0.95, shortest)` in AsciiMath and `10.3, [9.9, 10.7]` with the probability statement in LaTeX and HTML.
+
+=== Category identity
+
+The category is part of the node's identity: two nodes with the same numbers and different categories are different nodes. A round trip that loses the category is a lossy round trip, and the encodings of clause 9 are designed so that no lossless format loses it.
+
+=== Choosing a category
+
+The category is the author's statement about their result, and the model carries it rather than inferring it:
+
+[cols="2,2,2,3", options="headers"]
+.Category guidance
+|===
+|The author's report |Category |Fields the node carries |Surface shape
+
+|"u = 0.2 g" |standard |value, magnitude |`v(m)` reporting form
+|"U = 0.5 g, k = 2" |expanded |value, magnitude, factor |`(v ± m)` with statements
+|"[9.9, 10.7] at 95%" |coverage-interval |value, endpoints, kind |`v, [l, u]` with statements
+|===
+
+Converting between categories is not a rendering act: turning a standard uncertainty into an expanded one requires multiplying by a factor — a computation belonging to document 1004, performed on request, producing a new node. An encoding never silently upgrades one category's shape to another's.
+
+=== The category in the encodings
+
+Every encoding that can carry semantics carries the category name explicitly: the AsciiMath call names it (`ustd`, `uexp`, `ucov`), and the markers begin with it (`standard-uncertainty`, `expanded-uncertainty`, `coverage-interval`). The shape-only encodings (LaTeX, HTML) distinguish the categories by shape alone — the reporting form, the ± form, the interval form — which is unambiguous precisely because the model defines exactly three shapes and refuses everything else.
+
+[example]
+The three categories with the same value `10.3` and unit `g`, side by side in LaTeX.
+*Expected outcome.* `10.3(0.2) g`, `(10.3 \pm 0.5) g~(k = 2)`, and `10.3,~[9.9, 10.7] g~(shortest, p = 0.95)` — three distinguishable shapes, no shared ambiguity.
+
+=== The JCGM grounding
+
+.Category grounding in the JCGM family
+[cols="2,2,3", options="headers"]
+|===
+|Category |Grounding |What the node carries beyond the JCGM form
+
+|standard |JCGM 100 7.2.1–7.2.2 reporting forms |the notation distinction and the exact-decimal discipline
+|expanded |JCGM 100 6.2.1, 7.2.3 |the reported factor and probability, carried verbatim
+|coverage-interval |JCGM 101 5.3, 5.5 |the interval kind, made explicit per endpoint pair
+|===
+
+The model adds no metrology of its own. Everything metrological — which k to choose, which interval is shortest, whether the distribution is symmetric enough for the symmetric interval — is the author's or the evaluator's (document 1004); the node records what was reported.
+
+=== Interval kinds, precisely
+
+The shortest coverage interval of a probability distribution and its probabilistically symmetric interval coincide only for symmetric distributions. JCGM 101 distinguishes them because Monte Carlo results need not be symmetric; a reported interval says which one it is, and downstream consumers treat them differently when combining or comparing results. The model carries the distinction on every interval node; the encodings carry it in every channel that carries anything.
