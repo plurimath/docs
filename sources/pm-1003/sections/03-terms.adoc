@@ -1,0 +1,57 @@
+== Terms and definitions
+
+For the purposes of this document, the following terms and definitions apply.
+
+=== reader
+a component that converts text or markup of one accepted type into a formula tree
+
+=== writer
+a component that converts a formula tree into the bytes of one output surface
+
+=== interface
+one format's reader, writer, or pair
+
+=== accepted type
+one of the type keys the parse entry point validates: `asciimath`, `html`, `latex`, `mathml`, `omml`, `unicode`, `unitsml`
+
+=== input string
+the original text a reader received, preserved on the yielded tree for diagnostics
+
+=== typed error
+one of the error classes of Annex A; the only failures that cross an interface boundary
+
+=== locale
+the parse option selecting language-specific symbol readings for the localized types
+
+=== lossless direction
+a reader-writer pair whose composition returns a tree equal to the one rendered
+
+=== round trip
+render a tree with a writer and read the result back with the same format's reader
+
+=== intent authority
+the rule that a marker (intent attribute, marker run, intent wrapper) determines the fields, and the visible shape is regenerated from them
+
+=== approximate rendering
+a registry entry's LaTeX rendering that does not carry the construct exactly; recorded with the entry, equal in both directions
+
+=== reading corpus
+the frozen inputs and their trees, replayed to discharge reading claims
+
+=== boundary
+the seam between the system and a caller, of which this document defines two: the reader's and the writer's
+
+=== channel
+the quoted UnitsML string of the AsciiMath interface; the reserved form carrying unit expressions
+
+=== marker run
+the OMML run carrying an uncertainty marker ahead of its construct
+
+=== wrapper
+the UnicodeMath `ⓘ("marker" visible)` construct carrying machine-readable intent
+
+=== display form
+the presentation variant of a surface selected by display style
+
+=== corpus generation
+a published, immutable version set of the corpora; claims name the generation they were checked against

@@ -1,0 +1,17 @@
+== Conventions
+
+=== General
+
+Interface signatures are written as `parse(text, type, **options)` and `to_<format>(options)` following the implementation's shape; this document specifies behaviour, not a language binding. Format names follow PM 1001.
+
+=== Examples
+
+Examples carry an *Expected outcome* paragraph stating observable behaviour. Where an example shows reading, the outcome states the resulting tree; where it shows failure, the typed error and its message shape.
+
+=== Normative encodings
+
+The encodings read and written here are the ones defined in PM 1001 (surfaces) and PM 1002 (uncertainty); this document adds the reading rules, not new encodings.
+
+=== Corpus entries
+
+Where an example says "the corpus freezes" an outcome, the frozen vector is the example with its provenance; the corpora are external, versioned artifacts, and this document's examples are their illustrations.

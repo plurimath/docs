@@ -1,3 +1,0 @@
-== Foreword
-
-The math model (Plurimath 1001) meets the world through five format interfaces. Each interface is a bidirectional contract where reading is meaningful and an emission contract where it is not. Uncertainty's per-format encodings live in Plurimath 1002; this part carries everything else.

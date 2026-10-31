@@ -1,7 +1,0 @@
-[bibliography]
-== Bibliography
-
-* [[[mathml4-b,nofetch(W3C MathML 4)]]]
-* [[[ecma376-b,nofetch(ECMA-376)]]]
-* [[[unicodemath-b,nofetch(UnicodeMath linear format)]]]
-* [[[siunitx,nofetch(siunitx documentation)]]] (presentation alignment)

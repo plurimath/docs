@@ -1,0 +1,76 @@
+== The LaTeX and HTML interfaces
+
+=== LaTeX
+
+The LaTeX reader accepts the fragment-level LaTeX the writer emits, plus the common mathematical core: commands of the registry vocabulary, environments for tables and alignment, and math-mode grouping. It does not accept document preamble, packages or free text outside math.
+
+LaTeX is a lossless direction for the model's constructs: writing and reading returns an equal tree, with the exceptions the registry records (constructs whose LaTeX rendering is approximate carry the approximation in both directions and are equal as trees).
+
+The LaTeX writer emits per PM 1001 and PM 1002, with the statements of PM 1002 after the unit.
+
+=== HTML
+
+HTML is a display surface. The writer emits an HTML fragment optimised for browser presentation: nested elements for structure, sub/sup for scripts, and the encodings of PM 1002 for uncertainty. HTML does not read: the interface has a writer only, and round-trip claims do not include it.
+
+[example]
+Writing the quadratic formula to HTML and to LaTeX.
+*Expected outcome.* the HTML fragment renders the same content with presentational markup; the LaTeX fragment is the lossless one; only LaTeX reads back.
+
+=== Command mapping
+
+.LaTeX commands to nodes
+[cols="2,2,3", options="headers"]
+|===
+|Command or environment |Node |Notes
+
+|registry commands |`Symbol` |`\alpha`, `\sum`, `\infty`, and so on
+|digits and `.` |`Number` |in math mode
+|`\frac{}{}`, `\tfrac`, `\dfrac` |`Frac` |style variants to the same node
+|`\sqrt{}{}`, `\sqrt[]{}` |`Sqrt`, `Root` |optional degree
+|`^{}`, `_{}` |script classes |grouping per braces
+|`\sum_{}^{}` and kin |the nary classes |limits as given
+|`\left..\right` |`Fenced` |delimiter pair preserved
+|`matrix`, `pmatrix`, `cases`, `aligned` |the table classes |environment per class
+|`\text{}`, `\mbox{}`, `\mathrm{}` |`Text`, font styles |per command
+|`\hat`, `\bar`, `\vec` and kin |the accent classes |per command
+|`\mathbf{}` and kin |font styles |per command
+|`\textcolor{}{}` |`Color` |colour argument carried
+|uncertainty shapes |`Uncertainty` |per PM 1002's LaTeX encodings and statements
+|===
+
+=== What the LaTeX reader refuses
+
+Preamble, `\usepackage`, document environments and free prose between math are refused: the interface is a math fragment interface. A document that carries formulas in prose extracts the formulas first; that extraction is outside this interface.
+
+=== The HTML writer's output shape
+
+The HTML writer emits nested presentational elements: spans for structure, `sub`/`sup` for scripts, fraction layouts with borders, tables for matrices, and the statement spans of PM 1002. Class names are stable within an edition and the corpus freezes them.
+
+=== An HTML fragment, concretely
+
+The HTML writer's shape, for the power example of PM 1001:
+
+[source,html]
+----
+<span class="plurimath-formula"><i>x</i><sup>2</sup></span>
+----
+
+The class names are the writer's stable surface: editions may add classes, never rename them. Presentational decisions (fonts, sizes) belong to the host page's styles; the fragment carries structure and semantics only.
+
+=== LaTeX shape, concretely
+
+The same tree in LaTeX:
+
+[source,latex]
+----
+x^{2}
+----
+
+and the quadratic formula:
+
+[source,latex]
+----
+x = \left(-b \pm \sqrt{b^{2} - 4ac}\right)/(2a)
+----
+
+The writer emits the linear fraction form when the tree was read from one and the `\frac` form when built as `Frac`; both read back to equal trees, and the round-trip corpus carries both shapes.

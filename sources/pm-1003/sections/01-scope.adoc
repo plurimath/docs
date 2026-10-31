@@ -1,0 +1,60 @@
+== Scope
+
+=== General
+
+This document specifies the format interfaces of the Plurimath system:
+
+* the interface model: readers and writers as typed boundaries over the formula tree;
+* the reader contract: accepted types, options, error behaviour, and the guarantees every reader makes about the tree it yields;
+* the writer contract: entry points, determinism, and the display-style option;
+* the per-format rules for AsciiMath, MathML, OMML, UnicodeMath, LaTeX and HTML, including how the uncertainty encodings of PM 1002 read;
+* image rendering through the optional renderer;
+* round-trip properties and their exceptions;
+* conformance of an implementation.
+
+This document does not specify:
+
+* the grammar of each input notation in the abstract — the accepted surface is what the readers accept, and the writer surfaces are defined in PM 1001 and PM 1002;
+* the math model itself (PM 1001) or the uncertainty fields (PM 1002);
+* numeric evaluation (PM 1004).
+
+=== Relationship to the series
+
+.Relationship to the series
+[cols="1,3", options="headers"]
+|===
+|Document |Relationship to this one
+
+|1001 Math model
+|defines the tree readers yield and the surfaces writers serve
+
+|1002 Uncertainty model
+|defines the encodings this document specifies reading for
+
+|1004 Evaluation
+|consumes the trees readers yield; not a boundary of this document
+
+|===
+
+=== Audience
+
+Implementers of Plurimath, authors of independent readers or writers that must interoperate with it, and applications embedding the system.
+
+=== The interface inventory
+
+.The interfaces this document specifies
+[cols="2,2,2,2", options="headers"]
+|===
+|Format |Reader |Writer |Round trip
+
+|asciimath |yes |yes |lossless
+|latex |yes |yes |lossless
+|html |yes |yes |display only
+|mathml |yes |yes |lossless
+|omml |yes |yes |lossless
+|unicode |yes |yes |lossless
+|unitsml |yes (unit expressions) |— |—
+|image rendering |— |yes (svg, png, pdf, ps) |—
+|===
+
+Every interface reads or writes the one tree of PM 1001; none of them defines content of its own.

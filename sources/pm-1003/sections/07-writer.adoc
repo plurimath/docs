@@ -1,0 +1,64 @@
+== The writer contract
+
+=== Entry points
+
+A tree writes to each surface through one entry point: `to_asciimath`, `to_mathml`, `to_omml`, `to_latex`, `to_unicodemath`, `to_html`. The surfaces, their outer elements and their stability rules are PM 1001's; this document adds the interface obligations.
+
+.Writers and obligations
+[cols="2,3,3", options="headers"]
+|===
+|Entry point |Obligation this document adds |Reads back
+
+|`to_asciimath` |emits the call forms and reporting forms that clause 8 reads |yes
+|`to_mathml` |emits intent markers that clause 9 reads |yes
+|`to_omml` |emits marker runs that clause 10 reads |yes
+|`to_unicodemath` |emits the intent wrapper that clause 11 reads |yes
+|`to_latex` |emits shapes and statements; display surface |no
+|`to_html` |emits shapes and statements; display surface |no
+|===
+
+=== Determinism
+
+Writers are deterministic and byte-stable per PM 1001. This document adds: a writer emits only through its own boundary — no writer depends on a reader having produced the tree, and no writer consults the tree's `input_string`.
+
+=== The display-style option
+
+The root's display flag (PM 1001) may be forced per call: a writer asked for display style renders the display form regardless of the root's flag, and one asked for inline renders inline. Absent an override, the root's flag decides.
+
+=== Failure
+
+A writer given a well-formed tree does not fail. A writer given a tree that violates PM 1001 — an operand missing, an unknown node class — is outside the contract; implementations report it as a programming error, not as a parse or rendering error.
+
+[example]
+The same uncertainty node written to all six surfaces and the outputs collected.
+*Expected outcome.* six encodings, one per PM 1002's tables; byte-identical output on every conforming implementation for each.
+
+=== Family obligations per surface
+
+The writers' family obligations, at the level this document pins them (the per-construct detail is PM 1001's mapping and PM 1002's encodings):
+
+.Obligations by family
+[cols="2,2,2,2,2,2", options="headers"]
+|===
+|Family |AsciiMath |MathML |OMML |UnicodeMath |LaTeX / HTML
+
+|content |literal |`mn`/`mi`/`mo`/`mtext` |runs |literal |literal elements
+|structure |linear grouping |`mrow` families |construct elements |parentheses |nested elements
+|scripts |`^`/`_` |script elements |script elements |`^`/`_` |`sup`/`sub`, braces
+|fractions |`/` |`mfrac` |`m:f` |`/` |`\frac`, layouts
+|nary |name + limits |nary elements |`m:nary` |symbol + limits |commands + limits
+|tables |`[[..]]` forms |`mtable` family |`m:m` family |`■(...)` |environments, tables
+|fonts |call forms |`mathvariant` |run properties |alphanumeric ranges |font commands, styles
+|uncertainty |calls, reporting form |intent |marker run |wrapper |shapes + statements
+|units |quoted channel |UnitsML form |UnitsML form |`ⓐ` form |UnitsML form
+|===
+
+Every cell is discharged by the corpora: each family's row in each surface's column has corpus vectors, and a writer claim covers its column end to end.
+
+=== Writing what was not read
+
+A tree may be built by construction — an application assembling nodes — rather than by reading. Writers treat constructed trees identically: the boundary knows no difference between a read tree and a built one. This is what makes evaluation pipelines possible: document 1004's output trees write like any others.
+
+=== Idempotence of shape
+
+Writing a tree twice yields identical bytes. Writing a read-back tree yields the same bytes as writing the original: the round-trip property plus writer determinism give write-read-write idempotence per lossless format. The corpora assert it.

@@ -1,0 +1,31 @@
+== Annex A: the typed errors
+
+=== General
+
+These are the only errors that cross an interface boundary. Message shapes are stable within an edition; the messages carry the input, the type, or the field responsible.
+
+.Error classes
+[cols="2,3,3", options="headers"]
+|===
+|Error |Raised by |Means
+
+|`InvalidTypeError` |parse entry point |the type key is not an accepted type
+|`ParseOptionError` |parse entry point |an unknown option, or `locale` for a non-localized type
+|`ParseError` |any reader |the input cannot be read; carries the text and the type
+|`AmbiguousDecimalError` |uncertainty reading |a concise form whose decimal places cannot be reconstructed
+|`MissingDependencyError` |a reader |an optional parsing dependency is absent
+|`InvalidUncertainty` |uncertainty construction |a field set inconsistent with the category (PM 1002)
+|`RenderingUnavailable` |renderer |the image library is absent
+|`UnsupportedRenderFormat` |renderer |the requested image format is not offered
+|`RenderingFailed` |renderer |rendering failed on a tree that parsed
+|===
+
+Specialized parse errors are subclasses of `ParseError`: an implementation catching `ParseError` catches them all, and one catching the subclass catches the specific case.
+
+=== What never escapes
+
+Parser internals, XML library exceptions, encoding errors and assertion failures never cross a boundary as themselves: a reader converts them to `ParseError` with cause information retained for diagnostics. A boundary that leaks a foreign exception is nonconforming.
+
+[example]
+A MathML reader given input that makes the XML library raise.
+*Expected outcome.* the caller sees `ParseError` carrying the input text and the type `mathml`; the original exception is the cause, not the error.

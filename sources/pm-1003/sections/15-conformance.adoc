@@ -1,0 +1,79 @@
+== Conformance
+
+=== General
+
+Conformance to this document is claimed per interface class. Every claim is discharged by replaying frozen vectors; nothing here is satisfied by assertion.
+
+=== Conformance classes
+
+.Conformance classes
+[cols="1,3,3", options="headers"]
+|===
+|Class |Licenses the implementation to claim |Replay requirements
+
+|read-asciimath
+|reads AsciiMath per clause 8, including the uncertainty reading rules
+|the AsciiMath reading corpus, tree-identical replay
+
+|read-mathml
+|reads MathML per clause 9 |the MathML reading corpus
+
+|read-omml
+|reads OMML per clause 10 |the OMML reading corpus
+
+|read-unicodemath
+|reads UnicodeMath per clause 11 |the UnicodeMath reading corpus
+
+|read-latex
+|reads LaTeX per clause 12 |the LaTeX reading corpus
+
+|write-<surface>
+|writes a surface per clause 7 and PM 1001/1002 |the surface column of the render corpus, byte-identically
+
+|roundtrip-<format>
+|the lossless claim of clause 14 for a format |the format's write-then-read corpus
+
+|render-images
+|image rendering per clause 13 |the image corpus, byte-identically
+
+|full-interfaces
+|all of the above |all corpora
+|===
+
+A `read-<format>` claim carries the model claim of PM 1001; a `roundtrip-<format>` claim carries both directions' claims.
+
+=== The corpora
+
+The reading corpora are frozen sets of inputs with frozen trees; the round-trip corpora are frozen trees replayed through write and read. Entries state provenance and never change within an edition.
+
+=== Drift
+
+A reader that yields a tree differing from the corpus for the same input does not conform. A writer whose bytes differ from the render corpus does not conform at the corpus's model version. Drift is resolved by fixing the implementation or moving the model version, and recording which moved.
+
+=== Claiming
+
+A conformance claim names its classes, the model version, and the corpus generation. A claim without a corpus generation is not checkable and is not a claim.
+
+=== Independent implementations
+
+The contracts are written for more than the reference implementation: an independent reader that yields model trees per clause 6 and passes the reading corpora conforms, whatever its internals. An independent writer that passes the byte corpora conforms, whatever its codegen.
+
+=== The error corpus
+
+The typed errors are part of the contract and carry their own vectors: each error class has corpus entries whose expected outcome is the error with its message shape. An implementation that succeeds where the corpus expects a refusal does not conform — refusals are behaviour, not friction.
+
+=== Corpus provenance
+
+.Evidence each corpus entry carries
+[cols="2,4", options="headers"]
+|===
+|Field |Content
+
+|input or tree |the frozen input text, or the frozen tree for round-trip entries
+|expected |the frozen tree (readers), the frozen bytes (writers), or both (round trips)
+|model version |the version whose behaviour was frozen
+|corpus generation |the generation of the corpus set
+|provenance note |where the entry came from: a clause of this series, a defect fix, a community report
+|===
+
+Claims name the generation they were checked against; a claim against generation N is void for generation N+1 until rechecked. The validator of the register build enforces the naming.

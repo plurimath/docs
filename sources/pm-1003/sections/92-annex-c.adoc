@@ -1,0 +1,119 @@
+== Annex C: test-suite examples
+
+Vectors illustrative of the conformance classes of clause 15; the corpora freeze them.
+
+=== Reading (classes `read-*`)
+
+[example]
+Reading `sum_(i=1)^n i^3` in AsciiMath.
+*Expected outcome.* the nary tree of PM 1001's introduction example, with `input_string` preserved.
+
+[example]
+Reading `"unitsml(kg*m/s^2)"` inside an AsciiMath formula.
+*Expected outcome.* a `Unitsml` node with the expression `kg*m/s^2`; the quoted string is the channel, not text.
+
+[example]
+Reading an AsciiMath `ucov` call with kind `symmetric`.
+*Expected outcome.* a coverage-interval node with interval kind `probabilistically-symmetric`; the AsciiMath spelling maps to the model value.
+
+[example]
+Reading `10.3(2)`.
+*Expected outcome.* a standard uncertainty node, notation concise, magnitude `0.2`; `input_string` is `10.3(2)`.
+
+[example]
+Reading a MathML document whose uncertainty `mrow` carries a stale visible magnitude under an accurate intent marker.
+*Expected outcome.* the marker's fields win; the stale content is discarded.
+
+=== Failure (all readers)
+
+[example]
+`parse("x^2", :fortran)`.
+*Expected outcome.* `InvalidTypeError` before any parsing.
+
+[example]
+`parse("x^2", :asciimath, locale: :fr)` and `parse("<math/>", :mathml, locale: :fr)`.
+*Expected outcome.* the first parses with the French readings; the second raises `ParseOptionError` naming the type — MathML does not localize.
+
+[example]
+`parse("ustd(10.3, 0.25, notation: concise)", :asciimath)` — wait, that form is not input; the input `10.3(25)` with the wrong place count.
+*Expected outcome.* `AmbiguousDecimalError`: the digit string cannot be reconstructed at the value's decimal places.
+
+[example]
+An input that makes the XML library raise inside the MathML reader.
+*Expected outcome.* `ParseError` with the input and type; the foreign exception is the cause.
+
+=== Round trips (classes `roundtrip-*`)
+
+[example]
+A tree containing every node family of PM 1001's Annex A — one construct per class group — round-tripped through AsciiMath, MathML, OMML, UnicodeMath and LaTeX.
+*Expected outcome.* five writes, four equal read-backs, and the LaTeX output unread; the HTML column of the same corpus asserts bytes only.
+
+[example]
+A concise uncertainty node round-tripped through all four lossless formats.
+*Expected outcome.* notation concise after every read-back; the reporting form re-emitted identically each time.
+
+=== Image rendering (class `render-images`)
+
+[example]
+`render("x^2", :asciimath, format: :svg)` with the library present, then absent.
+*Expected outcome.* the SVG bytes frozen in the corpus; then `RenderingUnavailable`, raised before parsing repeats.
+
+=== Boundary behaviour (all classes)
+
+[example]
+The same call twice: `parse("x^2", :asciimath)` then `parse("x^2", :asciimath)` again.
+*Expected outcome.* two equal trees; no state carried between the calls; identical `input_string` on both.
+
+[example]
+A reader yielding to a writer of a different format immediately.
+*Expected outcome.* the composition works with no format-specific step; the output is a function of the tree.
+
+[example]
+`parse` called with an option the boundary does not know.
+*Expected outcome.* `ParseOptionError` naming the option; no parsing occurred.
+
+=== Localization vectors (localized readers)
+
+[example]
+An AsciiMath input containing a locale-specific function name, read with the matching locale, then with a different one.
+*Expected outcome.* the matching locale reads the function node; the other reading treats the token per its own vocabulary — the corpora freeze both outcomes rather than leaving the difference undefined.
+
+=== Uncertainty reading vectors (classes `read-*`)
+
+[example]
+An AsciiMath `ustd` call with three arguments.
+*Expected outcome.* a reading error: the standard call takes two; arity errors are `ParseError` with the input.
+
+[example]
+A UnicodeMath `ⓘ` wrapper whose quoted text is not a marker.
+*Expected outcome.* a reading error: the wrapper channel is reserved for markers.
+
+[example]
+An OMML sequence whose shape runs precede a marker run.
+*Expected outcome.* the marker is positional; a late marker run is text, and the construct reads without uncertainty fields unless another marker precedes it.
+
+=== Vocabulary vectors (classes `read-asciimath`, `read-unicodemath`, `read-latex`)
+
+[example]
+One representative token per symbol family, read in each linear format.
+*Expected outcome.* the same `Symbol` node per registry entry regardless of format; each format's token spelling is its own.
+
+[example]
+The same expression written with locale-selected function names and read under the matching and the default locale.
+*Expected outcome.* the corpora's frozen pair: function node under the matching locale, symbol-sequence reading under the default — both documented, neither an error.
+
+=== Structure vectors (classes `read-*`)
+
+[example]
+A deeply nested expression — a fraction inside a radical inside a script inside a nary limit — read in each markup format.
+*Expected outcome.* the same tree shape at every nesting level; no depth-related divergence between readers.
+
+[example]
+A table with a labelled row in MathML, read.
+*Expected outcome.* a `Mlabeledtr` in the tree; written to OMML and LaTeX as the labelled row of each surface; round-tripped equal.
+
+=== Writer idempotence (classes `write-*`)
+
+[example]
+Write a tree, read it back, write again — per lossless format.
+*Expected outcome.* the second write's bytes equal the first's, per format; the corpora assert write-read-write idempotence for every entry.

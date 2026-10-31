@@ -1,0 +1,65 @@
+== The OMML interface
+
+=== Reading
+
+The OMML reader accepts DrawingML mathematics (ECMA-376, `m:` namespace): runs, run properties, fractions, radicals, scripts, nary constructs, matrices, delimiters, and phantom boxes.
+
+The marker convention is authoritative for uncertainty: a run holding an uncertainty marker string (PM 1002's grammar) marks the construct that follows; the fields come from the marker and the shape runs are regenerated. A consumer that never learned the convention sees one extra run of text; a conforming reader consumes it.
+
+Run properties map to font styles; `m:nary` to the nary classes with their character; matrices to the table classes; `m:d` delimiters to `Fenced`. As with MathML, structure the model does not define is read to its closest representable content.
+
+=== Writing
+
+The OMML writer emits per PM 1001: run properties from font styles, `m:nary` from nary nodes, `m:m` matrices with the table class's delimiters, `m:d` from fences, and the marker run before the shape runs for uncertainty nodes, with the unit boxed. The display form wraps in `m:oMathPara` per the root's flag.
+
+=== Losslessness
+
+OMML is lossless for the model's constructs under the marker-authority rule.
+
+[example]
+Reading an OMML run sequence whose marker run says `coverage-interval:shortest(10.3,9.9,10.7,0.95)` followed by shape runs showing `[9.8, 10.8]`.
+*Expected outcome.* the tree carries the marker's endpoints `9.9` and `10.7`; the stale shape is discarded; the next write emits the marker's shape.
+
+=== Construct mapping
+
+.OMML constructs to nodes
+[cols="2,2,3", options="headers"]
+|===
+|Construct |Node |Notes
+
+|`m:r` runs with `m:rPr` |`Symbol`, `Number`, `Text`, font styles |properties map to variants
+|`m:f` with `m:num`, `m:den` |`Frac` |order preserved
+|`m:rad` |`Sqrt`, `Root` |degree hiding per construct
+|`m:sSup`, `m:sSub`, `m:sSubSup`, `m:sPre` |script classes |pre-scripts to `Multiscript`
+|`m:nary` |the nary classes |`m:chr` carries the character
+|`m:d` with `m:dPr` |`Fenced` |delimiter characters preserved
+|`m:m`, `m:mr`, `m:eqArr` |table classes |delimiters per properties
+|`m:box`, `m:phant`, `m:groupChr` |the presentation classes |per construct
+|marker run |`Uncertainty` |per PM 1002's convention
+|===
+
+=== The marker run in detail
+
+The marker run is an ordinary `m:r` whose text matches PM 1002's marker grammar. The reader scans for it at the start of a construct it marks; on a match, the construct's fields come from the marker and the shape runs are skipped. A run that resembles a marker but is ordinary text — inside another run, or after the construct it would mark — is text. The convention is positional: marker first, shape after.
+
+=== Run properties
+
+Fonts, styles and script positioning in run properties map to the font style nodes and the script placement the model defines; properties without a model counterpart (kerning, colour) are dropped on read, as presentation the tree does not carry.
+
+=== Reading algorithm
+
+The OMML reader walks the `m:` tree:
+
+. runs accumulate into content; a marker-matching run switches to marker handling;
+. construct elements (`m:f`, `m:rad`, script and nary elements, `m:d`, `m:m`) map per the table;
+. delimiter and matrix properties select the table class and its fences;
+. a marker reconstructs the following construct's uncertainty node per PM 1002 and consumes its shape runs;
+. document-level properties outside the model are dropped as presentation.
+
+=== OMML specificity of the model
+
+Two OMML constructs have model-specific treatment: pre-sub/superscript (`m:sPre`) reads to `Multiscript`, and the equation-array constructs read to `Align`/`Eqarray` with their alignment. Everything else maps one to one.
+
+=== Writing matrices and nary constructs, concretely
+
+The table classes write to `m:m` with delimiter properties per class: `Matrix` plain, `Pmatrix` parenthesised, `Bmatrix` braced, `Vmatrix` barred, `Cases` with the asymmetric brace. The nary classes write to `m:nary` with `m:chr` carrying the character and the limits in `m:sub`/`m:sup`; a limit absent leaves the element empty rather than omitted, which is how OMML spells "no limit here".
