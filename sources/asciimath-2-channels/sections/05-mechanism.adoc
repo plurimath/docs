@@ -1,6 +1,0 @@
-== The mechanism
-
-A channel is a quoted string whose content begins `name(...)`. Every other asciimath processor sees a text string; conforming readers dispatch on the namespace.
-
-[example]
-*Expected outcome.* `"unitsml(g)"` renders the gram symbol with its `xref` bond in conforming readers, and renders as the literal text `unitsml(g)` in every other asciimath processor — both behaviors from one string.

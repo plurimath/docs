@@ -1,0 +1,34 @@
+== Numbers and text
+
+=== Numbers
+
+A run of digits with an optional decimal point reads as one `Number` node: `3`, `0.5`, `42`, `2.10`. The digits are verbatim — `2.10` keeps its trailing zero (PM 1002's exact-decimal discipline applies to the tree's numbers). There is no exponent form, no thousands separator, no sign: a minus is a symbol sibling, and `1e5` reads as the `Number` 1 followed by the name `e5` is refused — `e5` is not a token, so the input errors, which is the correct answer for a notation without exponent forms.
+
+=== Upright text: the two forms
+
+Text enters the notation in two forms:
+
+* `text(content)` — the text function: the content reads as upright text, and AsciiMath commands inside it are honoured (`text(the "sum" is)` reads its quotes as text);
+* quoted strings — `"content"` — read verbatim with the channel exception of clause 11.
+
+Both yield `Text` nodes; they differ in processing, not in the node. The choice is the author's: `text(...)` for text that may contain structure, quotes for literal text.
+
+[example]
+`text(hello world)` and `"hello world"`.
+*Expected outcome.* two `Text` nodes with equal content. The first form's content passes through the reader's text processing; the second is verbatim.
+
+=== Spacing
+
+Whitespace separates tokens and is never content. The spaces the surfaces render come from the constructs, not from the input's spacing: `x+y` and `x + y` read to equal trees, and `input_string` preserves whichever the author wrote.
+
+=== Text in constructs
+
+`text(...)` inside constructs composes: `color(red)(text(urgent))` colours its text; pass:[[[a,text(total)]]] sits text in a cell. The text content participates in the tree as an operand like any other, and the writer surfaces render it upright per PM 1001.
+
+=== The number boundary
+
+A token boundary ends a number: `2x` is the number 2 then the name `x` (an implicit product per clause 13), `2.5.1` is the number `2.5` then a fault, and `1..5` is a number, a fault, a number — the reader does not guess ranges into existence.
+
+=== Verbatim, one more time
+
+The exact-decimal discipline (UnitsML 2, PM 1002) is visible here at the notation's front door: `2.10` reads to a `Number` whose text is `2.10`, and every writer emits those digits. An author who writes the trailing zero made a precision statement; the notation's job is to carry it to every surface, and it does.

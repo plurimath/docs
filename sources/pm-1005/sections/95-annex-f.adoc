@@ -1,0 +1,89 @@
+== Annex F: test-suite examples
+
+Vectors illustrative of the conformance classes of clause 16. The corpus freezes them; these are their statements.
+
+=== Symbol vectors (class `read-asciimath`)
+
+[example]
+One representative per family of Annex D, read.
+*Expected outcome.* the family's registry entry per token; the tree is a formula of symbols, and the writer emits each entry's canonical token.
+
+[example]
+The longest-match cases: `==>` against `==` then `>`; `<=` against `<` then `=`; `ZZ` against `Z` times `Z`.
+*Expected outcome.* the long reading in each pair — one arrow, one relation, one number-set token; the corpora freeze all three against their short readings.
+
+[example]
+An unresolvable character run — a Greek letter with a modifier the registry lacks.
+*Expected outcome.* `ParseError` naming the run and its position.
+
+=== Construct vectors (class `read-asciimath`)
+
+[example]
+Every unary class of Annex A with a plain argument and a grouped argument.
+*Expected outcome.* the class's node with the argument as its operand; the two forms read to equal trees.
+
+[example]
+Every binary class with grouped arguments, and `frac` with token arguments.
+*Expected outcome.* operand order per the class; `frac(a)(b)` and `a/b` read to equal `Frac` nodes.
+
+[example]
+The ternary classes bare, with one script, and with both.
+*Expected outcome.* the nary node with no limits, the lower limit, and both limits respectively.
+
+[example]
+`lim_(x->0)`, `log_2 x`, bare `lim x`.
+*Expected outcome.* the sub/sup class readings with limits attached where written.
+
+=== Table vectors (class `read-asciimath`)
+
+[example]
+Each bracket form of clause 9 with a two-by-two grid.
+*Expected outcome.* the class per form — `Matrix`, `Pmatrix`, `Bmatrix`, `Vmatrix` — with equal cell trees.
+
+[example]
+A grid with an empty middle cell and a labelled row in the aligned form.
+*Expected outcome.* the `None` node in place; the label carried per the aligned class.
+
+=== Script and fraction vectors
+
+[example]
+The four script shapes of clause 10 and both orders of sub and superscript.
+*Expected outcome.* `Power`, `Base`, and two equal `PowerBase` nodes.
+
+[example]
+`a/b^2`, `a^2/b`, `a/b/c`.
+*Expected outcome.* the script inside the denominator; the script on the numerator; the left-associative fraction chain.
+
+=== Channel and uncertainty vectors (classes `read-asciimath`)
+
+[example]
+The channel with `g`, with `m/s2`, with a leading space, with an unreadable expression, and a plain quoted string.
+*Expected outcome.* two unit embeddings; a `Text` node; a reading error naming the expression; a `Text` node — the five rows of clause 11.
+
+[example]
+The six uncertainty readings of clause 12's table.
+*Expected outcome.* the categories, notations and kinds per PM 1002; the reporting form reconstructs the magnitude.
+
+[example]
+`uexp(10.3, 0.5)` and `10.3(25)`.
+*Expected outcome.* `ParseError` for the arity; `AmbiguousDecimalError` for the place mismatch.
+
+[example]
+A shared-exponent reporting form.
+*Expected outcome.* the concise node with the shifted exact magnitude, per the shared-exponent rule.
+
+=== Precedence vectors (class `read-asciimath`)
+
+[example]
+Every ruling row of clause 13's two tables.
+*Expected outcome.* the stated reading for each — `a/bc`, `sin 2x`, `x^2y`, the refused bare-operator script, the grouped `x^(-x)` — each also frozen in its refused or accepted form.
+
+[example]
+The whitespace-ends-attachment rule on a nary and on a script.
+*Expected outcome.* the limits end before the summand; the script takes one token.
+
+=== Round-trip vectors (classes `write-asciimath`, `roundtrip-asciimath`)
+
+[example]
+A tree containing every construct family, one uncertainty node per category, and a unit-bearing node — written, read back.
+*Expected outcome.* an equal tree, notation and kind intact, the unit in the channel; the writer's bytes byte-frozen.

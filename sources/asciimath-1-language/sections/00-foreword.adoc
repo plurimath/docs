@@ -1,3 +1,0 @@
-== Foreword
-
-This is the compatibility language: the dialect every existing asciimath document is written in, specified so that its behavior is fixed — including its prohibition on growth. Features do not land here; they land in pma. The extension mechanism that does exist (the quoted channel) is Part 2.

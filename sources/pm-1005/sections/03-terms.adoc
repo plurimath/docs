@@ -1,0 +1,54 @@
+== Terms and definitions
+
+For the purposes of this document, the following terms and definitions apply.
+
+=== token
+a maximal lexical unit of AsciiMath input: a symbol token, a number, a function or font name, a fence, or a structure character
+
+=== symbol
+a registry entry's AsciiMath token: `alpha`, `sum`, `infty`, and the rest of the symbol space
+
+=== unary class
+a construct taking one operand, written `name(x)` or `name x`: the list of clause 8
+
+=== binary class
+a construct taking two operands: `frac`, `root`, `underset`, `overset`, `stackrel`
+
+=== ternary class
+a construct taking an operand and both scripts: `sum`, `prod`, `int`, `oint`
+
+=== sub/sup class
+a construct taking an operand and optional sub or superscript: `lim`, `log`
+
+=== font style name
+a token applying a font variant to its operand: the list of clause 8
+
+=== fence
+a token pair delimiting content: the parenthesis table of Annex C, including the multi-character and letter-pair fences
+
+=== structure character
+one of `^`, `_`, `/`, `@`, and the grouping parentheses
+
+=== quoted string
+double-quoted content read verbatim, with the UnitsML channel as its one special case
+
+=== channel
+the quoted string form `"unitsml(...)"` carrying a unit expression
+
+=== reporting form
+the concise uncertainty shape `v(digits)`, read per PM 1002
+
+=== corpus
+the pinned AsciiMath corpus this document's claims replay, with its generations
+
+=== canonical token
+the registry entry's primary AsciiMath spelling; the token the writer emits
+
+=== longest match
+the tokeniser's rule that the longest vocabulary entry at a position wins
+
+=== open stack
+the reader's record of unclosed fence openers, matched by opener identity
+
+=== generation
+a published, immutable version set of the corpus; claims name the generation they were checked against

@@ -1,0 +1,130 @@
+== Symbols
+
+=== The symbol surface
+
+The symbol tokens are the registry's AsciiMath tokens (PM 1001's symbol space, 1 438 entries at edition 1). A symbol token reads to its registry entry's `Symbol` node and nothing else: no arguments, no variants. The families:
+
+.Symbol families
+[cols="2,4", options="headers"]
+|===
+|Family |Representative tokens
+
+|Greek lower |`alpha` `beta` `gamma` `delta` `epsilon` `zeta` `eta` `theta` `iota` `kappa` `lambda` `mu` `nu` `xi` `pi` `rho` `sigma` `tau` `upsilon` `phi` `chi` `psi` `omega`
+|Greek upper |`Alpha` `Beta` `Gamma` `Delta` `Theta` `Lambda` `Xi` `Pi` `Sigma` `Upsilon` `Phi` `Psi` `Omega`
+|binary operators |`+` `-` `*` `**` `times` `div` `pm` `mp` `cdot` `ast` `star` `circ` `bullet` `oplus` `ominus` `otimes`
+|relations |`=` `!=` `<` `<=` `>` `>=` `approx` `equiv` `sim` `simeq` `cong` `propto` `asymp`
+|logic |`and` `or` `not` `implies` `iff` `forall` `exists` `neg` `land` `lor`
+|sets |`in` `notin` `ni` `subset` `supset` `subseteq` `supseteq` `cup` `cap` `emptyset`
+|arrows |`->` `-->` `=>` `==>` `<-` `<--` `<=>` `iff` `mapsto` `hookrightarrow`
+|calculus |`int` `oint` `sum` `prod` `partial` `nabla` `iint` `iiint`
+|accents as symbols |`hbar` `ell` `Re` `Im` `wp` `aleph`
+|miscellany |`oo` `degree` `angle` `perp` `parallel` `triangle` `square` `prime` `therefore`
+|===
+
+The complete listing is generated from the registry; Annex D shows the families with their full member counts. The reader resolves a token by longest match — `==> ` reads as one arrow, not `==` then `>` — and an unresolvable token is a reading error naming the token and its position.
+
+=== Fractions of the surface: what the public definition adds
+
+*Compatibility note.* Plurimath's token set is a superset of the asciimath.org set: the uncertainty tokens of clause 12, the UnitsML channel of clause 11, and additional symbols the registry carries. The public set reads unchanged; nothing in the baseline was removed or re-spelled.
+
+=== Case sensitivity
+
+Tokens are case-sensitive: `alpha` and `Alpha` are different entries, `EE` (the special bold E) differs from `ee`. There are no aliases that differ only by case.
+
+=== Numbers are not symbols
+
+Digits and decimal points read as `Number` nodes (clause 7), never as symbol tokens; the reader's token classes are disjoint by first character.
+
+=== Symbol vs construct: the classification rule
+
+A token first matches the construct and font names (clause 8), then the special alphabets, then the symbols. The classification is total and ordered; `sum` can never be a symbol, `d` can never be a construct. The constants carry the order, and the generated tables of the annexes are that order's statement.
+
+=== The Greek letters, complete
+
+.Greek lower
+[cols="3,3,3,3,3", options="headers"]
+|===
+| | | | |
+
+|`alpha` |`beta` |`gamma` |`delta` |`epsilon`
+|`zeta` |`eta` |`theta` |`iota` |`kappa`
+|`lambda` |`mu` |`nu` |`xi` |`pi`
+|`rho` |`sigma` |`tau` |`upsilon` |`phi`
+|`chi` |`psi` |`omega` | |
+|===
+
+.Greek upper
+[cols="3,3,3,3,3", options="headers"]
+|===
+| | | | |
+
+|`Gamma` |`Delta` |`Theta` |`Lambda` |`Xi`
+|`Pi` |`Sigma` |`Upsilon` |`Phi` |`Psi`
+|`Omega` | | | |
+|===
+
+=== The operators and relations, complete
+
+.Binary operators
+[cols="3,3,3,3,3", options="headers"]
+|===
+| | | | |
+
+|`+` |`-` |`*` |`**` |`times`
+|`div` |`pm` |`mp` |`cdot` |`ast`
+|`star` |`circ` |`bullet` |`oplus` |`ominus`
+|`otimes` | | | |
+|===
+
+.Relations
+[cols="3,3,3,3,3", options="headers"]
+|===
+| | | | |
+
+|`=` |`!=` |`<` |`<=` |`>`
+|`>=` |`approx` |`equiv` |`sim` |`simeq`
+|`cong` |`propto` |`asymp` | |
+|===
+
+=== Logic, sets, arrows, calculus
+
+.Logic and sets
+[cols="3,3,3,3,3", options="headers"]
+|===
+| | | | |
+
+|`and` |`or` |`not` |`implies` |`iff`
+|`forall` |`exists` |`neg` |`in` |`notin`
+|`ni` |`subset` |`supset` |`subseteq` |`supseteq`
+|`cup` |`cap` |`emptyset` | |
+|===
+
+.Arrows
+[cols="3,3,3,3,3", options="headers"]
+|===
+| | | | |
+
+|`->` |`-->` |`=>` |`==>` |`<-`
+|`<--` |`<=>` |`mapsto` |`hookrightarrow` |`iff`
+|===
+
+.Calculus and miscellany
+[cols="3,3,3,3,3", options="headers"]
+|===
+| | | | |
+
+|`int` |`oint` |`sum` |`prod` |`partial`
+|`nabla` |`hbar` |`ell` |`Re` |`Im`
+|`wp` |`aleph` |`oo` |`degree` |`angle`
+|`perp` |`parallel` |`triangle` |`square` |`prime`
+|===
+
+These are the registry's AsciiMath tokens for the families; the counts of Annex D are their totals. The generated listing remains authoritative — these tables are its statement at edition 1.
+
+=== Unicode and entities
+
+Input is Unicode text: symbol tokens are the spellings the registry declares, and a character outside every token's set is an unresolvable run — named, positioned, refused. The reader does not decode HTML entities in AsciiMath input (the writer emits character references in some surfaces; that is output encoding, not input syntax). An author pasting rendered mathematics strips the entities first, or the reader will name every ampersand.
+
+=== The registry is the whole truth
+
+Every token this clause lists is a registry entry's AsciiMath token, and every registry entry's AsciiMath token is accepted. Neither side of that sentence bends: no unlisted token reads, and no listed token fails. When the registry grows (PM 1001's entry lifecycle), the token surface grows with it at the next edition, and the generated tables of this document regenerate with it.

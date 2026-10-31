@@ -1,3 +1,0 @@
-== Materialization into the math model
-
-Parse trees map through the registry's primitive bindings into the Plurimath math model: one binding table, no per-language mapping code. A parser conforming to this part produces trees that the render corpus replays byte-identically across every format column.

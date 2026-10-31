@@ -1,0 +1,49 @@
+== Tables and matrices
+
+=== The bracket forms
+
+A double-bracketed, comma-separated grid reads as a table: pass:[[[a,b],[c,d]]] is a two-by-two matrix — each inner bracket pair is a row, commas separate the cells within it. The delimited variants wrap the grid in a fence, and the fence selects the class:
+
+.The table forms
+[cols="2,3,3", options="headers"]
+|===
+|Grid |Wrapped in |Yields
+
+|double-bracket grid |nothing |`Matrix`
+|double-bracket grid |round fences |`Pmatrix`
+|double-bracket grid |brace fences |`Bmatrix`
+|double-bracket grid |bar fences |`Vmatrix`
+|the cases form |left brace, null right |`Cases`
+|===
+
+=== Alignment
+
+`align` and `eqarray` content carries the ampersand alignment points their input wrote; `split` and `multline` preserve line structure. The table node keeps the alignment as data (PM 1001's table classes), and the writer surfaces emit it per their mappings.
+
+=== Cells
+
+A cell's content is a full expression: `[[x^2, text(notes)],[frac(a)(b), sum_(i=1)^n i]]` reads all four cells as complete subtrees. An empty cell — nothing between separators — reads to the `None` node.
+
+[example]
+`[[1,2],[3,4]]` and `([1,2],[3,4])` with round fences.
+*Expected outcome.* the first is a plain `Matrix`; the second is the same grid read to `Pmatrix`. Both round-trip per PM 1003.
+
+=== Row and cell rules, precisely
+
+A table grid is a bracketed sequence of bracketed rows: `[[row],[row]]`. Inside a row, commas separate cells; inside a cell, a full expression goes. The reader allows trailing separators to read as an empty trailing cell — the corpus pins whether it warns — and a row mismatch (two cells in one row, three in the next) reads as written: tables are not square by force.
+
+=== The delimited forms, precisely
+
+A grid wrapped in `(...)` reads to `Pmatrix`; in `{...)` — the brace pair of Annex C — to `Bmatrix`; between bar pairs to `Vmatrix`; and the `cases` reading comes from the input form the public definition writes. The delimiters live on the tree as the table class; the writer surfaces re-emit the class's delimiters, which is why the class matters.
+
+=== Alignment, precisely
+
+`align` and `eqarray` content uses `&` for alignment points and `\` for line breaks, the grid conventions the public definition carries. The alignment points are data: the table node keeps them, the writer surfaces emit them where their format has alignment (`aligned` in LaTeX, `maligngroup` in MathML per its mapping), and the round trip preserves the count and order of points. A surface without alignment drops them as presentation (PM 1001's fallback rule).
+
+=== Tables inside tables
+
+A cell may carry a grid: `[[a,[[1,2],[3,4]]],[c,d]]` nests. Nesting depth is unbounded; the corpus carries the two-deep case, and nothing in the reader's recursion limits applies to it that does not apply to any grouping.
+
+=== Tables in the corpus, and what they freeze
+
+The table vectors freeze: each bracket form with a known grid; the alignment forms with their points; the empty-cell reading; the nested grid; and the row-mismatch reading as written. Tables are the notation's most structure-heavy construct, and the corpus treats them accordingly — a table reading that drops a cell cannot hide.

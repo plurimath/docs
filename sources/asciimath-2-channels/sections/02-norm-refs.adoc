@@ -1,7 +1,0 @@
-[bibliography]
-== Normative references
-
-* [[[asciimath-1,nofetch(asciimath 1)]]]
-* [[[unitsml-6,nofetch(UnitsML 6)]]] (content grammar)
-* [[[plurimath-2,nofetch(Plurimath 1002)]]] (uncertainty model)
-* [[[unitsml-1,nofetch(UnitsML 1)]]]

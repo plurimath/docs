@@ -1,0 +1,7 @@
+== Normative references
+
+The following documents are referred to in the text.
+
+* PM 1001 (math model), PM 1002 (uncertainty model) and PM 1003 (format interfaces) of this series.
+* UnitsML 6 (asciiunits content language) of the UnitsML series — the content of the quoted channel of clause 11.
+* asciimath.org — the public AsciiMath definition, cited in the compatibility notes as the baseline this surface descends from.

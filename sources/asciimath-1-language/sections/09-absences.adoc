@@ -1,3 +1,0 @@
-== Absences (normative)
-
-No uncertainty syntax, no `unit(...)` constructor, no measured literals, no `::` assertions, no conversion syntax. This list is exhaustive by construction: this dialect never grows.

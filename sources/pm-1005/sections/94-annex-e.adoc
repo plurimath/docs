@@ -1,0 +1,23 @@
+== Annex E: corpus provenance
+
+=== Generations
+
+.Corpus generations
+[cols="1,2,3", options="headers"]
+|===
+|Generation |Contents |Provenance
+
+|1 |the initial 143 cases |the first frozen surface: constructs, symbols, precedence rulings
+|2 |uncertainty forms |the PM 1002 encodings: calls, reporting form, kinds, unit placements
+|3 |shared exponents, locale pairs |the shared-exponent reading and the localized reading pairs
+|===
+
+Generations extend by appending; a generation's entries are immutable once published, and the digest replay covers all generations on every run.
+
+=== Entry provenance
+
+Each entry names its origin: the clause of this document that first required it, the defect it froze, or the report that brought it. The provenance is the specification's institutional memory: a behaviour with a provenance entry is deliberate, and a proposal to change it must name the entry.
+
+=== Where the corpus lives
+
+The corpus is versioned outside this document, pinned by the replay script the implementation carries. This document's claims name the generation they were checked against; the register's build checks the naming.

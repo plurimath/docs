@@ -1,0 +1,48 @@
+== Conformance
+
+=== General
+
+Conformance to this document is claimed as the AsciiMath reading and writing classes of PM 1003, discharged per this document's surface.
+
+=== Conformance classes
+
+.Conformance classes
+[cols="1,3,3", options="headers"]
+|===
+|Class |Licenses the implementation to claim |Replay requirements
+
+|read-asciimath
+|reads the full surface of clauses 5 to 13
+|the reading corpus, tree-identical
+
+|write-asciimath
+|writes the surface per PM 1001/1002's encodings
+|the AsciiMath column, byte-identical
+
+|roundtrip-asciimath
+|the lossless claim of PM 1003, clause 14
+|write-then-read per corpus entry
+
+|===
+
+The reading claim is the demanding one: the surface is total on well-formed input, so a reader's refusals are as much a part of the claim as its successes — the error vectors are inside the corpus, not beside it.
+
+=== Claiming
+
+A claim names the corpus generation. A claim without a generation is not checkable and is not a claim; a claim against an older generation is void for the current one until rechecked.
+
+=== The writer's side of the claim
+
+The writing claim covers the whole surface too: every node family writes, the uncertainty encodings write per PM 1002, the channel writes for expressible units, and the token chosen per entry is the canonical token of the registry. A writer emitting a non-canonical synonym (an arrow alias where the entry's canonical token differs) still round-trips — but the byte corpus freezes the canonical form, and that is what the write claim replays.
+
+=== Editions
+
+This document's surface changes only at an edition: tokens join the registry per PM 1001's process, constructs join with their classes and clauses, and the corpus generation pins each edition's surface. Between editions, nothing moves.
+
+=== What conformance means for authors
+
+For an author, the conforming implementations are interchangeable: text written for one reads the same in another, and the corpus is the guarantee. For a tool builder, the claim to look for is `read-asciimath` against a named generation — and the refusal behaviour is part of what they are buying, because a reader that accepts everything cannot promise anything about what it read.
+
+=== The claim, in one sentence
+
+An implementation conforming to this document reads every input built from this surface into the tree of PM 1001, refuses everything else with a typed error and its position, writes the canonical surface back byte-identically to the corpus, and round-trips losslessly — and names the corpus generation that says so.

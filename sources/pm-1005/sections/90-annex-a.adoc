@@ -1,0 +1,92 @@
+== Annex A: the construct tables in full
+
+=== General
+
+The construct lists of clause 8, restated with each name's reading. These are generated from the reader's constants; a mismatch fails the build.
+
+=== Unary classes and their readings
+
+.Unary readings
+[cols="2,3,2,3", options="headers"]
+|===
+|Token |Reads to |Token |Reads to
+
+|`underbrace` |over/under brace form |`overbrace` |over brace form
+|`underline` |underline |`arccos` |inverse cosine
+|`arcsin` |inverse sine |`arctan` |inverse tangent
+|`ubrace` |under brace |`obrace` |over brace
+|`cancel` |strike-through |`tilde` |tilde accent
+|`floor` |floor fence |`ceil` |ceiling fence
+|`ddot` |double-dot accent |`coth` |hyperbolic cotangent
+|`csch` |hyperbolic cosecant |`sech` |hyperbolic secant
+|`sinh` |hyperbolic sine |`tanh` |hyperbolic tangent
+|`cosh` |hyperbolic cosine |`sqrt` |square root
+|`norm` |norm fence |`text` |upright text
+|`sec` |secant |`sin` |sine
+|`tan` |tangent |`cos` |cosine
+|`exp` |exponential |`gcd` |greatest common divisor
+|`glb` |greatest lower bound |`lcm` |least common multiple
+|`lub` |least upper bound |`cot` |cotangent
+|`csc` |cosecant |`det` |determinant
+|`dim` |dimension |`max` |maximum
+|`min` |minimum |`abs` |absolute-value fence
+|`bar` |bar accent |`dot` |dot accent
+|`hat` |hat accent |`vec` |vector accent
+|`ul` |underline |`ln` |natural logarithm
+|`log` |logarithm (sub/sup class) |`lim` |limit (sub/sup class)
+|===
+
+=== Binary readings
+
+.Binary readings
+[cols="2,3,3", options="headers"]
+|===
+|Token |Arguments |Reads to
+
+|`frac` |numerator, denominator |`Frac`
+|`root` |radicand, degree |`Root`
+|`underset` |base, under |`Underset`
+|`overset` |base, over |`Overset`
+|`stackrel` |bottom, top |`Stackrel`
+|===
+
+=== Ternary readings
+
+.Ternary readings
+[cols="2,3,3", options="headers"]
+|===
+|Token |Character |Reads to
+
+|`sum` |∑ |`Sum` with limits
+|`prod` |∏ |`Prod` with limits
+|`int` |∫ |`Int` with limits
+|`oint` |∮ |`Oint` with limits
+|===
+
+=== Sub/sup readings
+
+`lim` reads to the limit class with optional scripts; `log` reads to the logarithm with optional base scripts. Both take the operand adjacency gives and the scripts the input writes.
+
+=== The unary readings, worked
+
+.Worked unary cases
+[cols="2,4", options="headers"]
+|===
+|Input |Reading
+
+|`sqrt x` |`Sqrt` over `x` — the adjacency operand
+|`sqrt(x^2 + 1)` |`Sqrt` over the sum — the grouped operand
+|`bar x`, `hat x`, `vec x` |the accent classes — one operand each
+|`abs x`, `norm x` |the fence classes — the delimiters ride the node
+|`floor x`, `ceil x` |the floor and ceiling fences
+|`obrace x`, `ubrace x`, `underbrace x`, `overbrace x` |the brace forms
+|`cancel x`, `underline x`, `ul x` |the strike and underbar forms
+|`sin x`, `cosh x`, `arctan x` |the trigonometric, hyperbolic and inverse classes
+|`ln x`, `log x`, `exp x` |the logarithmic and exponential classes
+|`gcd x`, `lcm x`, `glb x`, `lub x` |the binary-named-but-unary classes — one operand in the notation
+|`det x`, `dim x`, `max x`, `min x` |the operator-name classes
+|`ddot x`, `tilde x`, `dot x` |the remaining accents
+|`text x` |upright text — adjacency form of the text function
+|===
+
+The last-but-one row is the table's trap: `gcd`, `lcm`, `glb`, `lub`, `max` and `min` are unary classes in this notation, whatever their arity in mathematics — an author who means `gcd(a, b)` writes it as a product-adjacency the reader splits, and the corpus pins the split. The comma form is not a two-argument call; grouping composes.

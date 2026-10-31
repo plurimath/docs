@@ -1,9 +1,0 @@
-[[annex-test-suite]]
-[appendix]
-== Annex A (informative): additional test-suite examples
-
-[example]
-*Cross-processor safety.* The channel strings in this part, fed to a third-party asciimath renderer, produce quoted text — never errors, never misinterpreted math.
-
-[example]
-*Malformed discipline.* `"ustd(10.3)"` raises; `"unitsml(` unterminated raises; `"nonsense(foo)"` renders as text.
