@@ -392,7 +392,7 @@ Unit and uncertainty classes:
 |===
 |Class |Meaning |Operands |Surface notes
 
-|Unitsml |UnitsML unit embedding |0 + expression |per-format forms supplied by UnitsML (UnitsML 1005)
+|Unitsml |UnitsML unit embedding |0 + expression |per-format forms supplied by UnitsML (UnitsML 5)
 |Uncertainty |uncertainty attachment |1 + fields |fields per document 1002
 |===
 

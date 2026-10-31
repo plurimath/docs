@@ -56,7 +56,7 @@ A tree containing an `Uncertainty` node with category `standard`, magnitude `0.2
 
 [example]
 A tree whose top level is a `Unitsml` node with expression `kg*m/s^2` —
-*Expected outcome.* each surface emits the UnitsML-provided form for its format (MathML, OMML, LaTeX, Unicode, XML per UnitsML 1005); the asciiunits expression is preserved verbatim in the model; no surface expands or rewrites the expression.
+*Expected outcome.* each surface emits the UnitsML-provided form for its format (MathML, OMML, LaTeX, Unicode, XML per UnitsML 5); the asciiunits expression is preserved verbatim in the model; no surface expands or rewrites the expression.
 
 === Fallback discipline (classes `render-*`)
 

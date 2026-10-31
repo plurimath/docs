@@ -6,4 +6,4 @@ The following documents are referred to in the text in such a way that their con
 * ECMA-376, Office Open XML File Formats, Part 1. The OMML rendering surface produces DrawingML mathematics (`m:` namespace) as defined there.
 * Unicode Technical Report #28, Unicode Support for Mathematics (the UnicodeMath linear format). The UnicodeMath surface reads and writes it.
 * JCGM 200:2012, International vocabulary of metrology — Basic and general concepts and associated terms (VIM). Used by the uncertainty document (1002) for the terms carried by uncertainty nodes.
-* UnitsML 1002 (numeric contract) and UnitsML 1005 (XML usage) of the UnitsML series, for the contract of the `Unitsml` node.
+* UnitsML 2 (numeric contract) and UnitsML 5 (XML usage) of the UnitsML series, for the contract of the `Unitsml` node.

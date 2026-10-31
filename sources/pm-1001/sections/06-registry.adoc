@@ -105,7 +105,7 @@ The registry is editioned with this document series. An entry's renderings are s
 
 === Unit terminals
 
-The unit expressions that may appear inside a `Unitsml` node are not registry entries of this document. They come from the UnitsDB dataset through the asciiunits artifact of the UnitsML series (UnitsML 1003, 1006), and the model consumes them as opaque validated content. Nothing in this registry duplicates a unit name, a prefix, or a quantity — the registry's single source of truth for units is the UnitsDB dataset.
+The unit expressions that may appear inside a `Unitsml` node are not registry entries of this document. They come from the UnitsDB dataset through the asciiunits artifact of the UnitsML series (UnitsML 3, 1006), and the model consumes them as opaque validated content. Nothing in this registry duplicates a unit name, a prefix, or a quantity — the registry's single source of truth for units is the UnitsDB dataset.
 
 [example]
 Adding a symbol for a newly standardised operator to the registry:

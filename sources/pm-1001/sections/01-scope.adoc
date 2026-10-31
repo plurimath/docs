@@ -16,7 +16,7 @@ This document does not specify:
 * the syntax of any input representation, or the behaviour of any reader (format interfaces, document 1003);
 * the representation of uncertainty inside specific notations, nor uncertainty arithmetic (uncertainty model, document 1002);
 * numeric evaluation, propagation or coverage (evaluation, document 1004);
-* the UnitsML unit-expression language, which is specified in the UnitsML series (asciiunits content language, UnitsML 1006), and is consumed by the model through the `Unitsml` node defined here.
+* the UnitsML unit-expression language, which is specified in the UnitsML series (asciiunits content language, UnitsML 6), and is consumed by the model through the `Unitsml` node defined here.
 
 === Relationship to the series
 
@@ -34,7 +34,7 @@ This document does not specify:
 |1004 Evaluation
 |consumes this document's tree numerically; the model performs no arithmetic
 
-|UnitsML 1002, 1005, 1006
+|UnitsML 2, 1005, 1006
 |define the numeric contract, the XML usage and the content language behind the `Unitsml` node
 
 |===
