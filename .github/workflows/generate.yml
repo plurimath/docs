@@ -33,18 +33,13 @@ jobs:
       - name: Cache Metanorma assets
         uses: actions-mn/cache@v1
 
-      # - name: Setup Flavor
-      #   uses: actions-mn/setup-flavors@v1
-      #   with:
-      #     extra-flavors: nist
-      #     github-packages-token: ${{ secrets.METANORMA_CI_PAT_TOKEN }}
-      #     use-bundler: true
-
       - name: Metanorma generate site
-        uses: actions-mn/build-and-publish@v2
+        run: metanorma site generate . -o _site -c metanorma.yml --no-progress --agree-to-terms --continue-without-fonts
+
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          agree-to-terms: true
-          destination: gh-pages
+          path: _site
 
   deploy:
     if: ${{ github.ref == 'refs/heads/main' }}
