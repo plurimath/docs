@@ -1,5 +1,9 @@
 == The deviation ledger (closed)
 
+The closed deviations are recorded in <<tbl-ledger>>.
+
+[[tbl-ledger]]
+.Dialect-L deviation ledger
 [cols="3,2,3"]
 |===
 |Deviation |Kind |Rationale

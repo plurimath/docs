@@ -1,3 +1,4 @@
+[[annex-vectors]]
 [appendix]
 == Annex B (normative): vector set reference
 

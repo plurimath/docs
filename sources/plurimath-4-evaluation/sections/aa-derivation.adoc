@@ -1,3 +1,4 @@
+[[annex-derivation]]
 [appendix]
 == Annex A (normative): the H.1.7 second-order derivation
 
@@ -11,8 +12,10 @@ GUM H.3 (bilinear): l = f(l_S, d, α_S, θ, δα, δθ) = l_S + d − l_S(δα·
 
 === Derivation
 
-The note to 5.1.2 augments u_c² with ½ Σ_i Σ_j (∂²f/∂x_i∂x_j)² u²(x_i)u²(x_j); its third-derivative term vanishes because H.3 is bilinear. The nonzero second partials at the estimates: ∂²f/∂θ∂δα = −l_S; ∂²f/∂α_S∂δθ = −l_S; ∂²f/∂l_S∂δα = −θ; ∂²f/∂l_S∂δθ = −α_S (the θ and α_S l_S-pairs vanish at the zero estimates of δα and δθ). Of the four candidate pairs, exactly two are non-negligible:
+The note to 5.1.2 augments u_c² with ½ Σ_i Σ_j (∂²f/∂x_i∂x_j)² u²(x_i)u²(x_j); its third-derivative term vanishes because H.3 is bilinear. The nonzero second partials at the estimates: ∂²f/∂θ∂δα = −l_S; ∂²f/∂α_S∂δθ = −l_S; ∂²f/∂l_S∂δα = −θ; ∂²f/∂l_S∂δθ = −α_S (the θ and α_S l_S-pairs vanish at the zero estimates of δα and δθ). Of the four candidate pairs, exactly two are non-negligible, tabulated in <<tbl-second-order>>:
 
+[[tbl-second-order]]
+.Non-negligible second-order pairs
 [cols="3,2,2,1"]
 |===
 |Term |Expression |Value |Class

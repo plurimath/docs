@@ -1,3 +1,4 @@
+[[annex-decisions]]
 [appendix]
 == Annex B (informative): open maintainer decisions
 

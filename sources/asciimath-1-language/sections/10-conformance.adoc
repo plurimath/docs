@@ -1,3 +1,3 @@
 == Conformance
 
-The asciimath.org specimen corpus renders byte-identically; the ledger-audit test proves no unledgered divergence; the render corpus (UnitsML 8) replays the asciimath columns. Class coverage: `parse/render`.
+The asciimath.org specimen corpus renders byte-identically; the ledger-audit test proves no unledgered divergence; the render corpus (UnitsML 8) replays the asciimath columns. Class coverage: `parse/render`. Additional test-suite examples are given in <<annex-test-suite>>.

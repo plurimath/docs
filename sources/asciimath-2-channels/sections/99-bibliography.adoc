@@ -1,3 +1,5 @@
+[bibliography]
 == Bibliography
 
-* plurimath/amath#17 (dialect-L restriction) · UnitsML 7 (xref targets)
+* [[[amath17-b,nofetch(plurimath/amath#17)]]] (dialect-L restriction)
+* [[[unitsml7-b,nofetch(UnitsML 7)]]] (xref targets)

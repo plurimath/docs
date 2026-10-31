@@ -1,7 +1,9 @@
 == The model
 
-An `Uncertainty` node carries exactly:
+An `Uncertainty` node carries exactly the fields of <<tbl-record-fields>>.
 
+[[tbl-record-fields]]
+.Uncertainty record fields
 [cols="1,2,2"]
 |===
 |Field |Values |Notes

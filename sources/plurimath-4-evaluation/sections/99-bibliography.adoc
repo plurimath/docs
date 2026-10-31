@@ -1,4 +1,10 @@
+[bibliography]
 == Bibliography
 
-* JCGM 100:2008+Amd.1:2026 · JCGM 101:2008 (Table 10, §9.5) · JCGM 106:2012 · GUM-6:2020 Annex F · GUM-5:2026 Examples 6, 7, 12, 13, 14, 16
-* ILAC-G8 (guard-band family) · ISO 14253-1 (default decision rule)
+* [[[jcgm100-b,nofetch(JCGM 100:2008 + Amd.1:2026)]]]
+* [[[jcgm101-b,nofetch(JCGM 101:2008)]]], Table 10, §9.5
+* [[[jcgm106-b,nofetch(JCGM 106:2012)]]]
+* [[[gum6-b,nofetch(GUM-6:2020)]]], Annex F
+* [[[gum5-b,nofetch(GUM-5:2026)]]], Examples 6, 7, 12, 13, 14, 16
+* [[[ilac-g8,nofetch(ILAC-G8)]]] (guard-band family)
+* [[[iso14253,nofetch(ISO 14253-1)]]] (default decision rule)

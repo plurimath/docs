@@ -1,3 +1,3 @@
 == Conformance
 
-The render corpus (UnitsML 8): every model→format column and every readable format→model column replays byte-identically; lossy channels replay their declared subset. Class coverage: `parse/render` and `full-series`.
+The render corpus (UnitsML 8): every model→format column and every readable format→model column replays byte-identically; lossy channels replay their declared subset. Class coverage: `parse/render` and `full-series`. Additional test-suite examples are given in <<annex-test-suite>>.
