@@ -1,0 +1,108 @@
+== The interface model
+
+=== General
+
+Every exchange with the outside world passes one of two boundaries:
+
+[source,lml]
+----
+lml "1.0"
+
+models FormatInterfaces {
+
+  class Reader {
+    attribute accepted_type, TypeKey[1]
+    attribute input, String[1]
+    attribute options, ParseOptions
+  }
+
+  class Writer {
+    attribute surface, SurfaceKey[1]
+    attribute tree, Formula[1]
+    attribute options, WriteOptions
+  }
+
+  enum TypeKey {
+    value asciimath
+    value html
+    value latex
+    value mathml
+    value omml
+    value unicode
+    value unitsml
+  }
+
+  enum SurfaceKey {
+    value asciimath
+    value html
+    value latex
+    value mathml
+    value omml
+    value unicodemath
+  }
+
+  class ParseOptions {
+    attribute locale, String
+  }
+
+  class WriteOptions {
+    attribute display_style, Boolean
+  }
+}
+----
+
+A reader receives text of one accepted type and yields a formula tree. A writer receives a tree and emits one surface's bytes. Neither boundary exposes anything else: no parser objects, no intermediate representations, no partial trees.
+
+=== The boundaries are typed
+
+Every failure crossing a boundary is a typed error (Annex A). A reader that cannot complete raises a `ParseError` or one of its specialized subclasses; a writer does not fail on a well-formed tree — render totality is a model guarantee of PM 1001 — and the renderer's failures are the rendering errors of clause 13.
+
+=== Composition
+
+The interfaces compose without glue: the tree a reader yields satisfies every writer. An application may read AsciiMath, inspect the tree, evaluate it (document 1004), and write OMML in one pipeline; no format-specific steps exist between the boundaries.
+
+[example]
+A pipeline that reads LaTeX, writes MathML, reads the MathML back, and writes AsciiMath.
+*Expected outcome.* each boundary yields or consumes a tree per this document; the final AsciiMath is a function of the original tree alone, and the intermediate MathML round-trips per clause 14.
+
+=== Boundary invariants
+
+Four invariants hold at both boundaries, and the clauses that follow make each precise:
+
+* *Typed failures.* only Annex A's errors cross; internals stay inside.
+* *Tree guarantees.* readers yield PM 1001 trees; writers consume them without inspection of provenance.
+* *No hidden state.* a boundary call depends on its arguments and the configuration only — no reader remembers the previous call, no writer caches by identity.
+* *Composition.* any reader's output feeds any writer; nothing between the boundaries knows formats exist.
+
+=== Where the units reader sits
+
+The `unitsml` type is a reader without a writer: it reads one unit expression (UnitsML 6) into the unit embedding the tree carries. It exists so applications can validate and embed units independently of a surrounding formula, and its failure mode is the parse error naming the unit expression.
+
+=== The contracts as obligations
+
+The two boundaries carry symmetrical obligations, which the rest of this document discharges:
+
+.Reader obligations
+[cols="2,4", options="headers"]
+|===
+|Obligation |Clause
+
+|validate type and options before work |6
+|yield model-conformant trees |6
+|preserve the input string |6
+|raise only typed errors |6, Annex A
+|read the encodings of PM 1002 by their authority rules |8 to 11
+|===
+
+.Writer obligations
+[cols="2,4", options="headers"]
+|===
+|Obligation |Clause
+
+|emit model-defined encodings only |7
+|deterministic bytes per model version |7, PM 1001
+|totality on well-formed trees |7, PM 1001
+|no provenance inspection |7
+|===
+
+An implementation audit walks these two tables; the conformance classes of clause 15 are their operational form.

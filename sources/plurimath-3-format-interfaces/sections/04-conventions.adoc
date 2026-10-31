@@ -1,3 +1,0 @@
-== Conventions
-
-Requirement language per UnitsML 1. Examples show model input and the exact emitted fragment.

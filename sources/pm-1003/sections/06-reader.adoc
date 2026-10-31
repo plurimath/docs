@@ -1,0 +1,91 @@
+== The reader contract
+
+=== The parse entry point
+
+Reading goes through one entry point, `parse(text, type, **options)`:
+
+. The type is validated: an unknown type raises `InvalidTypeError`, before the text is examined.
+. The options are validated: only the supported options (`locale`) are accepted, and an unknown option raises `ParseOptionError`; a `locale` passed for a type that does not localize raises the same error naming the type.
+. The text is parsed by the type's reader; success yields a formula tree whose `input_string` is the original text.
+. Failure raises the specialized error the failure maps to, or `ParseError` carrying the text and the type.
+
+The entry point never raises any other error. An internal exception escaping a reader is a defect of the reader; the boundary converts everything it can into the typed errors and preserves the specialized ones unchanged.
+
+=== Accepted types
+
+.Accepted types and their inputs
+[cols="2,4,3", options="headers"]
+|===
+|Type |Input |Localized
+
+|asciimath |AsciiMath linear text |yes
+|latex |LaTeX fragment |yes
+|html |HTML fragment |yes
+|mathml |MathML 4 document or fragment |no
+|omml |OMML (DrawingML mathematics) |no
+|unicode |UnicodeMath linear text |yes
+|unitsml |a UnitsML unit expression |no
+|===
+
+The localized types accept the `locale` option, which selects the language-specific readings of symbols and function names (for instance, localized function names in LaTeX and HTML inputs). The markup types do not localize: a MathML document says what it says.
+
+=== The tree guarantee
+
+A reader yields a tree that satisfies PM 1001: node classes from the model, operands in the class-defined order, no formatting in descendant nodes, and — for inputs carrying uncertainty encodings — uncertainty nodes per PM 1002. A reader never yields a tree it cannot itself render.
+
+=== The input string
+
+The yielded tree records the input text verbatim. Diagnostics, error messages and the math zone printers may show it; the tree's identity does not depend on it: two trees read from equal inputs carry the same `input_string` and are equal; two equal trees from different inputs differ only in that field.
+
+[example]
+Reading `"10.3(2)"` in AsciiMath.
+*Expected outcome.* the tree carries an uncertainty node per PM 1002 (value `10.3`, magnitude `0.2`, notation concise), and `input_string` is `"10.3(2)"`.
+
+=== Failure
+
+A reader's refusals are part of its contract. The general `ParseError` names the input and the type; the specialized errors name their cause: an ambiguous decimal in uncertainty reading raises `AmbiguousDecimalError`, a missing parsing dependency raises `MissingDependencyError`. The message shapes of Annex A are stable within an edition.
+
+=== Validation order
+
+The entry point validates in a fixed order, so callers can predict which error they see first:
+
+. the type — `InvalidTypeError` before anything else;
+. the options — `ParseOptionError` next;
+. the input — parse errors last.
+
+A call with both an unknown type and an unknown option reports the type. A call with a bad option and a malformed input reports the option. No reader runs before the boundary checks pass.
+
+=== What each reader guarantees
+
+Every reader, for every input it accepts, yields a tree with these properties:
+
+* the node classes and operand orders of PM 1001;
+* numbers as exact decimals of the grammar PM 1002 states, wherever the tree carries numbers;
+* uncertainty nodes constructed through the validation of PM 1002 — a reader never assembles a malformed uncertainty;
+* units as UnitsML embeddings read from the content language;
+* no reference to the reader, the type or the options inside the tree.
+
+The last property keeps trees portable: a tree does not remember which reader made it, and PM 1001's syntax-independence invariant holds at the boundary.
+
+=== Reading is not interpretation
+
+Readers translate structure; they do not evaluate, simplify, reorder or repair. An input that says `2 + 2` yields a tree that says `2 + 2`; whether that is 4 is evaluation's business (document 1004). An input with a suspicious construct — a division by a zero-valued expression, an inverted interval — reads as written; the evaluators and the checkers flag, the readers transcribe.
+
+=== Reading uncertainty: the summary
+
+The reading rules per format, in one place (the full rules are PM 1002's encodings plus the clauses above):
+
+.Reading uncertainty by format
+[cols="2,3,3", options="headers"]
+|===
+|Format |Authoritative channel |Visible shape
+
+|asciimath |the call form / reporting form |is the form
+|mathml |the `intent` marker |regenerated
+|omml |the marker run |regenerated
+|unicode |the `ⓘ` marker |regenerated
+|latex |not read |not read
+|html |not read |not read
+|===
+
+A marker and its shape disagreeing is a producer defect; the reader takes the marker, and the next write emits a consistent pair. The corpora include a stale-shape vector per markup format so the authority is tested, not stated.

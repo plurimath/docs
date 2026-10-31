@@ -1,0 +1,76 @@
+== The MathML interface
+
+=== Reading
+
+The MathML reader accepts a MathML 4 document or fragment. It reads the presentation markup into the tree: `mi`, `mn`, `mo`, `mrow`, `mfrac`, `msqrt`, `mroot`, scripts, tables, and the constructs the model names. Two rules govern semantics:
+
+* the `intent` attribute is authoritative for uncertainty (PM 1002): where an `mrow` carries an uncertainty marker, the fields come from the marker's arguments and the row's visible content is regenerated;
+* a `semantics` element carries its annotations as annotation data on the tree, and its first child as the expression.
+
+Unknown presentation elements are read as their content where they are containers and refused where they are not: the reader does not silently drop structure it cannot represent.
+
+=== Writing
+
+The MathML writer emits MathML 4 per PM 1001's surface rules: `mathvariant` from font styles, intent markers from uncertainty nodes, `mtable` families from tables, `mn`/`mi`/`mo` per the registry entries. The `display` attribute follows the root's flag or the call's override.
+
+=== Losslessness
+
+MathML is lossless for the constructs the model defines, with the intent-authority rule for uncertainty. A MathML document using constructs the model does not define reads to the closest model content it can represent and records nothing else — such documents are outside the losslessness claim.
+
+[example]
+Reading a MathML `mrow` with `intent="expanded-uncertainty(10.3,0.5,2,0.95)"` whose visible content shows a stale magnitude.
+*Expected outcome.* the tree carries the marker's fields (`0.5`, `2`, `0.95`); the stale visible magnitude is discarded and regenerated on the next write.
+
+=== Element mapping
+
+The reader's element mapping, at family level:
+
+.MathML elements to nodes
+[cols="2,2,3", options="headers"]
+|===
+|Element or construct |Node |Notes
+
+|`mi`, `mo` with registry entries |`Symbol` |per the entry's MathML rendering
+|`mn` |`Number` |text verbatim
+|`mtext` |`Text` |content verbatim
+|`mfrac` |`Frac` |numerator, denominator order
+|`msqrt`, `mroot` |`Sqrt`, `Root` |degree order preserved
+|`msub`, `msup`, `msubsup` |`Base`, `Power`, `PowerBase` |order preserved
+|`munder`, `mover`, `munderover` |`Under`, `Over`, `Underover` family |per construct
+|`nary` shapes |the nary classes |character from the construct
+|`mtable`, `mtr`, `mtd`, `mlabeledtr` |table, `Tr`, `Td`, `Mlabeledtr` |structure preserved
+|`menclose`, `merror`, `mphantom`, `mpadded`, `mspace` |the presentation classes |per construct
+|`mmultiscripts` |`Multiscript` |pre and post pairs
+|`semantics` |`Semantics` |annotations carried
+|`intent` attribute |per the intent |uncertainty per PM 1002
+|===
+
+=== Whitespace and `mspace`
+
+Significant whitespace in MathML is structural; the reader treats `mspace` per its width semantics and collapses presentation-only whitespace, as MathML itself prescribes. Trees carry structure, not spacing.
+
+=== Diagnostics
+
+A MathML input that mixes constructs the model cannot represent reads to its representable core; the reading corpora contain such vectors with their expected trees, so the boundary between "reads with loss" and "refuses" is pinned, not folklore.
+
+=== Reading algorithm
+
+The MathML reader walks the document in order:
+
+. the root element fixes the fragment's bounds; a stray text outside it refuses;
+. each element maps per the table of this clause; containers recurse;
+. `intent` markers are collected as the elements carrying them close, and the marked element's node is reconstructed from the marker per PM 1002;
+. annotations ride with their `Semantics` node;
+. the resulting parameters form the tree's top level, in document order.
+
+=== The intent-authority consequence
+
+Because markers are authoritative, a MathML producer has exactly one way to be wrong about uncertainty: emit a marker whose arguments contradict the visible content. That document reads to the marker's fields. A producer that wants the visible shape to win must not carry a marker; but then the node is not an uncertainty node, and the shape reads as ordinary constructs.
+
+=== Entities
+
+Named entities (`&alpha;`) and numeric character references read through the registry's MathML renderings — an entity the registry knows reads to its entry; an unknown entity is a reading error naming it.
+
+=== Writing the intent, concretely
+
+The uncertainty markers of PM 1002 write as the `intent` attribute value on the enclosing `mrow`: `intent="standard-uncertainty(10.3,0.2)"`. The attribute is the whole machine-readable contract; a MathML consumer that understands intent reads the fields, one that does not sees the shape. The writer never splits a marker across elements or abbreviates it — the grammar of PM 1002 is the attribute's entire alphabet.

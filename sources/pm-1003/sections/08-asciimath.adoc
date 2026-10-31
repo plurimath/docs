@@ -1,0 +1,130 @@
+== The AsciiMath interface
+
+=== Reading
+
+The AsciiMath reader accepts the linear form: symbols and function applications of the registry vocabulary (PM 1001), grouping, scripts, fractions, nary constructions, text in `text(...)` and in quoted strings, and the uncertainty forms of PM 1002.
+
+The quoted string is content: `"unitsml(kg*m/s^2)"` is the UnitsML channel, read as a unit embedding; any other quoted string is upright text. The reader does not interpret inside a quoted string beyond the UnitsML channel check.
+
+The uncertainty reading follows PM 1002:
+
+* the calls `ustd(v, m)`, `uexp(v, m, k, p)` and `ucov(v, l, u, p, kind)` read to their categories with the given fields;
+* the reporting form `v(digits)` reads to a standard uncertainty with notation concise and the magnitude reconstructed by the decimal-places rule;
+* the interval kinds spell `shortest` and `symmetric` on input, reading to the model's kinds;
+* a malformed form — wrong arity, non-decimal arguments, an unknown kind — is a reading error: `AmbiguousDecimalError` where the ambiguity is the decimal place count, `ParseError` otherwise.
+
+=== Writing
+
+The AsciiMath writer emits per PM 1002's encodings: the calls with their argument orders, the concise reporting form for concise nodes, the quoted UnitsML channel for expressible units and the visible unit otherwise.
+
+=== Losslessness
+
+The AsciiMath interface is lossless: writing a tree and reading the result yields an equal tree, for every tree the model defines. The one deliberate asymmetry: a concise node writes the reporting form and reads back concise — the notation survives the round trip, as a field of the node.
+
+[example]
+Writing `ustd(10.3, 0.2)` and reading it back; writing the same node with notation concise and reading that back.
+*Expected outcome.* the first round trip returns the node with notation absolute; the second returns notation concise. The two trees differ in that field and in nothing else.
+
+=== The accepted surface
+
+The reader accepts the construct families below, in the spellings of the registry vocabulary. The table states each family's AsciiMath shape and the node it yields; the vocabulary itself is the registry of PM 1001.
+
+.Construct families, AsciiMath
+[cols="2,3,3", options="headers"]
+|===
+|Family |Shape |Node yielded
+
+|symbols |token from the registry (`alpha`, `sum`, `infty`) |`Symbol` per entry
+|numbers |digits with optional decimal point |`Number`
+|grouping |parentheses |content nodes, `Fenced` where the fences are meaningful
+|fractions |`a/b` |`Frac`
+|roots |`sqrt(x)`, `root(x)(n)` |`Sqrt`, `Root`
+|scripts |`x^2`, `x_1`, `x_1^2` |`Power`, `Base`, `PowerBase`
+|nary with limits |`sum_(i=1)^n` |`Sum` with limits
+|functions |`sin x`, `log_a b`, `abs(x)` |the function classes
+|matrices |`[[a,b],[c,d]]` and variants |the table classes
+|text |`text(...)` and quoted strings |`Text`
+|accents |`hat x`, `bar x`, `vec x` |the accent classes
+|font styles |`bold(x)`, `fraktur(g)` |font style nodes
+|colour |`color(red)(x)` |`Color`
+|units |`"unitsml(...)"` |`Unitsml`
+|uncertainty |`ustd`/`uexp`/`ucov` calls, `v(digits)` |`Uncertainty`
+|===
+
+=== Precedence and grouping
+
+The reader applies the notation's precedence: scripts bind tighter than adjacency, fractions tighter than addition, and explicit grouping overrides. The tree is the precedence-correct reading; an author who means something else parenthesises. This document does not restate the precedence table — the reader's behaviour is its definition, and the corpus pins it vector by vector.
+
+=== Localization
+
+The localized symbols and function names follow the active locale: an Italian locale reads `sen` as the sine function where an English reading sees a symbol sequence. Localization affects which tokens map to which nodes; it never changes the tree shape a construct yields.
+
+=== Errors and the corpus
+
+The reader's refusals are pinned by the corpus alongside its successes: every reading error of Annex A that the AsciiMath surface can produce has a corpus vector whose expected outcome is the error and its message shape.
+
+=== The quoted channel, precisely
+
+A quoted string in AsciiMath input is content, with exactly one special case: text matching the UnitsML channel shape `unitsml(<expression>)` becomes a unit embedding. The check is on the whole string, after trimming nothing: `" unitsml(g)"` with a leading space is text, `"unitsml(g)"` is the channel. Anything inside the channel that the unit reader refuses is a reading error naming the expression — the channel never silently degrades to text, because a unit intended as a unit must not become prose.
+
+=== Concise reconstruction, precisely
+
+On reading the reporting form `v(digits)`:
+
+. the value is the text before the parenthesis;
+. the digit string is the text inside;
+. the magnitude's decimal places are the value's decimal places — the count that made the form well formed;
+. the magnitude is the digit string with its last digit(s) moved behind a decimal point at that place count, prefixed with `0.` when the place count is positive;
+. the node is constructed with notation concise, through PM 1002's validation.
+
+A digit string that cannot be reconstructed at the value's place count — more digits than places is unambiguous, fewer or mismatched is not — raises `AmbiguousDecimalError`. The reconstruction never invents places: `10(2)` reads magnitude `2` at zero places; `10.3(25)` refuses.
+
+=== Symmetric, precisely
+
+The AsciiMath kind token `symmetric` reads to `probabilistically-symmetric` before node construction; the model never sees the short spelling. Writing a `probabilistically-symmetric` node emits `symmetric` in AsciiMath and the full name everywhere else. The asymmetry is spell-level and pinned in both corpora.
+
+=== AsciiMath error table
+
+.AsciiMath reading errors
+[cols="2,3,3", options="headers"]
+|===
+|Input fault |Error |Message shape
+
+|unknown token |`ParseError` |the token and its position
+|arity mismatch in a call |`ParseError` |the call and its argument count
+|unknown interval kind |`ParseError` |the kind as written
+|concise place-count mismatch |`AmbiguousDecimalError` |the value and the digit string
+|refused unit expression in the channel |`ParseError` |the expression, from the unit reader
+|===
+
+=== Writing matrices and alignment
+
+The table classes write in the bracket forms; `Align` and `Eqarray` write with the ampersand alignment their reads accept. Alignment points are structural for these classes and survive the round trip; a writer that drops them fails the corpus.
+
+=== The vocabulary surface
+
+The AsciiMath reader's symbol vocabulary is the registry's AsciiMath token set. The families, with representative tokens (the full set is the registry; the corpus exercises it):
+
+.Symbol families, AsciiMath tokens
+[cols="2,4", options="headers"]
+|===
+|Family |Representative tokens
+
+|Greek |`alpha`, `beta`, `Gamma`, `Delta`, `theta`, `Omega`
+|operators |`+`, `-`, `*`, `**`, `times`, `div`, `pm`, `mp`, `cdot`
+|relations |`=`, `!=`, `<`, `<=`, `>`, `>=`, `approx`, `equiv`, `sim`, `propto`
+|logic and sets |`and`, `or`, `not`, `forall`, `exists`, `in`, `notin`, `subset`, `cup`, `cap`
+|arrows |`->`, `=>`, `<->`, `iff`, `mapsto`
+|calculus |`int`, `oint`, `sum`, `prod`, `partial`, `nabla`
+|miscellany |`oo`, `emptyset`, `aleph`, `hbar`, `ell`, `Re`, `Im`, `degree`
+|===
+
+Function-name tokens follow: `sin`, `cos`, `tan` and kin, `log`, `ln`, `lg`, `exp`, `min`, `max`, `gcd`, `lcm`, `mod`, `det`, `dim`, `deg`, `exp`, `hom`, `ker`, `lim` with its variants — each reading to its function class. Locale-selected alternatives exist for a number of them, per clause 6.
+
+=== Text and quotes, precisely
+
+`text(...)` reads its content as upright text with grouping; quoted strings read as text with the UnitsML channel exception of this clause. The two forms differ in one observable way: `text(...)` may contain AsciiMath commands, a quoted string never does — quotes are literal, which is what makes them the right channel for content a formula must not interpret.
+
+=== What the corpus pins for AsciiMath
+
+The AsciiMath corpora carry, at minimum: every registry family with a representative per entry-group; every construct family of the table above, in plain and grouped forms; the uncertainty forms of PM 1002 with all categories, notations and kinds; the quoted channel with expressible, inexpressible and refused units; the localization pairs; and the error table's rows. 143 cases formed the first frozen generation; later generations extend, never rewrite.

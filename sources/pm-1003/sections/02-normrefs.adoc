@@ -1,0 +1,9 @@
+== Normative references
+
+The following documents are referred to in the text in such a way that their content applies to the construction of these interfaces.
+
+* PM 1001 (math model) and PM 1002 (uncertainty model) of this series.
+* MathML 4, W3C Recommendation — the `intent` attribute and `semantics` element as read by the MathML interface.
+* ECMA-376, Office Open XML File Formats, Part 1 — the DrawingML mathematics the OMML interface reads and writes.
+* Unicode Technical Report #28, Unicode Support for Mathematics — the linear format the UnicodeMath interface reads and writes.
+* UnitsML 6 (asciiunits content language) of the UnitsML series — the content of the quoted channel the AsciiMath interface reads and of the unit embedding.

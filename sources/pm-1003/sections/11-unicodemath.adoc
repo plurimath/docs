@@ -1,0 +1,60 @@
+== The UnicodeMath interface
+
+=== Reading
+
+The UnicodeMath reader accepts the linear format of UTR #28 as the implementation defines its surface: symbols, fractions, scripts, nary constructs, and the intent wrapper `ⓘ("marker" visible)`.
+
+The wrapper is authoritative for uncertainty: the marker string inside the quotes carries the fields; the visible shape inside the wrapper is regenerated. The `ⓐ(unit ...)` form inside the wrapper carries the unit. Outside wrappers, the linear format reads per its own conventions — `^`, `_`, `/` grouping, named symbols from the registry's UnicodeMath tokens.
+
+=== Writing
+
+The UnicodeMath writer emits per PM 1001 and PM 1002: the linear forms of the constructs, the intent wrapper for uncertainty nodes with the marker and the regenerated visible shape, and `ⓐ(unit ...)` for the unit.
+
+=== Losslessness
+
+UnicodeMath is lossless for the model's constructs under the intent-authority rule.
+
+[example]
+Reading `ⓘ("standard-uncertainty:concise(10.3,0.2)"10.3(2))`.
+*Expected outcome.* a standard uncertainty node, notation concise, magnitude `0.2`; writing it emits the wrapper again with the reporting form visible.
+
+=== Token families
+
+.UnicodeMath token families
+[cols="2,3,3", options="headers"]
+|===
+|Family |Shape |Node yielded
+
+|literal characters |Unicode symbol characters |`Symbol` per registry entry
+|named tokens |`alpha`, `sum`, `infty` |`Symbol` per entry
+|fractions |`a/b`, `(a+b)/(c+d)` |`Frac`
+|radicals |`√x`, `∛(x&3)` |`Sqrt`, `Root`
+|scripts |`x^2`, `x_1` |script classes
+|nary with limits |`∑_(i=1)^n` |the nary classes
+|functions |`sin`, `log_2 x` |the function classes
+|intent wrapper |`ⓘ("marker" visible)` |per the marker; uncertainty per PM 1002
+|units in wrappers |`ⓐ(unit ...)` |the unit embedding or unit text
+|text |quoted strings |`Text`
+|===
+
+=== The wrapper is the only comment channel
+
+UnicodeMath has no comment or annotation mechanism the model carries; the `ⓘ` wrapper is the single channel for machine-readable intent. An `ⓘ` whose quoted text does not match the marker grammar is a reading error, not text — the wrapper is reserved.
+
+=== Linear-format precedence
+
+As with AsciiMath, the reader applies the linear format's precedence and the corpus pins it. Fraction and script grouping in parentheses follows UTR #28's conventions as the implementation defines them.
+
+=== Reading algorithm
+
+The UnicodeMath reader scans the linear text:
+
+. literal characters and named tokens read through the registry's UnicodeMath tokens;
+. structural characters (`/`, `^`, `_`, parentheses) build the corresponding nodes;
+. an `ⓘ` opens a wrapper: the quoted marker reads per PM 1002's grammar, the visible shape is skipped or regenerated, and `ⓐ` inside carries the unit;
+. a `ⓐ` outside a wrapper is unit text;
+. everything else reads per the linear format's precedence, as the corpus pins.
+
+=== Why the wrapper skips and regenerates
+
+The visible shape inside a wrapper was produced from the marker's fields; re-reading it would invite the stale-shape problem the marker exists to prevent. The reader reads the marker, reconstructs the node, and moves past the visible shape.

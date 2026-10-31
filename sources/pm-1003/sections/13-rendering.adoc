@@ -1,0 +1,44 @@
+== Image rendering
+
+=== The renderer
+
+Beyond the text surfaces, a tree renders to images — SVG, PNG, PDF and PostScript — through the optional renderer, which delegates to the `lasem` library. Rendering goes through one entry point, `render(text, type, format:, **options)`: it parses per clause 6 and renders the parsed tree to the requested image format.
+
+=== Availability
+
+Image rendering is available when the `lasem` gem and its native extension are present; it is never available under Opal. Availability is queryable and never raises: `render_available?` answers the question, and `render` raises the typed errors when called without it.
+
+=== Failure
+
+The renderer's failures are typed: `RenderingUnavailable` when the library is missing, `UnsupportedRenderFormat` for a format it does not offer, `RenderingFailed` when rendering fails on a tree that parsed. Parsing failures surface as the parse errors of clause 6 — the renderer never masks a parse failure as a rendering failure.
+
+[example]
+`render("x^2", :asciimath, format: :png)` with lasem installed.
+*Expected outcome.* the PNG of the rendered formula. The same call with lasem absent raises `RenderingUnavailable` before any parsing work is repeated. A malformed input raises `ParseError`, not `RenderingFailed`.
+
+=== The rendering pipeline
+
+Rendering composes two boundaries: parse per clause 6, then render the tree to the image format through the library. Options split the same way — parse options to the parse step, the rest to the renderer. The pipeline is one entry point so that callers cannot interleave a broken state: either the image bytes or a typed error, nothing in between.
+
+=== Formats and their properties
+
+.Image formats
+[cols="2,2,3", options="headers"]
+|===
+|Format |Bytes |Notes
+
+|svg |vector |the default
+|png |raster |width options apply
+|pdf |vector page |one formula per page
+|ps |vector page |as pdf
+|===
+
+The corpus freezes one image per format at a reference size; raster differences at other sizes are not drift.
+
+=== Availability and platforms
+
+The renderer's availability follows the library's platform support: native where the extension builds, absent under Opal and on platforms without the native stack. Applications probe availability once and degrade to text surfaces where images are unavailable; the interface makes degradation explicit rather than failing mid-document.
+
+=== Rendering and the model version
+
+Image output depends on the library's rendering of the intermediate form; it is byte-stable per model version plus library version, and the corpus records both. A library upgrade that changes bytes is a corpus regeneration with provenance, the same discipline as any other byte change.

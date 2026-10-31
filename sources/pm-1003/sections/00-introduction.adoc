@@ -1,0 +1,20 @@
+== Introduction
+
+The math model of PM 1001 is one tree; the world speaks seven notations. The format interfaces are where the tree meets them: a reader for each input notation — AsciiMath, LaTeX, HTML, MathML, OMML, UnicodeMath and the UnitsML unit-expression content — and a writer for each output surface.
+
+A reader is a total function on well-formed input: it accepts text, validates the type and the options, and yields a tree that satisfies the model of PM 1001 — with the input text preserved on the tree for diagnostics. A writer is a deterministic function from tree to bytes, per the stability rules of PM 1001. Between them stand the error contracts: an implementation never leaks an internal exception across a boundary — every failure is one of the typed errors of Annex A, carrying the input and the format that failed.
+
+This document also fixes which directions read back. AsciiMath, MathML, OMML, LaTeX and UnicodeMath read back to the tree they were written from, with the exceptions enumerated in the round-trip clause; HTML does not read back. Where PM 1002 defines uncertainty encodings, this document defines how they read — the marker is authoritative, the visible shape is regenerated.
+
+[example]
+`Plurimath::Math.parse("x^2", :asciimath)` yields the power tree of PM 1001's first example, with `input_string` equal to `x^2`. `Plurimath::Math.parse("<math><msup>...", :mathml)` given malformed MathML raises `ParseError` — or the specialized error the failure maps to — and never a naked parser exception.
+
+=== How to read this document
+
+Clauses 5 to 7 are the interface model and the two contracts; they apply to every format. Clauses 8 to 12 are the formats, each self-contained: its reading rules, its writing rules, its place in the round-trip table. Clause 13 is the image surface, clause 14 the round-trip properties, clause 15 conformance. The annexes carry the error classes, the options and the vectors.
+
+A reader implementing one format needs: clause 6 or 7 for the shared contract, their format's clause, clause 14 for the round-trip claim, and the corpora.
+
+=== One system, seven doors
+
+The interfaces exist so that the number of formats never multiplies the number of implementations. Seven notations, two boundaries, one tree: an implementation of this document writes each reader once and each writer once, and every format pair works.

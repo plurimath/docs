@@ -1,0 +1,50 @@
+== Annex B: options reference
+
+=== Parse options
+
+.Options of the parse entry point
+[cols="2,3,3", options="headers"]
+|===
+|Option |Applies to |Effect
+
+|`locale` |asciimath, latex, html, unicode |selects the language-specific readings of symbols and function names
+|===
+
+The locale value follows the implementation's locale keys. A locale the implementation does not know raises `ParseOptionError` — silently ignoring a locale would read the wrong language and report success.
+
+=== Write options
+
+.Options of the writer entry points
+[cols="2,3,3", options="headers"]
+|===
+|Option |Applies to |Effect
+
+|display style |all surfaces |forces the display or inline form regardless of the root's flag
+|===
+
+=== Rendering options
+
+.Options of the render entry point
+[cols="2,3,3", options="headers"]
+|===
+|Option |Applies to |Effect
+
+|`format` |render |the image format: svg, png, pdf, ps
+|parse options |render |forwarded to the parse step
+|===
+
+Unknown options at any boundary raise the typed option error; no boundary guesses.
+
+=== Worked option cases
+
+[example]
+`parse("\\operatorname{sen} x", :latex, locale: :pt)` — a Portuguese input.
+*Expected outcome.* with the locale, `sen` reads as the sine function; the tree is the sine of `x`. The same call without the locale reads `sen` per the default vocabulary — a symbol sequence, not the function. The corpora freeze both.
+
+[example]
+`to_latex(display_style: true)` on a tree whose root flag says inline.
+*Expected outcome.* the display form; the root's flag is overridden for this call and unchanged on the tree.
+
+[example]
+`render("x_1", :asciimath, format: :png)` with the library present.
+*Expected outcome.* PNG bytes at the reference size; the parse options forward, the rest route to the renderer.

@@ -1,0 +1,57 @@
+== Round trips
+
+=== The lossless directions
+
+The lossless directions of the system:
+
+.The lossless directions
+[cols="2,3,3", options="headers"]
+|===
+|Format |Round trip |Exceptions
+
+|AsciiMath |yes |none
+|MathML |yes |constructs outside the model
+|OMML |yes |constructs outside the model
+|UnicodeMath |yes |constructs outside the model
+|LaTeX |yes |the registry's approximate renderings
+|HTML |no |display surface; no reader
+|===
+
+A round trip composes the writer and the reader of one format: `read(write(tree))` equals `tree`, under the structural equality of PM 1001, for trees built from the model's constructs. The `input_string` after a round trip is the written form, not the original — identity of trees does not depend on it.
+
+=== What survives
+
+Every model field survives every lossless round trip: operands, order, uncertainty categories, fields, notation, interval kinds, units, intent annotations. The encodings of PM 1002 were designed so that no lossless format is the weak link: each carries the marker or the call that reconstructs the node.
+
+=== What does not
+
+Three things do not survive, by design and stated here so that no one searches for them:
+
+* the original input text (the `input_string` after a round trip is the written form);
+* presentation choices that live outside the tree — display style survives, ad-hoc spacing does not;
+* constructs outside the model, which read to their closest representable content on the way in and therefore cannot survive a round trip unchanged.
+
+[example]
+A tree with a concise uncertainty node round-tripped through AsciiMath, MathML, OMML, UnicodeMath and LaTeX, then read back.
+*Expected outcome.* the four lossless round trips each return an equal tree, notation concise everywhere; the LaTeX output is not read back and makes no claim.
+
+=== A worked round trip
+
+Start from the tree of Result two of PM 1002's Annex D: the expanded uncertainty `10.3 g, U = 0.5 g (k = 2, p = 95%)`.
+
+. Write to AsciiMath: `uexp(10.3, 0.5, 2, 0.95) "unitsml(g)"`.
+. Read it back: the tree, equal, `input_string` now the written call.
+. Write to MathML: the intent `expanded-uncertainty(10.3,0.5,2,0.95)` over the fenced ± shape.
+. Read that back: the tree, equal again.
+. Write to LaTeX: `(10.3 \pm 0.5) g~(k = 2,~(p = 0.95))`-shaped output.
+. Stop — LaTeX does not read back; the claim ends at the bytes.
+
+*Expected outcome.* after each lossless leg the tree is equal to the original in every field; the `input_string` differs at every leg, and identity is unaffected.
+
+=== Round trips through different formats
+
+Reading one format's output with another format is not a round trip; it is two round trips joined by the tree. The composition works because every reader yields model trees and every writer consumes them: AsciiMath in, OMML out, OMML read, HTML out — each boundary checks per its own clause.
+
+=== The corpus and the claim
+
+The round-trip corpora freeze, per format: a spread of trees covering every node family, the uncertainty categories, units, and the registry's approximate-rendering cases. A conforming implementation replays them all; one failure is nonconformance.
