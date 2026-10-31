@@ -1,0 +1,69 @@
+== The constructors
+
+=== General
+
+A constructor is atomic: `keyword(args)` with the argument list its table fixes, materialising one node. A malformed argument list is a parse error — there is no partial record, no default-filled form, no interpretation of what the author probably meant.
+
+=== unit
+
+`unit(<expression>)` carries one unit expression in the UnitsML 6 grammar and materialises a `Unitsml` node (PM 1001). Alone it states a unit; following a value or a literal it scopes the unit of the whole quantity (the trailing-unit rule below).
+
+=== ustd, uexp, ucov
+
+The uncertainty constructors carry PM 1002's categories with their argument orders:
+
+.The uncertainty constructors
+[cols="2,4,2", options="headers"]
+|===
+|Constructor |Arguments in order |Materialises
+
+|`ustd(v, m)` |value, magnitude |the standard category, notation absolute
+|`uexp(v, m, k, p?)` |value, magnitude, factor, optional probability |the expanded category
+|`ucov(v, l, u, p?, kind)` |value, endpoints, optional probability, kind |the coverage-interval category
+|===
+
+Optional arguments are omitted without empty positions, as in AsciiMath. The kinds are `shortest` and `probabilistically-symmetric` — the full model names; AsciiMath's `symmetric` respelling does not exist here, because this notation owns its tokens and has no minus-sign ambiguity to dodge.
+
+The constructors validate through PM 1002's rules at materialisation: field rules per category, the positive factor, the bounded probability, the exact decimals. A violation is a construction error naming the field — the same typed refusal the model defines, surfaced at parse time.
+
+=== diff
+
+`diff(<quantity>)` materialises its operand as a difference-typed quantity: the node structure of the operand with the difference typing of the quantity algebra (clause 12). The name `diff` is the register's current choice; the register is the place a successor spelling (`delta`) would land, through the reserved-word process, never by overloading.
+
+=== The trailing-unit rule
+
+A `unit(...)` following a value or a measured literal scopes the unit of the entire quantity, uncertainty included: `ustd(10.3, 0.2) unit(m)` states a value of `10.3 m` with a magnitude of `0.2 m` — the magnitude is a difference in that unit (clause 12). The unit is stated once; nothing in the form repeats it per field.
+
+[example]
+`ustd(10.3, 0.2) unit(m)`.
+*Expected outcome.* one `Uncertainty` node — value `10.3`, magnitude `0.2`, category standard, unit the metre. `ustd(10.3)` is a parse error naming the missing magnitude, not a record with a zero.
+
+[example]
+`unit(kg m/s^2)`.
+*Expected outcome.* the `Unitsml` node of the newton's unit expression — the UnitsML 6 grammar's reading, one grammar for both notations.
+
+=== The constructors against PM 1002's rules
+
+The uncertainty constructors do not restate PM 1002's validation — they invoke it. The table maps each constructor's refusal to the rule that refuses it:
+
+.Constructor refusals and their rules
+[cols="2,3,3", options="headers"]
+|===
+|Constructor fault |PM 1002 rule invoked |Error shape
+
+|`ustd(10.3)` — missing magnitude |the standard category requires the magnitude |construction error: "magnitude is required for a standard uncertainty"
+|`uexp(10.3, 0.5, 0)` — zero factor |the factor must be greater than zero |construction error naming the factor
+|`uexp(10.3, 0.5, 2, 1)` — probability one |the probability is strictly inside (0, 1) |construction error naming the probability
+|`ucov(..., fastest)` — unknown kind |the kinds are shortest and probabilistically-symmetric |parse error naming the kind
+|`diff(x)` — a name, not a quantity |the operand must carry a quantity expression |parse error naming the operand
+|===
+
+The error shapes are this document's, the rules are PM 1002's, and the split is deliberate: one model, one validation, two notations surfacing it.
+
+=== The trailing unit's scope, precisely
+
+`ustd(10.3, 0.2) unit(m)` — the unit scopes the value and the magnitude. `uexp(10.0, 0.3, 2, 0.95) unit(cm)` — the unit scopes value, magnitude and the interval the factor describes: everything in the record is centimetres. A form with two trailing units is a parse error: the scope is the whole quantity, stated once. A constructor whose operand already carries a unit takes no trailing unit — the scope is decided at the innermost statement, and re-stating it outside is ambiguous about what it would override.
+
+=== The unit expression's strictness
+
+The expression inside `unit(...)` is the UnitsML 6 grammar, and its strictness is that grammar's: an expression the unit reader refuses is a parse error here naming the expression and the unit reader's message. The channel-less design pays here — in AsciiMath the channel's content was quoted data; here it is grammar, and the errors are parse errors with positions, not text-channel refusals.

@@ -1,0 +1,93 @@
+== Differences from AsciiMath
+
+This clause is the complete, systematic comparison between pma and the AsciiMath surface of PM 1005. It is organised by category — lexicon, syntax, semantics, errors — and the categories are exhaustive: a construct that is not listed as shared, changed, added, or removed does not exist in either notation's intersection. A developer implementing pma from this document needs this clause and the grammar of clause 6; nothing else differs.
+
+=== Shared, unchanged
+
+These parts of AsciiMath carry into pma with identical syntax and identical meaning:
+
+[cols="2,4,3", options="headers"]
+|===
+|Shared |Form |Reference
+
+|numbers |digits with an optional decimal point, exact decimals |clause 6
+|arithmetic operators |`+`, `-`, `*`, `/`, `^`, `mod` |clause 6
+|unary signs |`-x`, `+x` |clause 6
+|grouping |parentheses |clause 6
+|relations |`=`, `!=`, `<`, `<=`, `>`, `>=` |clause 6
+|names |identifiers bound at evaluation |clause 6
+|the power associativity |right-associative `^` |clause 6
+|===
+
+=== Changed
+
+These exist in AsciiMath under one spelling and in pma under another:
+
+[cols="2,2,2,3", options="headers"]
+|===
+|Concept |AsciiMath (PM 1005) |pma |Reason
+
+|the unit |the quoted channel `"unitsml(...)"` |the unquoted constructor `unit(...)` |no strings as syntax (clause 5)
+|the interval kind `probabilistically-symmetric` |spelled `symmetric` |spelled in full |no minus-sign ambiguity to dodge; tokens are owned
+|the uncertainty calls' context |loose placement rules |strict argument lists with the trailing-unit rule |owned grammar
+|the reserved reading of `sum`, `prod` |ternary classes with scripts |reserved words without scripts; iteration bounds are evaluation's |clause 6's token discipline
+|===
+
+=== Added
+
+These exist only in pma:
+
+[cols="2,4", options="headers"]
+|===
+|Addition |Form
+
+|the measured literal |`(v +/- u)` with its modifiers: relative `%`, shared exponent `e`, distribution tag `~name`
+|the fenced ± sugar |`(v ± u)` — fenced only
+|the unit constructor |`unit(...)` unquoted
+|the difference constructor |`diff(...)`
+|the quantity assertion |`unit-expression :: kind-name`
+|===
+
+=== Removed — not carried in this edition
+
+AsciiMath's surface has four areas pma does not carry in this edition, stated so the boundary is exact:
+
+[cols="2,4,3", options="headers"]
+|===
+|Area |What AsciiMath has |pma edition 1
+
+|the mathematical construct surface |`frac`, `root`, `sqrt`, scripts `^`/`_` on symbols, `sum`/`prod`/`int` with scripts, matrices `[[...]]`, accents, font styles, `text(...)` |not carried: pma edition 1 is the arithmetic and measurement language; a pma document composes construct content through the model, and an edition may carry a subset later with its grammar and corpus
+|quoted strings |text content and the channel |removed entirely: no quoted-string token exists in pma
+|implicit multiplication |adjacency `2x` means `2 * x` |removed: multiplication is explicit `*`; adjacency is a parse error — the owned grammar carries no load-bearing whitespace
+|the reporting form as input |`10.3(2)` reads |removed: output-only per clause 10
+|===
+
+The script tokens `^` and `_` in pma belong to the arithmetic's power operation only: `x^2` is the power, and there is no subscript form in edition 1.
+
+=== Lexical differences
+
+.Lexicon differences
+[cols="2,4", options="headers"]
+|===
+|Difference |Statement
+
+|`+/-` is one token |not `+` then `/` then `-`; the tokeniser's longest match carries it
+|`%` is a positional token |only inside a literal's magnitude position; elsewhere a parse error
+|`e` in exponent position |only after a literal's closing parenthesis; elsewhere a name
+|`~` is a positional token |only before a distribution tag; elsewhere a parse error
+|`::` is a positional token |only after a unit expression; elsewhere a parse error
+|no quoted-string token |a double quote anywhere is a parse error
+|case sensitivity |identical to AsciiMath: tokens and names are case-sensitive
+|===
+
+=== Error differences
+
+Both notations raise PM 1003's typed errors. The differences: pma's error set is exhaustive over its grammar (every input is derivable or named by one error — no legacy corner survives to be interpreted leniently), and pma carries no compatibility fallbacks by definition: AsciiMath's reader honours its baseline's leniencies where the baseline has them; pma's reader honours none, because there is no baseline to honour. The practical consequence for implementers: the pma error table of clause 6 is complete, and conformance to it is testable edge to edge.
+
+[example]
+The same intent in both notations — the measured value 10.3 m with standard uncertainty 0.2 m — and the two spellings.
+*Expected outcome.* AsciiMath: `ustd(10.3, 0.2) "unitsml(m)"`. pma: `(10.3 +/- 0.2) unit(m)`. Both materialise the same node; the differences clause accounts for every character that differs — the channel became the constructor, and nothing else changed.
+
+=== The MECE claim, stated
+
+Every token of pma is either shared, changed, added, or removed by the tables above; every construct is derivable from clause 6's grammar alone; every input is either derivable — to exactly one tree — or refused by exactly one error. This clause and clause 6 are the whole language; the remaining clauses explain it.

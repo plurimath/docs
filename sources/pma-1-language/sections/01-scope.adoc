@@ -1,3 +1,0 @@
-== Scope
-
-This document specifies: the design rules; the constructors; the measured literals; quantity assertions and static semantics; the rejected syntaxes; and materialization.

@@ -1,0 +1,17 @@
+== Conventions
+
+=== General
+
+pma text is shown verbatim; the canonical ASCII form is normative and the ± spelling is its fenced sugar. Trees are named in the model terms of PM 1001. The ± character is U+00B1.
+
+=== Examples
+
+Examples carry an *Expected outcome* paragraph. Where an example shows a refusal, the outcome names the error class per PM 1003's Annex A and the message shape this document fixes.
+
+=== Forward-specification status
+
+This document specifies the notation for implementation. Rules stated here are the specification the implementation follows; until first release, an implementation gap is a defect of the implementation against this document, not of the document.
+
+=== The artifact references
+
+Where a clause says the grammar carries a form, the artifact is the carrier: this document states the form, the artifact makes it runnable, and the two are checked against each other in the build. References to UnitsML 6's grammar are by content, not by copy — the unit grammar appears once, in its own series, and both notations point at it.

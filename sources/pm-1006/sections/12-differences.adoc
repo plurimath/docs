@@ -1,0 +1,25 @@
+== Differences and typing
+
+=== The difference quantity
+
+`diff(5 unit(degC))` materialises a difference-typed quantity: the value five with the unit degree Celsius, typed as a difference — five degrees hotter than something, not five degrees above absolute zero. The typing is the quantity algebra's (the invariants of the UnitsML series): differences are the values subtraction yields, and they convert factor-only, because offsets do not apply to them.
+
+=== Where differences come from
+
+Two roads: the `diff(...)` constructor states one directly; the subtraction of two absolute quantities of the same unit and quantity kind produces one. Both roads land in the same typing, and the arithmetic gating follows the units model: an absolute and a difference may combine in the ways the invariants define, and the model refuses the rest.
+
+=== Why the constructor exists
+
+The subtraction road needs two absolutes to make a difference; an author who starts from "the temperature rose by 5 degrees" has a difference and no base quantity to subtract. `diff(...)` states it without inventing a base, and the typing carries the statement — so the eventual conversion (`diff` in kelvin is the same five) and the eventual evaluation see the truth the author stated.
+
+[example]
+`diff(5 unit(degC))` converted to the kelvin difference.
+*Expected outcome.* `5 K` of difference — the factor-only conversion, no offset applied; the typing did its work.
+
+=== Differences and the literals
+
+A literal's magnitude is itself a difference — `0.2 m` in `(10.3 +/- 0.2) unit(m)` is a difference quantity, which is why the trailing unit scopes it and why its conversion is factor-only. The trailing-unit rule and the difference typing meet in every literal: the rule states the unit once because both the value and the difference-in-that-unit share it.
+
+=== The invariants, invoked
+
+The quantity algebra's invariants (the UnitsML series) govern what may combine with what: an absolute plus a difference yields an absolute, a difference plus a difference yields a difference, and the rest refuses. pma states these as materialisation-time checks where the operands are static, and leaves the dynamic cases to evaluation — the notation refuses what it can see, and the evaluator owns what it cannot.

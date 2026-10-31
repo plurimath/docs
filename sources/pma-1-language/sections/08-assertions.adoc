@@ -1,6 +1,0 @@
-== Quantity assertions and static semantics
-
-`unit(J::energy)` asserts the L1 quantity: the right side resolves per UnitsML 4 (short → unitsml id → nist id, exact tokens) and is validated against the unit record's membership (or the dimension check for unregistered composites). `::` is the lowest-precedence operator inside `unit(...)`, binding the whole preceding expression; subterm annotation requires parentheses. Static checks — membership, scale legality, difference typing (UnitsML 4) — run before evaluation; the evaluator (Plurimath 4) consumes already-checked trees.
-
-[example]
-*Expected outcome.* `unit(J::energy)` checks; `unit(J::torque)` is a static error naming the missing membership; `unit((N*m)::torque)` passes; `unit(N*(m::torque))` is a static error — subterm annotation is legal only in parentheses, and torque is not a metre kind.

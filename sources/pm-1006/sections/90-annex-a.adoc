@@ -1,0 +1,19 @@
+== Annex A: the constructor reference
+
+.Constructors in full
+[cols="2,3,2,3", options="headers"]
+|===
+|Constructor |Arguments |Materialises |Refusals
+
+|`unit(e)` |one unit expression (UnitsML 6) |`Unitsml` node |unreadable expression → parse error naming it
+|`ustd(v, m)` |value, magnitude |standard uncertainty, absolute |field rules of PM 1002
+|`uexp(v, m, k, p?)` |value, magnitude, factor, optional probability |expanded uncertainty |factor ≤ 0, probability outside (0, 1)
+|`ucov(v, l, u, p?, kind)` |value, endpoints, optional probability, kind |coverage interval |forbidden magnitude/factor present; unknown kind
+|`diff(q)` |one quantity expression |difference-typed quantity |non-quantity operand
+|===
+
+The optional probability is omitted without an empty position, as in AsciiMath. Every refusal names its field and its rule; the message shapes are this document's and are frozen in the error corpus.
+
+=== The constructors' composition
+
+Constructors compose through the arithmetic: `uexp(10.0, 0.3, 2, 0.95) unit(cm) + uexp(4.1, 0.2, 2) unit(cm)` is an addition of two expanded uncertainties — valid syntax, materialised nodes, and an evaluation question (document 1004) rather than a notation question. The notation carries what the author stated; the evaluator answers what it means.

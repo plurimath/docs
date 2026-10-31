@@ -1,0 +1,56 @@
+== Annex D: worked examples
+
+=== A measurement statement
+
+`(10.3 +/- 0.2) unit(m)` — the canonical literal with its trailing unit.
+
+. the literal desugars to `ustd(10.3, 0.2)`;
+. the trailing unit scopes both fields;
+. materialisation: one uncertainty node, category standard, value `10.3`, magnitude `0.2`, unit the metre.
+
+*Expected outcome.* rendered to AsciiMath: `ustd(10.3, 0.2) "unitsml(m)"`; to LaTeX: `10.3(0.2) m`; to every surface per PM 1002 — one statement, six encodings, no per-format authorship.
+
+=== A relative statement
+
+`(5.0 +/- 1%) unit(V)` — one percent of five volts.
+
+. the relative magnitude computes at materialisation: exact decimal `0.05`;
+. the record is the absolute form.
+
+*Expected outcome.* the tree carries magnitude `0.05`; the surfaces render `5.0(0.05) V` shapes; nothing recomputes the percentage at render or evaluation time.
+
+=== A shared-exponent statement
+
+`(3.85 +/- 0.23)e4 unit(m)`.
+
+. the exponent shifts both: `38500` and `2300`, digit movement only;
+. the desugared record is `ustd(38500, 2300) unit(m)`.
+
+*Expected outcome.* the exact decimals of the shifted form; no rounding anywhere in the shift.
+
+=== A tagged statement
+
+`(0.5 +/- 0.01) ~rect unit(V)`.
+
+. the tag attaches to the literal: the uncertainty's distribution family is the rectangular;
+. the node carries the tag as metadata; arithmetic is unchanged in this edition.
+
+*Expected outcome.* the tree with the tag; the surfaces render the tag where their encoding carries it (per PM 1002's statements) and drop it as presentation where they do not.
+
+=== An asserted unit
+
+`unit(Bq)::frequency`.
+
+. the assertion names the kind; the static semantics check the dimension;
+. the registry's assignment for `Bq` is the becquerel's own quantity — and the gating refuses the frequency claim.
+
+*Expected outcome.* a materialisation error naming the gating: the becquerel is not a hertz, and the assertion said it was. `unit(Bq)::activity` — the kind the registry assigns — materialises with the assertion recorded.
+
+=== A difference
+
+`diff(5 unit(degC))` — the temperature rise.
+
+. the constructor types the quantity as a difference;
+. the conversion to a kelvin difference is factor-only: `5 K` of difference, no offset.
+
+*Expected outcome.* the typed difference; the arithmetic that combines it with absolutes follows the invariants; the evaluation that converts it applies no offset — the typing carried the truth the author stated.

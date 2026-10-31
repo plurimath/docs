@@ -1,3 +1,0 @@
-== Conformance
-
-Conformance class `parse/render` includes this part. <<annex-test-suite>> defines the pma corpus: every form of Clauses 6–8 parses to the specified model; every malformed form is a parse error with the specified class; render replay per UnitsML 8.

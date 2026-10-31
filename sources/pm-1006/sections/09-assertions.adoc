@@ -1,0 +1,40 @@
+== Quantity assertions
+
+=== The :: form
+
+A unit expression followed by `::` and a kind name asserts the quantity: `unit(m/s2)::acceleration` states that the expression denotes an acceleration. The kind names are the UnitsDB quantity kinds (UnitsML 4); the assertion invokes the static semantics of UnitsML 5 — the expression's dimension must resolve to the kind's dimension, and a mismatch is an error at materialisation, not at evaluation time.
+
+=== What the assertion is for
+
+The assertion settles what units leave ambiguous: `Bq` and `Hz` share a dimension and are different quantities; `Sv` and `Gy` likewise. An author who writes `unit(Bq)::frequency` has said something checkable — and the static semantics check it. An author who writes `unit(Bq)` without an assertion gets the registry's primary quantity for the unit (the default), stated so the record is still complete.
+
+=== Gating
+
+The strict gating of UnitsML 5 applies to assertions: an assertion that contradicts the registry's quantity assignment for the unit refuses, and the refusals the units model defines (becquerel is not a hertz, sievert is not a gray) are materialisation errors here, exactly as they are conversion errors there. The notation does not carry its own quantity logic; it invokes the units model's.
+
+=== Assertions on literals
+
+The trailing unit of a literal carries assertions like any unit expression: `(10.3 +/- 0.2) unit(m)::length` asserts the metre as a length — redundant with the registry's default, checked anyway, and stated because the author preferred the record complete.
+
+=== The assertion grammar, precisely
+
+The assertion rides a unit expression at the positions a unit expression appears: inside `unit(...)`, and on the trailing unit of a literal or constructor. `unit(m/s2)::acceleration`, `(10.3 +/- 0.2) unit(m)::length`, `uexp(10.0, 0.3, 2, 0.95) unit(cm)::length` — each states the kind of the quantity the unit denotes. An assertion on a bare `unit(...)` inside an arithmetic product states the product's operand's kind, and the static semantics check what the product then builds — the checks are the units model's, at every position.
+
+=== The kinds, named
+
+Kind names are the UnitsDB quantity identifiers in their form: `length`, `acceleration`, `activity`, and the rest of the register. A name the register lacks is a materialisation error naming it — the kinds are data (PM 1001's registry discipline), and this notation carries no kinds of its own.
+
+=== Matched, gated, defaulted
+
+The three assertion outcomes:
+
+[cols="2,4", options="headers"]
+|===
+|Case |Outcome
+
+|the kind matches the unit's dimension and assignment |the assertion is recorded on the node
+|the dimension matches but the assignment is gated (Bq as a frequency, Sv as a gray) |materialisation error naming the gating
+|no assertion written |the registry's primary quantity for the unit is recorded, stated as the default
+|===
+
+Every outcome leaves the record complete: an author either asserts, or the registry's default is asserted on their behalf — a tree never carries a unit without a quantity statement.

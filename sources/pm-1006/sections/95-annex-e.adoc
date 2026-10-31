@@ -1,0 +1,69 @@
+== Annex E: test-suite examples
+
+Vectors illustrative of the conformance classes of clause 14; the pma corpus freezes them.
+
+=== Constructor vectors (class `read-pma`)
+
+[example]
+`unit(kg m/s^2)`.
+*Expected outcome.* the `Unitsml` node of the newton expression; the unit reader's exact reading, positions preserved for errors.
+
+[example]
+`ustd(10.3, 0.2) unit(m)` and `uexp(10.0, 0.3, 2, 0.95) unit(cm)` and `ucov(10.0, 9.7, 10.3, 0.95, shortest) unit(cm)`.
+*Expected outcome.* the three categories with their fields per PM 1002; the trailing units scoped to the whole quantities.
+
+[example]
+`ucov(10.0, 9.7, 10.3, probabilistically-symmetric)`.
+*Expected outcome.* the interval without probability, the full kind name — AsciiMath's `symmetric` respelling does not exist here.
+
+[example]
+`diff(5 unit(degC))`.
+*Expected outcome.* the difference-typed quantity; factor-only conversion to the kelvin difference per clause 12.
+
+=== Literal vectors (class `read-pma`)
+
+[example]
+Every form of clause 8's desugar table, read and compared to its desugar.
+*Expected outcome.* equal trees between each literal and its desugared constructor shape — the desugar is normative and tested.
+
+[example]
+`(10.3 +/- 2%) unit(m)`.
+*Expected outcome.* the exact magnitude `0.206`; a percentage that produced an inexact decimal would refuse at materialisation instead.
+
+[example]
+`(3.85 +/- 0.23)e4 ~rect unit(m)`.
+*Expected outcome.* one literal carrying both modifiers — the exponent shifted, the tag attached.
+
+=== Refusal vectors (class `read-pma`)
+
+[example]
+Every row of clause 8's refusal table and clause 7's refusal table.
+*Expected outcome.* the named error with its message shape — the strict error surface, one vector per rule.
+
+[example]
+`10.3(2)`.
+*Expected outcome.* a parse error: the reporting form is not an input form of this notation (clause 10).
+
+[example]
+`3+-1` inside a literal position.
+*Expected outcome.* a parse error naming the separator; the canonical `+/-` is one token and `+-` is not it.
+
+=== Assertion vectors (class `read-pma`)
+
+[example]
+`unit(m)::length` and `unit(Bq)::activity`.
+*Expected outcome.* recorded assertions — matched and defaulted-and-stated, both complete records.
+
+[example]
+`unit(Bq)::frequency`.
+*Expected outcome.* the gating refusal naming the quantity conflict.
+
+=== Round-trip and cross-runtime vectors (classes `roundtrip-pma`, `cross-runtime`)
+
+[example]
+A tree carrying every constructor and literal form, written and read back.
+*Expected outcome.* an equal tree; the canonical form re-emitted byte-identically.
+
+[example]
+The shared corpora replayed on the TypeScript runtime against the Ruby reference.
+*Expected outcome.* byte-identical outputs — the cross-runtime claim, discharged.

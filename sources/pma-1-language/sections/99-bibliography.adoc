@@ -1,5 +1,0 @@
-[bibliography]
-== Bibliography
-
-* [[[plurimath-issues,nofetch(plurimath)]]] — issues #513, #524; plurimath/amath#16
-* [[[rejected-b,nofetch(rejected-syntax provenance)]]] — Python `uncertainties`; Wolfram `Around`; Pint delta units

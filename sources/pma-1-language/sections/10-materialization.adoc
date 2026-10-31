@@ -1,6 +1,0 @@
-== Materialization and the artifact contract
-
-The pma grammar is generated from the registry edition; the checksummed artifact is normative; materialization maps into the math model like every front end. Rendering into the legacy dialect goes through the asciimath 2 quoted channel.
-
-[example]
-*Expected outcome.* `ustd(10.3, 0.2) unit(m)` rendered into dialect L emits `"ustd(10.3, 0.2)" "unitsml(m)"` — the quoted channels — and back into pma unchanged.

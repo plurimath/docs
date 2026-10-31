@@ -1,0 +1,21 @@
+== Annex C: the rejected forms, argued
+
+=== The concise form
+
+The argument for accepting `10.3(2)` as input: authors have results in that shape from reports, and re-typing them is friction. The argument against: the shape is the notation's own application/multiplication territory, and the input that accepts it must choose between a reported result and a product on syntax that does not distinguish them. The resolution: the reporting form is an output convention of PM 1002 everywhere, and its input path exists where the ambiguity is resolvable — the AsciiMath reader, whose positional rule recovers the magnitude exactly. pma authors convert reported results once, into `(10.3 +/- 0.2)`, and the conversion is data entry, not notation.
+
+=== `+-`
+
+One character of separation, and the reading collapses: `3+-1` is either `3 + (−1)` or the literal. The `uncertainties` heritage chose the literal; the notation chooses the operators, because `3 + (-1)` is already unambiguous and the literal already has a spelling. Two spellings for one form is the ambiguity budget spent twice.
+
+=== Bare `pm`
+
+`pm` is the picometre. A unit-bearing notation that also makes `pm` a separator has `unit(5 pm)` meaning two things, and the resolution cannot be syntactic. The ± character keeps the same rule outside fences: it appears exactly where the fence closes it, and nowhere else.
+
+=== Conversion syntax
+
+The arrow forms are attractive and wrong here: conversion carries exactness rules, difference typing and quantity gating — whole clauses of the UnitsML series. Inline conversion syntax would restate them as grammar, in a place the grammar cannot check. `convert(q, target)` is where those rules live; the notation stays a notation.
+
+=== The general principle
+
+A rejected form returns through an edition, with its corpus and its rationale answered — not through a reader that accepts it quietly. The refusals are the notation's promises as much as its acceptances.
