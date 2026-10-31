@@ -1,0 +1,52 @@
+== Functions
+
+=== The function classes
+
+The evaluator evaluates the function classes the model defines where a numeric semantics exists: the trigonometric and hyperbolic functions and their inverses, the logarithms (`ln`, `lg`, `log` with a base), the exponential, the absolute value, floor and ceiling, min and max, and the named constants of the registry where the platform defines their values.
+
+.Function evaluation
+[cols="2,3,3", options="headers"]
+|===
+|Family |Evaluation |Domain refusals
+
+|trigonometric |per the platform |none; results checked real and finite
+|inverse trigonometric |per the platform |argument outside `[−1, 1]` → `MathDomainError`
+|hyperbolic |per the platform |overflow → `NonFiniteResultError`
+|logarithms |`ln`, `lg`, `log_b` |non-positive argument → `MathDomainError`; base `≤ 0` or base `1` → `MathDomainError`
+|exponential |per the platform |overflow → `NonFiniteResultError`
+|`abs` |absolute value |none
+|`floor`, `ceil` |per the platform |none
+|`min`, `max` |over the arguments |none
+|===
+
+=== Arguments
+
+A function's arguments are its operands, evaluated left to right as ordinary sub-evaluations. The argument count is the class-defined arity of PM 1001; a tree that carries a different count is an `UnsupportedExpressionError` — the evaluator does not improvise signatures.
+
+=== The logarithm base
+
+`log` with a base evaluates to the logarithm in that base: `log_2 8` yields `3` under exact arithmetic in the corpus. The one-argument form is the natural logarithm's decadic sibling per the registry's reading; the corpus pins which.
+
+=== Constants
+
+Registry constants with platform values (`π`, the exponential constant) evaluate to the platform's value of that constant. Constants without one are names: they bind from the bindings or refuse with `MissingVariableError`, like any name.
+
+[example]
+The tree of `log(x)` with the binding `x → 100` under the decadic reading.
+*Expected outcome.* `2` where the corpus fixes the decadic reading; the reading itself is pinned there, not negotiated per call.
+
+[example]
+The tree of `sqrt(x)` with `x → −1`.
+*Expected outcome.* `MathDomainError` — the square root of a negative number has no real value, and the contract has no complex numbers.
+
+=== Nary calls and argument evaluation
+
+The nary functions the evaluator defines (`sum`, `prod` with bounds) route to iteration (clause 10); the nary classes without bounds refuse as unsupported in this edition — a bare `∑` over a list has no evaluation semantics here. Argument sub-evaluations run through the same chain and contract; an error inside an argument aborts the whole call, and there is no argument-level recovery.
+
+=== The log argument rule
+
+The logarithm's argument is the full expression the notation groups: `log x + 1` is `log(x) + 1` under the adjacency binding, and `log(x + 1)` is the logarithm of the sum. Where the writer's shape and the reader's grouping disagree, the tree is authority: the evaluator evaluates the tree it is given, and the corpus carries the disambiguated pairs.
+
+=== Constants and names, precisely
+
+A registry constant with a platform value evaluates without bindings; a name without one binds or refuses. The registry decides which is which, per PM 1001 — evaluation adds no constants of its own and treats an unknown constant exactly like any other name.

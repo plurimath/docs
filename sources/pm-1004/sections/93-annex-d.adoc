@@ -1,0 +1,30 @@
+== Annex D: worked evaluations
+
+Two evaluations end to end, from tree to outcome.
+
+=== The quadratic discriminant
+
+The tree of `b^2 − 4ac`, bindings `b → −3`, `a → 1`, `c → 2`.
+
+. The power level: `b^2` folds to `9`.
+. The multiplicative level: `4`, `a`, `c` fold to `8` — implicit products fold left: `4·1 = 4`, `4·2 = 8`.
+. The additive level: `9 − 8` folds to `1`.
+
+*Expected outcome.* `1`. The discriminant is positive; nothing in this document says what that means — the caller reads their own mathematics into the number.
+
+=== A series sum with shadowing
+
+The tree of `x_0 + sum_(n=1)^5 (n * x_0 / n)` — a deliberately redundant form to exercise the machinery — bindings `x_0 → 2`.
+
+. The iteration's lower bound reads `n = 1`; the upper bound evaluates to `5`; the range is `1..5`.
+. For each `n` in order, the body folds: the product `n · 2` then the division by the bound `n`, yielding `2` each time — the index shadows nothing here (no outer `n`), but binds itself for the body.
+. The five values fold additively from `0`: `10`.
+. The additive level: `2 + 10`.
+
+*Expected outcome.* `12`. The outer `x_0` binding is untouched by the iteration; a second evaluation of the same tree with the same bindings yields `12` again, byte for byte.
+
+=== What the walk-through shows
+
+* the precedence chain in action: powers, products, then the sum, then the addition;
+* the binding discipline: entry validation, use-time missing-name refusals, scoped index binding;
+* determinism as an observable property, not a promise.

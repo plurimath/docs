@@ -1,0 +1,49 @@
+== Annex A: precedence and operations
+
+=== The precedence chain in full
+
+.Precedence, strictest binding last
+[cols="1,2,2,2", options="headers"]
+|===
+|Level |Constructs |Associativity |Folds to
+
+|relation |`=`, `≠`, `<`, `>`, comparisons |left |relation evaluation
+|additive |`+`, `−` |left |add, subtract
+|multiplicative |implicit product, `*`, `/`, `mod` |left |multiply, divide, modulo
+|unary |`−`, `+` |prefix |negate, identity
+|power |`^` |right |power
+|operand |numbers, names, groups, calls |— |leaf or recursion
+|group |parentheses |— |recursion
+|===
+
+=== The operations in full
+
+.The arithmetic, normative summary
+[cols="2,3,3", options="headers"]
+|===
+|Operation |Result |Refusals
+
+|add |`a + b` |non-finite intermediate
+|subtract |`a − b` |non-finite intermediate
+|multiply |`a · b` |non-finite intermediate
+|divide |`a / b` |zero divisor; non-finite
+|modulo |platform modulo |zero divisor
+|power |`a^b` in the real domains of clause 7 |domain; non-finite
+|negate |`−a` |none
+|identity |`a` |none
+|===
+
+=== Function domains, normative summary
+
+.Function refusals
+[cols="2,3", options="headers"]
+|===
+|Function |Refusal domain
+
+|inverse trigonometric |argument outside the closed interval of arcsine and arccosine
+|logarithms |argument ≤ 0; base ≤ 0 or base = 1
+|exponential, hyperbolic |overflow only
+|trigonometric, `abs`, `floor`, `ceil`, `min`, `max` |no domain refusals
+|===
+
+Every refusal raises `MathDomainError` with the platform's message; every overflow raises `NonFiniteResultError`.

@@ -1,0 +1,39 @@
+= Plurimath evaluation
+:docnumber: 1004
+:edition: 1
+:ref-docnumber: PM 1004:2026(E)
+:copyright-year: 2026
+:revdate: 2026-10-31
+:language: en
+:script: Latn
+:title: Plurimath specifications -- Evaluation
+:doctype: standard
+:status: draft-standard
+:committee: Plurimath
+:committee-type: technical
+:mn-document-class: ribose
+:docfile: document.adoc
+:mn-output-extensions: xml,html,doc
+:local-cache-only:
+:data-uri-image:
+
+include::sections/00-foreword.adoc[]
+include::sections/00-introduction.adoc[]
+include::sections/01-scope.adoc[]
+include::sections/02-normrefs.adoc[]
+include::sections/03-terms.adoc[]
+include::sections/04-conventions.adoc[]
+include::sections/05-evaluator.adoc[]
+include::sections/06-parser.adoc[]
+include::sections/07-arithmetic.adoc[]
+include::sections/08-functions.adoc[]
+include::sections/09-bindings.adoc[]
+include::sections/10-iteration.adoc[]
+include::sections/11-errors.adoc[]
+include::sections/12-limits.adoc[]
+include::sections/13-conformance.adoc[]
+include::sections/90-annex-a.adoc[]
+include::sections/91-annex-b.adoc[]
+include::sections/92-annex-c.adoc[]
+include::sections/93-annex-d.adoc[]
+include::sections/98-bibliography.adoc[]

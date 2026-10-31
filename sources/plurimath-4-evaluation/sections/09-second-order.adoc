@@ -1,3 +1,0 @@
-== Second-order terms (Amd.1:2026)
-
-Where nonlinearity is significant (Amd.1 4.1.4 NOTE 1): either apply MCM, or add higher-order Taylor terms. For independent, normally distributed inputs, the estimate gains ½ Σ f_ii u²(x_i), generalized to correlated normals by Equation (H.10). Second-order evaluation (GUF₂) is gated on declared input normality — otherwise refuse to MCM — and REQUIRES second derivatives (Hessians); the Annex F first-order stencil cannot serve GUF₂. Annex A applies this to the GUM gauge-block example.

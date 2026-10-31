@@ -1,0 +1,13 @@
+== Conventions
+
+=== General
+
+Evaluations are written as: tree, bindings, result. Errors are written as their class names of clause 11 with the identifying data the message carries.
+
+=== Examples
+
+Examples carry an *Expected outcome* paragraph stating the number yielded or the error raised. Numbers in examples are exact where they are exact: a rational binding such as one third behaves as its exact value in every example that uses it.
+
+=== Names
+
+Names in examples (`x`, `n`, `i`) are the plain identifiers the trees carry. The mapping from a tree's symbols to names is pinned by the corpus; this document treats names as the keys of the binding set.

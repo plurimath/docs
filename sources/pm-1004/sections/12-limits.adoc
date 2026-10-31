@@ -1,0 +1,25 @@
+== What this edition does not do
+
+=== Uncertainty propagation
+
+The model carries uncertainty nodes (PM 1002); this edition's evaluator does not compute with them. An evaluation whose tree contains an uncertainty node refuses with `UnsupportedExpressionError` — the honest answer, rather than an arithmetic that quietly drops the uncertainty. The propagation rules — sensitivities, the propagation law, second-order terms, coverage — enter this document in the edition whose implementation carries them.
+
+=== Simplification
+
+The evaluator never rewrites the tree: no folding of constants into nodes, no canonicalisation of equivalent forms, no algebra. Evaluation is a reading of the tree, and two equal trees evaluate identically while two different trees evaluate as written even when their values coincide.
+
+=== Units and quantities
+
+Evaluation works on numbers. Unit conversions, quantity arithmetic and the absolute/difference typing of the UnitsML series are that series' contracts; an evaluator applied to unit-bearing trees evaluates the numeric content as the bindings supply it and the units ride with the tree, unconverted.
+
+=== Solving
+
+No root-finding, no inversion, no symbolic manipulation. The evaluator answers one tree with one number, given complete bindings; everything else is a different tool.
+
+=== Why the limits are stated
+
+Each non-goal is a contract someone will eventually ask for. Stating them keeps the boundary honest: an evaluator that quietly simplified would surprise every caller who diffed two trees; one that silently propagated uncertainty would make reported results and computed results behave differently in the same expression; one that converted units would need the whole UnitsML typing inside arithmetic. The limits are the design; the clauses above are the contract they protect.
+
+=== The road in
+
+When propagation arrives, it arrives in this document: its operations, its error extensions if any, its corpus, its conformance class — the same structure this edition uses for arithmetic. The uncertainty nodes of PM 1002 were built to carry everything propagation will need: category, fields, exact decimals. Nothing in the model blocks the road; the evaluator simply has not walked it yet.

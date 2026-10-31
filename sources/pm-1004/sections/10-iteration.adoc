@@ -1,0 +1,45 @@
+== Iteration
+
+=== The construct
+
+The nary sum and product with explicit bounds — `sum_(i=1)^n body`, `prod_(i=1)^n body` — evaluate as bounded iteration: the index runs the integer range and the body's values fold under the operation, starting from the operation's identity.
+
+=== The bounds
+
+The lower bound parses as `index = start` and the upper as the end expression. Both evaluate to integers: a bound that evaluates to a non-integer or an infinite value raises the typed error of its cause (`MathDomainError` for a non-integer bound where the platform names it so, `NonFiniteResultError` for an infinite one). An empty range — a start above the end — yields the identity: the empty sum is `0`, the empty product is `1`.
+
+=== The step limit
+
+A range wider than the implementation's step limit refuses with `UnsupportedExpressionError`: iteration is bounded by construction, and an unbounded or enormous range is a caller error, not a long computation.
+
+=== The fold
+
+The body evaluates once per index value, left to right, with the index bound; the values fold under the operation — addition for the sum, multiplication for the product — from the identity. The index binding shadows per clause 9 and restores after.
+
+[example]
+`sum_(i=1)^4 i^2`.
+*Expected outcome.* `30` — `1 + 4 + 9 + 16`, each square evaluated with the index bound, folded in order.
+
+[example]
+`prod_(i=1)^4 i` — the factorial of 4 written as a product.
+*Expected outcome.* `24`.
+
+[example]
+`sum_(i=5)^4 i` — an empty range.
+*Expected outcome.* `0`, the addition identity; no error, no evaluation of the body.
+
+=== The index definition, precisely
+
+The lower bound parses as the two-part form `name = start`. The name becomes the index; anything else in the lower-bound position is an `UnsupportedExpressionError`. The start evaluates once, to an integer; a non-integer start refuses with the typed error the platform names for it.
+
+=== Bounds validation
+
+After the start, the upper bound evaluates once, to an integer. Validation is order-fixed: start first, end second, both integers, then the step limit. The error each check raises names its stage, so a caller with a malformed bound learns which one it was.
+
+=== The step limit's value
+
+The implementation carries a fixed maximum range width; the corpus pins it as behaviour (a range one past it refuses, one within it runs). The limit exists so that `sum_(i=1)^10^9` — an infinite work order in the caller's clothing — is a refusal the caller handles, not a hang they kill.
+
+=== Nested iteration
+
+A body may itself carry an iteration: the inner index shadows the outer for the inner body, and the ranges compose. The corpus carries nested vectors to fixed depth; the step limits apply per range.

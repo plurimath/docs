@@ -1,0 +1,53 @@
+== The expression parser
+
+=== General
+
+A tree denotes operations in writing order, not in a flat list: `2 + 3 * 4` multiplies before it adds. The expression parser turns the evaluator's node walk into that precedence-correct sequence of folds. It is a precedence-climbing parser over the tree's linear reading, with one level per binding strength.
+
+=== The precedence chain
+
+The parser descends one chain, strictest last:
+
+.The precedence chain
+[cols="1,3,3", options="headers"]
+|===
+|Level |Constructs |Folds to
+
+|relation |`=`, `≠`, comparisons |the relation evaluation of clause 7
+|additive |`+`, `−` |addition and subtraction
+|multiplicative |implicit products, `/`, `mod` |multiplication, division, modulo
+|unary |negation, positive sign |negation
+|power |`x^y`, right-associative |powers
+|operand |numbers, names, groups, functions |leaf evaluation or recursion
+|group |parenthesised content |recursion with saved state
+|===
+
+Each level parses the next as its operand and folds left-associatively within itself — powers excepted, which fold right-associatively: `2^3^2` is `2^(3^2)`, the mathematical convention.
+
+=== What the parser accepts
+
+The parser accepts the arithmetic core the evaluator evaluates: numbers, bound names, the operations above, groups, and the function and iteration calls of clauses 8 and 10. A node outside this core — a `Text` node, a matrix, an uncertainty node — makes the whole evaluation raise `UnsupportedExpressionError`: the evaluator does not evaluate what it does not define, and never guesses.
+
+[example]
+The tree of `2 + 3 * 4`.
+*Expected outcome.* the parser folds the multiplicative level first (yielding `12`) and the additive level second (yielding `14`), regardless of the walk order the tree's linear reading might suggest.
+
+[example]
+The tree of `2^3^2`.
+*Expected outcome.* `512` — the right-associative reading — not `64`.
+
+=== Groups
+
+A group saves the parser's pending state, evaluates its content to one value, and presents that value as an operand. Groups are the author's precedence: `2 * (3 + 4)` yields `14`, not `10`.
+
+=== Relations
+
+The relation level evaluates comparisons to truth values in the platform's terms. A tree whose top level is a relation yields that relation's result; relations compose left-associatively where the tree carries chains. The corpus pins the truth-value results alongside the numeric ones — both are results of the one contract.
+
+=== Token normalisation
+
+Before parsing, the tree's linear tokens normalise: implicit products are marked (`2x` becomes `2 * x`, `a(x + 1)` becomes multiplication, `x sin y` stays two operands), explicit multiplication symbols map to the same fold, and spacing is irrelevant. Normalisation is deterministic and pinned by the corpus; it changes no node, only the fold sequence.
+
+=== Function calls in the chain
+
+A function call parses as a prefix at the operand level: the function name, then its argument or arguments as the grammar of the construct gives them — parenthesised, braced, or by adjacency for the notation's single-argument forms. The argument expressions parse at the full chain, so `log_2 x^3` binds the power inside the argument where the notation's grouping says so; the corpus carries the ambiguous-looking cases explicitly.

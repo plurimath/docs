@@ -1,0 +1,51 @@
+== Terms and definitions
+
+For the purposes of this document, the following terms and definitions apply.
+
+=== evaluator
+the component that computes a numeric value for a tree against bindings
+
+=== binding
+a name and the real numeric value bound to it for one evaluation
+
+=== bindings
+the set of bindings an evaluation uses; keys are names, values are real numbers
+
+=== name
+the identifier a tree's symbols denote for evaluation purposes
+
+=== evaluation
+one walk of the tree under one binding set, yielding a number or raising a typed error
+
+=== typed error
+one of the eight error classes of clause 11; the only failures evaluation produces
+
+=== real, finite
+the only successful results: a real number with finite value — never NaN, never an infinity
+
+=== strict error contract
+the rule that evaluation either returns such a result or raises; there is no third answer
+
+=== iteration
+the bounded evaluation of a nary sum or product over an integer index range
+
+=== index
+the iteration variable, temporarily bound while the body folds
+
+=== shadowing
+an index temporarily replacing an outer binding of the same name for the body's evaluation
+
+=== fold
+the left-to-right accumulation of the body's values under the iteration's operation
+
+=== backend
+the arithmetic engine the evaluator's folds delegate to; its operations are clause 7's
+
+=== step limit
+the maximum range width an iteration accepts; behaviour pinned by the corpus
+
+=== normalisation
+the deterministic token preparation that makes implicit products explicit before parsing
+
+=== fold order
+the left-to-right (or right, for powers) application order within one precedence level

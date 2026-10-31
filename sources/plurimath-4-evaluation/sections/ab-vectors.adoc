@@ -1,5 +1,0 @@
-[[annex-vectors]]
-[appendix]
-== Annex B (normative): vector set reference
-
-The frozen evaluator vectors live in UnitsML 8 Annex C: GUM H.1–H.6 with the H.1 versioned triple; JCGM 101 §9.2–9.5; the LPU-failure set; JCGM 106 decision vectors. This part's clauses cite them; the sets are owned there.

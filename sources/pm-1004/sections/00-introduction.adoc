@@ -1,0 +1,18 @@
+== Introduction
+
+A formula tree is content until something computes with it. Evaluation is that step: given a tree and a set of bindings — names and their numeric values — the evaluator walks the tree, applies the operations its nodes denote, and yields one number, or refuses with a typed error naming exactly what stood in the way.
+
+The design centre is the strict error contract. Arithmetic in general notation runs into division by zero, negative square roots, logarithms of non-positive numbers, overflowing magnitudes and unbound names. Many evaluators answer such cases with `NaN`, `Infinity` or a silent fallback; this one answers with a refusal. A result is always a real, finite number, and everything else is one of eight typed errors. The effect on callers is that a successful evaluation needs no hedging: the number returned is usable, and the errors can be handled each by name.
+
+The evaluator is deliberately small. It evaluates arithmetic: addition, subtraction, multiplication, division, modulo, powers, negation, the function classes the model defines, and bounded iteration for the nary sum and product. It does not simplify, does not convert units, does not propagate uncertainty, and does not solve. Every one of those is a different contract with its own semantics; this document specifies the one the implementation carries.
+
+[example]
+The tree of `x^2 + 1` with the binding `x → 3`.
+*Expected outcome.* the evaluation yields `10`: the power evaluates to `9`, the addition to `10`, and the result is a real, finite number.
+
+=== The design forces
+
+* *One answer.* Real finite number, or typed error — the evaluator never leaves the caller between the two.
+* *As written.* The tree is evaluated as the author wrote it: precedence, grouping and order respected, nothing rewritten.
+* *Small surface.* Arithmetic, functions, iteration, bindings — and nothing else. Every non-goal is stated, not implied.
+* *Replayable.* Determinism is the testability: the corpus freezes trees, bindings and outcomes, and drift is visible.

@@ -1,0 +1,78 @@
+== The evaluator
+
+=== The model
+
+[source,lml]
+----
+lml "1.0"
+
+models Evaluation {
+
+  class Evaluator {
+    attribute tree, Formula[1]
+    attribute bindings, Binding { cardinality 0..n }
+  }
+
+  class Binding {
+    attribute name, Name[1]
+    attribute value, RealNumber[1]
+  }
+
+  class Result {
+    attribute value, RealNumber[1]
+  }
+
+  enum EvaluationError {
+    value "division-by-zero"
+    value "invalid-binding"
+    value "invalid-binding-key"
+    value "math-domain"
+    value "missing-variable"
+    value "non-finite-result"
+    value "unsupported-expression"
+  }
+}
+----
+
+An evaluation is one `Evaluator` over one tree with zero or more bindings. Its success is one `Result`; its failure is one `EvaluationError`, raised as the corresponding class of clause 11.
+
+=== The contract
+
+The strict error contract, stated once and honoured everywhere below: an evaluation returns a real, finite number, or raises one of the typed errors. There is no NaN result, no infinite result, no silently skipped subtree, no partial evaluation.
+
+[example]
+An evaluation whose arithmetic would produce a division by zero inside a larger expression.
+*Expected outcome.* the whole evaluation raises `DivisionByZeroError`. No subtree value, no partial result and no default leaks; the caller sees the refusal and nothing else.
+
+=== Determinism
+
+The same tree and the same bindings produce the same result or the same error, in the same order of internal operations. Evaluation has no randomness, no parallelism and no environment sensitivity; the corpus replays it identically.
+
+=== The tree is not modified
+
+Evaluation reads the tree. Nothing in the tree changes — no annotation of computed values, no caching inside nodes, no rewrite. A tree evaluates twice identically, and an evaluated tree writes exactly as an unevaluated one.
+
+=== Foreign exceptions become typed errors
+
+The underlying arithmetic platform's own signals — domain errors from the math library, float-domain failures, platform division failures — are caught at the evaluation boundary and re-raised as the corresponding typed errors: `MathDomainError`, `NonFiniteResultError`, `DivisionByZeroError`. A caller never sees a foreign exception from evaluation; the message text of the platform error, where one exists, travels inside the typed error.
+
+=== The walk, in order
+
+An evaluation proceeds:
+
+. bindings validate at entry (clause 9) — nothing has run yet;
+. the tree walks in writing order through the expression parser's chain (clause 6);
+. each node maps to an operation, a function call, an iteration, a name, or a leaf number;
+. names resolve against the bindings at first use;
+. folds apply clause 7's arithmetic and clause 8's functions, each result checked real-and-finite;
+. the final value returns; any refusal along the way aborts with its typed error.
+
+The order is observable through the errors: an expression with both a missing name and a division by zero reports whichever the walk reaches first. The corpus includes order-sensitive vectors so the ordering is tested, not implied.
+
+=== Zero bindings
+
+An evaluation with no bindings evaluates the closed part of the tree: a tree without names evaluates completely (`2 + 3 * 4` yields `14` with no bindings); a tree with any name refuses at that name. Both are ordinary evaluations under the one contract.
+
+=== The evaluator is reentrant
+
+An `Evaluator` instance holds its tree and bindings and nothing mutable; evaluating twice, or evaluating from two callers, shares no state. Iteration's temporary bindings are scoped to their body and restored on every exit path, including the error paths — an aborted iteration leaves the binding set as it found it.
