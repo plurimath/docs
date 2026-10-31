@@ -110,16 +110,32 @@ models Plurimath {
     }
 
     class Uncertainty {
-      attribute estimate, Node[1]
-      attribute magnitude, Node[1]
+      attribute value, Node[1]
       attribute category, UncertaintyCategory[1]
-      attribute coverage, String
+      attribute magnitude, Node
+      attribute coverage_factor, Node
+      attribute coverage_probability, Node
+      attribute lower, Node
+      attribute upper, Node
+      attribute interval_kind, IntervalKind
+      attribute notation, Notation
+      attribute unit, Unitsml
     }
 
     enum UncertaintyCategory {
       value standard
-      value exponential
-      value coverage
+      value expanded
+      value coverage-interval
+    }
+
+    enum Notation {
+      value absolute
+      value concise
+    }
+
+    enum IntervalKind {
+      value shortest
+      value probabilistically-symmetric
     }
   }
 
@@ -221,7 +237,7 @@ A `Fenced` holds its content and its open and close symbols; `Left` and `Right` 
 
 A `Unitsml` embeds a unit expression written in the asciiunits content language (UnitsML 6) together with the four renderings the UnitsML system supplies (UnitsML 5). The tree performs no unit arithmetic: every surface emits the UnitsML-provided form for its format, and the XML form stays available machine-readably.
 
-An `Uncertainty` attaches an uncertainty to a value expression. Its fields are specified in document 1002; the model-level contract stated here is that an uncertainty is carried as a node, rendering never recomputes it, and a surface without a faithful form for its category renders the category's declared fallback from document 1002 and nothing else.
+An `Uncertainty` attaches an uncertainty to a value expression. Its fields are specified in document 1002 and stated here in summary: the value, the category (standard, expanded, coverage interval), the magnitude or endpoints, the coverage factor and probability where present, the interval kind, the notation and the unit; the model-level contract stated here is that an uncertainty is carried as a node, rendering never recomputes it, and a surface without a faithful form for its category renders the category's declared fallback from document 1002 and nothing else.
 
 === Presentation constructs
 

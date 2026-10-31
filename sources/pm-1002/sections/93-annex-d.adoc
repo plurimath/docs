@@ -1,0 +1,79 @@
+== Annex D: worked end-to-end results
+
+Three complete results, each from the author's report through the node to every encoding. These are the shapes the corpus freezes.
+
+=== Result one: a gauge-block length
+
+The author reports: "the length is 500.0 mm with standard uncertainty 0.5 mm".
+
+The node: category `standard`, value `500.0`, magnitude `0.5`, notation `absolute`, unit the UnitsML embedding of `mm`.
+
+The encodings:
+
+.Result one encodings
+[cols="2,4", options="headers"]
+|===
+|Format |Encoding
+
+|AsciiMath |`ustd(500.0, 0.5) "unitsml(mm)"`
+|LaTeX |`500.0(0.5) mm`
+|HTML |`500.0(0.5) mm`
+|UnicodeMath |`ⓘ("standard-uncertainty(500.0,0.5)"500.0(0.5)ⓐ(unit mm))`
+|MathML |`mrow` with `intent="standard-uncertainty(500.0,0.5)"`, `mn(500.0)`, fenced `mn(0.5)`, unit
+|OMML |marker run `standard-uncertainty(500.0,0.5)`, value run, fenced magnitude run, boxed unit
+|===
+
+Reading the AsciiMath encoding back yields the node. The trailing zero of `500.0` is present in every encoding and in the read-back node.
+
+=== Result two: an expanded uncertainty
+
+The author reports: "the mass difference is 10.3 g, U = 0.5 g (k = 2, p = 95%)".
+
+The node: category `expanded`, value `10.3`, magnitude `0.5`, coverage factor `2`, coverage probability `0.95`, unit `g`.
+
+The encodings:
+
+.Result two encodings
+[cols="2,4", options="headers"]
+|===
+|Format |Encoding
+
+|AsciiMath |`uexp(10.3, 0.5, 2, 0.95) "unitsml(g)"`
+|LaTeX |`(10.3 \pm 0.5) g~(k = 2,~(p = 0.95))`-shaped output with the statements in factor-then-probability order
+|HTML |`(10.3 ± 0.5) g (k = 2) (p = 0.95)`
+|UnicodeMath |`ⓘ("expanded-uncertainty(10.3,0.5,2,0.95)"...)` with the visible shape and statements
+|MathML |`mrow` with `intent="expanded-uncertainty(10.3,0.5,2,0.95)"`, fenced `(10.3 ± 0.5)`, unit
+|OMML |marker run `expanded-uncertainty(10.3,0.5,2,0.95)`, fenced ± runs, boxed unit
+|===
+
+Dropping the probability from the report drops the `p` argument and the `(p = 0.95)` statement everywhere; no empty positions remain.
+
+=== Result three: a Monte Carlo coverage interval
+
+The author reports: "10.3 g, 95 % coverage interval [9.9, 10.7], shortest interval (JCGM 101 §9)".
+
+The node: category `coverage-interval`, value `10.3`, lower `9.9`, upper `10.7`, interval kind `shortest`, coverage probability `0.95`, unit `g`.
+
+The encodings:
+
+.Result three encodings
+[cols="2,4", options="headers"]
+|===
+|Format |Encoding
+
+|AsciiMath |`ucov(10.3, 9.9, 10.7, 0.95, shortest) "unitsml(g)"`
+|LaTeX |`10.3,~[9.9, 10.7] g~(shortest,~(p = 0.95))`-shaped output
+|HTML |`10.3, [9.9, 10.7] g (shortest) (p = 0.95)`
+|UnicodeMath |`ⓘ("coverage-interval:shortest(10.3,9.9,10.7,0.95)"...)`
+|MathML |`mrow` with `intent="coverage-interval:shortest(10.3,9.9,10.7,0.95)"`, value, bracketed group, unit
+|OMML |marker run `coverage-interval:shortest(10.3,9.9,10.7,0.95)`, shape runs, boxed unit
+|===
+
+The same result with the probabilistically symmetric kind changes three things and nothing else: the AsciiMath kind spells `symmetric`, the markers and kind statements spell `probabilistically-symmetric`, and the model's `interval_kind` field reads back as `probabilistically-symmetric` from every lossless encoding.
+
+=== What the three results show
+
+* The category, the kind and the notation travel through every encoding that can carry them, and the shapes differ across categories in every format.
+* The numbers are verbatim everywhere; nothing normalises, rounds or reorders digits.
+* The unit appears exactly once per encoding, in the channel that format uses for units.
+* Round trips recover the node, not an approximation of it.

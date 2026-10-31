@@ -1,0 +1,19 @@
+== Introduction
+
+A reported measurement is a pair: the measured value and its uncertainty. The GUM (JCGM 100) fixes the vocabulary — standard uncertainty, expanded uncertainty with its coverage factor, coverage interval — and the reporting discipline; JCGM 101 adds the coverage interval obtained by Monte Carlo. Plurimath carries these reported results as first-class content: an uncertainty is a node of the formula tree (PM 1001), not decoration around a number, and it survives every format transition the system performs.
+
+The design problem is that the six output formats carry uncertainty very differently. AsciiMath has no uncertainty at all and needs an explicit call syntax; LaTeX renders the concise reporting form natively but needs appended statements for a coverage factor; UnicodeMath needs an intent wrapper to keep the semantics machine-readable; MathML 4 has intent attributes; OMML has neither and needs a marker convention. This document defines one model and one encoding per format, so that a result written once renders faithfully everywhere and, where a format can carry the semantics, carries them machine-readably.
+
+Two disciplines run through the whole document. First, the node records reported numbers exactly as written: it never calculates, rounds or converts them — rounding is the author's act (JCGM 100 7.2.2). Second, every category has one spelling per format: the same result is written the same way by every conforming implementation.
+
+[example]
+The reported result "10.3 g, standard uncertainty 0.2 g" is one `Uncertainty` node of category standard. It renders as `ustd(10.3, 0.2) "unitsml(g)"` in AsciiMath, as `10.3(0.2) g` in LaTeX and HTML, and as an intent-marked construct in MathML, OMML and UnicodeMath. Reading any of the lossless forms back yields the node again.
+
+=== The design forces
+
+Four forces shaped the model, and the document keeps them in view because every clause is a resolution among them:
+
+* *Fidelity.* A reported result is a statement by its author. The model carries the statement — the digits, the category, the kind, the notation — and adds nothing.
+* *One encoding per format.* Two spellings of the same category in the same format would reintroduce the ambiguity the GUM warns against. Every format has exactly one encoding per category, fixed to the byte.
+* *Semantics where the format allows.* Where a format has a machine-readable channel — intent in MathML and UnicodeMath, the call name in AsciiMath, the marker run in OMML — the encoding uses it, so that consumers read fields, not shapes.
+* *No computation.* The node is a record. Propagation, combination and interval construction live in document 1004, on demand, with their own discipline.

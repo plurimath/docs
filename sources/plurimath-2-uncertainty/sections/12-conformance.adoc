@@ -1,3 +1,0 @@
-== Conformance
-
-UnitsML 8 Annex A replays the matrix of <<annex-matrix>>; the property under test: every field survives every lossless channel byte-identically. The editor's decisions are recorded in <<annex-decisions>>; additional test-suite examples are given in <<annex-test-suite>>. Class coverage: `parse/render` and `full-series`.

@@ -1,3 +1,0 @@
-== Foreword
-
-Uncertainty is a RECORD of what the author wrote, represented across every format this series supports, and round-tripped wherever the host format can carry it. This part defines the record once, then one clause per representation. There is no cross-format standard for uncertainty; where a host format has no native mechanism, this part defines a novel extension and says so.

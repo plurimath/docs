@@ -1,0 +1,44 @@
+== Units on an uncertainty
+
+=== The unit field
+
+A node may carry one unit, held as a UnitsML embedding (PM 1001, `Unitsml` node). The unit qualifies the value, the magnitude and the endpoints alike: the node reports "10.3 g with 0.2 g", and the unit appears once.
+
+=== Expressibility
+
+When the unit is expressible in the asciiunits content language (UnitsML 6) — a single symbol such as `g`, `kg`, `m/s2` — the AsciiMath encoding embeds it in the quoted UnitsML channel: `ustd(10.3, 0.2) "unitsml(g)"`. The embedding is attempted at encoding time; the attempt uses the UnitsML reader, and a unit the reader refuses falls back to visible placement.
+
+[example]
+A node with unit `g` in AsciiMath.
+*Expected outcome.* `ustd(10.3, 0.2) "unitsml(g)"` — the channel carries the unit machine-readably and the unit does not appear again in the call or after it.
+
+=== Visible placement
+
+When the unit is not expressible in UnitsML — arbitrary text the reader rejects — the AsciiMath encoding places the unit visibly after the call, which is the only place the AsciiMath reader accepts it: `ustd(10.3, 0.2) <unit>`. The unit then travels as ordinary trailing content, and the format's own encoding carries it (LaTeX after the shape, UnicodeMath inside `ⓐ(...)`, and so on).
+
+=== Constraints
+
+The unit is either a `Unitsml` node or a non-empty formula holding no uncertainty: a unit containing an uncertainty is refused (`InvalidUncertainty`, "unit must not contain an uncertainty"). A unit is not a place for content; it names the measurement unit and nothing else.
+
+=== Losslessness
+
+The unit survives every lossless round trip. The quoted channel and the visible placements of clause 9 read back to the unit field; a format transition that silently drops the unit is a defect of the encoding, not a permitted loss.
+
+=== Worked unit cases
+
+[cols="2,2,3", options="headers"]
+.Unit expressibility
+|===
+|Unit |Expressible in UnitsML |AsciiMath encoding
+
+|`g` |yes |`ustd(10.3, 0.2) "unitsml(g)"`
+|`m/s2` |yes |`ustd(10.3, 0.2) "unitsml(m/s2)"`
+|`mm` |yes |`ustd(500.0, 0.5) "unitsml(mm)"`
+|arbitrary text |no |`ustd(10.3, 0.2) <unit rendered visibly>`
+|===
+
+The expressibility question is answered by the UnitsML reader at encoding time, not by a table in this document: a unit the reader accepts travels in the channel, and a unit it refuses travels visibly. The same node encodes differently across the two cases only in where the unit sits; the unit field itself is identical.
+
+=== Units on intervals
+
+The interval endpoints share the value's unit; the unit appears once. `[9.9, 10.7] g` is one unit for the interval, not one per endpoint — reporting two units would double-count the measurement unit and is not a defined encoding.

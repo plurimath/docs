@@ -1,3 +1,0 @@
-== OMML — hidden phantom encoding
-
-Markers travel as invisible `m:phant` runs carrying the same marker text. Writers hide; readers decode; recognized-malformed raises. Documented risks: phantom-stripping consumers display the marker text; Word's edit behavior is untested. Non-goals: custom XML parts, content controls.

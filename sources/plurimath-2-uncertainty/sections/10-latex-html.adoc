@@ -1,3 +1,0 @@
-== LaTeX and HTML — presentation contracts
-
-Output-only. LaTeX renders `value \pm magnitude` and siunitx-aligned concise forms; HTML renders the visible form. Both LOSE category, interval kind and machine-readable k/p — declared lossiness, not fixed by encoding. A lossless LaTeX reader would require a novel macro family (`\plrmuncert{…}`) — an open decision; siunitx is third-party and receives no filings from this series.

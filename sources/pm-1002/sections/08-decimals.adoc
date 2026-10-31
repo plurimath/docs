@@ -1,0 +1,69 @@
+== Exact-decimal discipline
+
+=== The grammar
+
+Every number the node carries is a plain decimal:
+
+[cols="1,2,3", options="headers"]
+.Number grammar
+|===
+|Field |Grammar |Examples
+
+|value |`-? digits ( . digits )?` |`10.3`, `-42`, `0.0015`
+|magnitude, coverage_factor, coverage_probability, lower, upper |`digits ( . digits )?` |`0.2`, `2`, `0.95`
+|===
+
+No exponent forms, no signs on the unsigned fields, no separators. A value carried as anything else — a computed float, a `Number` with a base or a size qualifier, an empty string — is refused at construction.
+
+=== Verbatim preservation
+
+The node stores the digits as written. `2.10` and `2.1` are different exact decimals: the trailing zero is the author's statement of precision, and the model does not speak over it. Every encoding emits the digits verbatim; every exact comparison in this model — the concise rule, the probability bounds — compares the decimal strings digit-wise without converting to floating point.
+
+[example]
+A node with value `10.30`, magnitude `0.20`.
+*Expected outcome.* every encoding emits `10.30` and `0.20` with the trailing zeros intact; no surface normalises them away.
+
+=== Rounding is the author's act
+
+The node never calculates, rounds or converts its numbers (JCGM 100 7.2.2). Where evaluation (document 1004) produces numbers, they are produced as exact decimals by the evaluation rules of UnitsML 2 and attached to new nodes; an existing node's fields are never rewritten in place.
+
+=== Comparisons without floating point
+
+The two comparisons the model performs — the concise decimal-places rule and the coverage-probability bounds — are defined on the digit strings:
+
+* the probability check requires the first nonzero digit of the fraction to exist (strictly greater than zero) and the string to compare strictly less than `"1"` digit-wise;
+* the concise rule compares decimal-place counts, which is a property of the strings alone.
+
+Both refuse inputs whose comparison would require rounding.
+
+=== Worked comparisons
+
+The comparisons are on strings, and the examples below pin the edge behaviour.
+
+[example]
+Probability `0.999` against the bound `1`.
+*Expected outcome.* accepted: digit-wise, `0.999` is strictly less than `1`. The check does not convert to float; a float conversion of `0.999999999999999999` would equal `1.0` and wrongly refuse.
+
+[example]
+Probability `1.0`.
+*Expected outcome.* refused: the string equals the upper bound digit-wise; a probability of exactly one is not a coverage probability.
+
+[example]
+Probability `0.0`.
+*Expected outcome.* refused: the string has no nonzero digit, so it is not strictly greater than zero.
+
+[example]
+Probability `0.90`.
+*Expected outcome.* accepted: trailing zeros do not affect the digit-wise comparison; the encoding emits `0.90` verbatim, never `0.9`.
+
+[example]
+Magnitude `0.2` against value `10.3` for conciseness: decimal places 1 and 1.
+*Expected outcome.* accepted; the concise digit string is `2`.
+
+[example]
+Magnitude `0.02` against value `10.3` for conciseness: decimal places 2 and 1.
+*Expected outcome.* refused: the magnitudes' decimal places do not match the value's, and `10.3(02)` is not a defined form.
+
+=== Where the discipline comes from
+
+JCGM 100 7.2.2 fixes the reporting forms and assigns rounding to the reporter. The exact-decimal discipline is that assignment made executable: the model cannot round because it does not compute, and it cannot silently normalise because its numbers are text. The same discipline governs the whole Plurimath stack through UnitsML 2; this document applies it to the uncertainty fields.

@@ -3,7 +3,7 @@ metanorma:
   source:
     files:
       - sources/pm-1001/document.adoc
-      - sources/plurimath-2-uncertainty/document.adoc
+      - sources/pm-1002/document.adoc
       - sources/plurimath-3-format-interfaces/document.adoc
       - sources/plurimath-4-evaluation/document.adoc
       - sources/asciimath-1-language/document.adoc

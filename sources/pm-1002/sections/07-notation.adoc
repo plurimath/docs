@@ -1,0 +1,52 @@
+== Notation and the concise form
+
+=== Absolute and concise
+
+A standard uncertainty is written in one of two notations. The absolute notation carries the full magnitude: `10.3(0.2)` means v = 10.3 with u = 0.2. The concise notation carries the magnitude as a digit string aligned to the value's last decimal places: `10.3(2)` means the same result with u = 0.2.
+
+=== The concise rule
+
+The concise form is well defined only when the magnitude has exactly as many decimal places as the value. The magnitude's digits after its decimal point, with leading zeros of the fraction removed, form the concise digit string. A magnitude whose decimal places do not match the value's cannot be written concisely after it, and constructing such a node is refused:
+
+[example]
+value `10.3`, magnitude `0.25`, concise notation.
+*Expected outcome.* construction raises `InvalidUncertainty`: "magnitude 0.25 cannot be written concisely after 10.3: it needs as many decimal places as the value". The node is not created; nothing renders.
+
+[example]
+value `10.3`, magnitude `0.2`, concise notation.
+*Expected outcome.* the node is accepted. Its concise digit string is `2`. The AsciiMath encoding renders the concise reporting form `10.3(2)`; the other surfaces render the absolute shape with the marker qualified `:concise`, because only the reporting form is concise, never the carried magnitude.
+
+=== What concise means for the model
+
+The notation is a property of the standard category alone. The model always carries the full magnitude; the concise notation says that the AsciiMath and any other reporting-shaped encoding of this node uses the concise reporting form. Reading a concise form back yields a node with notation concise and the reconstructed full magnitude: `10.3(2)` reads back as value `10.3`, magnitude `0.2`.
+
+=== The expanded and interval categories carry no notation
+
+A notation argument accompanying an expanded uncertainty or a coverage interval is refused: the notion belongs to the standard-uncertainty reporting form. This keeps the concise digit string unambiguous: it appears only where its decimal-places rule is defined.
+
+=== Concise across value shapes
+
+The concise rule binds the magnitude's decimal places to the value's, so its behaviour at the edges is pinned by examples:
+
+[cols="2,2,2,3", options="headers"]
+
+|===
+|Value |Magnitude |Concise? |Reporting form
+
+|`10.3` |`0.2` |yes |`10.3(2)`
+|`10` |`2` |yes |`10(2)`
+|`10.0` |`0.0` |yes |`10.0(0)`
+|`10.3` |`0.25` |no |refused at construction
+|`10.3` |`2` |no |refused at construction
+|`-42.1` |`0.5` |yes |`-42.1(5)`
+|===
+
+A zero magnitude is well formed (`10.0(0)`) — a reported uncertainty of zero is the author's statement. The negative value carries its sign on the value; the magnitude stays unsigned.
+
+=== Notation is not a suggestion to writers
+
+A writer that receives a concise node and renders the absolute reporting form has not honoured the model: the notation is carried precisely so the reporting shape follows the author's choice. The encodings of clause 9 emit the concise reporting form exactly where this document says (AsciiMath) and the qualified marker where the format carries semantics.
+
+=== Reading the concise form
+
+Reading `10.3(2)` reconstructs the full magnitude by aligning the digit string to the value's decimal places: one digit at one decimal place gives `0.2`. The reconstruction is defined only because the concise rule guaranteed the place counts match; a malformed concise form is a reading error, not a reconstruction opportunity (document 1003 owns the error behaviour).

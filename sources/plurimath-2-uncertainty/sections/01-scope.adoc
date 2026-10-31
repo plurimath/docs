@@ -1,3 +1,0 @@
-== Scope
-
-This document specifies: the uncertainty model and its invariants; the round-trip policy; the concrete representations for MathML 4, OMML, UnicodeMath, LaTeX and HTML; and the ASCII channel boundary (asciimath 2, pma 1). Evaluation of uncertainty is out of scope (Plurimath 4).

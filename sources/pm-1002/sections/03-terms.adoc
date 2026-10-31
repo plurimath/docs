@@ -1,0 +1,63 @@
+== Terms and definitions
+
+For the purposes of this document, the following terms and definitions apply.
+
+=== uncertainty node
+the tree node carrying a measured value with its uncertainty; an instance of the model of clause 5
+
+=== category
+which kind of uncertainty the node represents: `standard`, `expanded`, or `coverage-interval`
+
+=== standard uncertainty
+the uncertainty of the result expressed as a standard deviation (JCGM 100 7.2.1); category `standard`
+
+=== expanded uncertainty
+a quantity defining an interval about the result with a stated coverage probability, obtained from a standard uncertainty by multiplication with a coverage factor (JCGM 100 6.2.1); category `expanded`
+
+=== coverage interval
+an interval containing the measured value with a stated coverage probability, given by its endpoints (JCGM 101 5.3); category `coverage-interval`
+
+=== coverage factor
+the positive number multiplying a standard uncertainty to yield an expanded uncertainty; conventionally written k
+
+=== coverage probability
+the probability that the interval covers the true value; a number strictly between 0 and 1
+
+=== interval kind
+which shortest-probability property a coverage interval has: `shortest` or `probabilistically-symmetric`
+
+=== notation
+how a standard uncertainty is written: `absolute` (`10.3(0.2)` shape) or `concise` (`10.3(2)` shape)
+
+=== concise form
+the reporting form in which the uncertainty magnitude is written as a digit string in the last decimal places of the value, with as many decimal places as the value
+
+=== estimate
+the measured value the uncertainty qualifies; carried verbatim
+
+=== magnitude
+the uncertainty magnitude; an unsigned plain decimal
+
+=== marker
+the machine-readable name string that the MathML intent, OMML and UnicodeMath encodings carry: `standard-uncertainty`, `expanded-uncertainty`, or `coverage-interval`, qualified by `:concise` and by the interval kind where applicable
+
+=== exact decimal
+a decimal string preserved verbatim from its source; `2.10` and `2.1` are different exact decimals
+
+=== InvalidUncertainty
+the typed error a conforming implementation raises when an uncertainty node is constructed with an inconsistent field set
+
+=== statement
+the fixed text appended to the shape-only encodings stating the interval kind, the coverage factor or the coverage probability
+
+=== encoding
+the one rendering of a node in one format, defined by clause 9 and frozen in the corpus
+
+=== round trip
+reading a node's encoding in a lossless format back to a node equal to the original
+
+=== refusal
+construction-time rejection with an `InvalidUncertainty` naming the violated rule
+
+=== corpus
+the frozen set of nodes and encodings used to discharge conformance claims

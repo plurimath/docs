@@ -1,3 +1,0 @@
-== Conventions
-
-Requirement language per UnitsML 1. Terminology per GUM-5:2026 A.11: coverage interval and coverage probability — never "confidence interval". The magnitude is a DIFFERENCE quantity: conversion applies the factor, never the offset (UnitsML 4, I4).

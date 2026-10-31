@@ -1,3 +1,0 @@
-== Round-trip policy
-
-Markers win. The visible form is presentation; the marker (or native pma literal) is the lossless channel. Read-time disagreement between marker and visible form raises `InvalidUncertainty`. Every lossless channel carries every field of Clause 5; lossy channels declare their losses in the matrix (Annex A).

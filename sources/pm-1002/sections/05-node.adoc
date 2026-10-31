@@ -1,0 +1,187 @@
+== The uncertainty node
+
+=== General
+
+The uncertainty node is specified as an LML model. It is one indivisible result: rendering never splits it across lines, and no surface recomputes any of its fields.
+
+=== The model
+
+[source,lml]
+----
+lml "1.0"
+
+models UncertaintyModel {
+
+  class Uncertainty {
+    attribute value, ExactDecimal[1]
+    attribute category, UncertaintyCategory[1]
+    attribute magnitude, ExactDecimal
+    attribute coverage_factor, ExactDecimal
+    attribute coverage_probability, ExactDecimal
+    attribute lower, ExactDecimal
+    attribute upper, ExactDecimal
+    attribute interval_kind, IntervalKind
+    attribute notation, Notation
+    attribute unit, Unitsml
+  }
+
+  enum UncertaintyCategory {
+    value standard
+    value expanded
+    value coverage-interval
+  }
+
+  enum Notation {
+    value absolute
+    value concise
+  }
+
+  enum IntervalKind {
+    value shortest
+    value probabilistically-symmetric
+  }
+
+  class ExactDecimal {
+    attribute text, String[1]
+  }
+}
+----
+
+The `ExactDecimal` of the model corresponds to a `Number` node of the tree (PM 1001) whose text is a plain decimal; the node never holds computed values.
+
+=== Field rules
+
+The category determines which fields are required and which are forbidden. A node is well formed when, for its category:
+
+.Field rules by category
+[cols="1,1,1,1", options="headers"]
+
+|===
+|Field |standard |expanded |coverage-interval
+
+|value
+|required |required |required
+
+|magnitude
+|required |required |forbidden
+
+|coverage_factor
+|forbidden |required |forbidden
+
+|coverage_probability
+|forbidden |optional |optional
+
+|lower, upper
+|forbidden |forbidden |required
+
+|interval_kind
+|forbidden |forbidden |required
+
+|notation
+|absolute or concise |unqualified |unqualified
+
+|unit
+|optional |optional |optional
+
+|===
+
+Constructing a node that violates its category's field set raises `InvalidUncertainty` with a message naming the field and the category. The validation runs at construction; a tree therefore never contains a malformed uncertainty node.
+
+[example]
+A node of category `expanded` given a `lower` endpoint.
+*Expected outcome.* construction raises `InvalidUncertainty` with the message "lower does not apply to a expanded uncertainty"; no tree is produced.
+
+=== The value
+
+The value is a signed plain decimal: an optional minus sign, digits, and an optional fractional part. It is carried verbatim: no canonicalisation of trailing zeros, no exponent forms, no thousands separators.
+
+=== Indivisibility
+
+The node renders as one unit in every format. A line break inside a rendered uncertainty never occurs; a surface asked to break inside one places the break before or after the whole node.
+
+=== Markers
+
+The marker is the machine-readable name of the node, carried by the intent mechanisms of MathML, OMML and UnicodeMath:
+
+.Marker names
+[cols="2,2,2,3", options="headers"]
+|===
+|Category |Base marker |Qualifiers |Full shape
+
+|standard |`standard-uncertainty` |`:concise` when notation is concise |`standard-uncertainty(v,m)` or `standard-uncertainty:concise(v,m)`
+|expanded |`expanded-uncertainty` |none |`expanded-uncertainty(v,m,k,p)`
+|coverage-interval |`coverage-interval` |`:shortest` or `:probabilistically-symmetric` |`coverage-interval:l,u,p` qualified
+|===
+
+Marker arguments are the node's numbers in the fixed order of clause 9's encodings, comma-separated without spaces.
+
+=== The fields, one by one
+
+==== value
+
+The measured value: a signed plain decimal held verbatim. It is the only field every category requires. The minus sign belongs to the value; magnitudes and endpoints are unsigned.
+
+==== magnitude
+
+The uncertainty magnitude: an unsigned plain decimal. For the standard category it is the standard uncertainty; for the expanded category it is the expanded uncertainty itself. It never appears on a coverage-interval node.
+
+==== coverage_factor
+
+The factor k that turned a standard uncertainty into the expanded one: an unsigned plain decimal greater than zero. `0` and negative values are refused, as is any form that is not a plain decimal. The factor is reported, never recomputed: a node does not know which distribution or degrees of freedom produced its k, and this document does not pretend it does.
+
+==== coverage_probability
+
+The probability p attached to an expanded uncertainty or a coverage interval: an unsigned plain decimal strictly between 0 and 1, checked exactly (clause 8). Optional on both categories.
+
+==== lower and upper
+
+The endpoints of a coverage interval: unsigned plain decimals. This document does not require `lower < upper` — the reported endpoints are carried verbatim, and an author who reports inverted endpoints has made their own statement; evaluation (document 1004) may flag it, construction does not.
+
+==== interval_kind
+
+Which property the interval has: `shortest` or `probabilistically-symmetric`. Required on a coverage-interval node and forbidden elsewhere, because an interval without its kind is not interpretable — for a skewed distribution the two intervals differ, and the difference is information.
+
+==== notation
+
+How a standard uncertainty reports: `absolute` or `concise` (clause 7). Present only on the standard category; the concise rule makes it meaningless anywhere else.
+
+==== unit
+
+The measurement unit, held as a UnitsML embedding (clause 10). Optional on every category.
+
+=== Equality
+
+Two nodes are equal when their categories and all ten fields are equal, field by field. Equality is exact: `0.2` and `0.20` are different magnitudes and therefore different nodes. Equality does not consult encodings: two nodes with equal fields have equal encodings by the determinism of clause 9.
+
+=== Cloning
+
+Copying a node copies the tree structures it holds (its value, numbers and unit) and shares nothing mutable. A copy is created through the constructor and revalidated; a validation passing at construction time cannot be bypassed by copying.
+
+=== The validation rules as a model
+
+The field rules of clause 5, written as the model they enforce:
+
+[source,lml]
+----
+models UncertaintyValidation {
+
+  class StandardRule {
+    attribute requires, String { cardinality 1..n }
+    attribute forbids, String { cardinality 1..n }
+    attribute allows_notation, Boolean[1]
+  }
+
+  class ExpandedRule {
+    attribute requires, String { cardinality 1..n }
+    attribute forbids, String { cardinality 1..n }
+  }
+
+  class CoverageIntervalRule {
+    attribute requires, String { cardinality 1..n }
+    attribute forbids, String { cardinality 1..n }
+    attribute requires_kind, Boolean[1]
+  }
+}
+----
+
+with the populations: StandardRule requires `value`, `magnitude` and forbids `coverage_factor`, `coverage_probability`, `lower`, `upper`, `interval_kind`; ExpandedRule requires `value`, `magnitude`, `coverage_factor` and forbids `lower`, `upper`, `interval_kind`; CoverageIntervalRule requires `value`, `lower`, `upper`, `interval_kind` and forbids `magnitude`, `coverage_factor`. The notation check is the standard category's alone; every refusal raises `InvalidUncertainty` at construction.

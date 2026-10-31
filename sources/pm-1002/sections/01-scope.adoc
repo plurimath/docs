@@ -1,0 +1,44 @@
+== Scope
+
+=== General
+
+This document specifies the uncertainty model of the Plurimath system:
+
+* the uncertainty node and its fields;
+* the three uncertainty categories — standard, expanded, coverage interval — with the fields each requires and forbids;
+* the notation distinction (absolute and concise) and the concise-form rule;
+* the exact-decimal discipline that governs every number the node carries;
+* the representation of each category in each output format, including the marker conventions of MathML, OMML and UnicodeMath;
+* units on an uncertainty, through the UnitsML embedding;
+* conformance of an implementation of this model.
+
+This document does not specify:
+
+* the syntax with which each input notation writes an uncertainty, beyond what the per-format encodings of clause 9 imply for the formats that read (document 1003 specifies the reading contracts);
+* uncertainty arithmetic: propagation, combination, degrees of freedom, coverage-factor computation — evaluation is document 1004;
+* which numerical tolerance conventions apply to evaluation output (UnitsML 2 governs those).
+
+=== Relationship to the series
+
+.Relationship to the series
+[cols="1,3", options="headers"]
+|===
+|Document |Relationship to this one
+
+|1001 Math model
+|defines the tree this node lives in and the rendering surfaces this document encodes for
+
+|1003 Format interfaces
+|defines the reader contracts for the encodings this document defines
+
+|1004 Evaluation
+|consumes uncertainty nodes numerically; this node never computes
+
+|UnitsML 2, 5, 6
+|numeric contract, XML usage, and the content language of the unit embedding
+
+|===
+
+=== Audience
+
+Implementers of Plurimath, implementers of independent readers and writers that must carry uncertainty through these formats, and authors of documents 1003 and 1004.

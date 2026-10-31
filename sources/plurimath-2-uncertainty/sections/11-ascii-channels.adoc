@@ -1,3 +1,0 @@
-== ASCII channels
-
-Dialect L (asciimath 2): quoted compatibility channel `"ustd(10.3, 0.2)"`. Dialect P (pma 1): native literals and constructors. Both reference this part for the model.

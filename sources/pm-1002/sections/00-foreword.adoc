@@ -1,0 +1,24 @@
+== Foreword
+
+=== General
+
+This document is the second document of the Plurimath specifications series. It specifies the uncertainty model: the node that carries a measured value together with its uncertainty through the Plurimath system, the categories of uncertainty it represents, the discipline that governs the numbers it carries, and the representation of each category in every output format.
+
+The model described here is implemented in the `plurimath` gem of the 0.11 series (the `Plurimath::Math::Function::Uncertainty` class). Where this document and the implementation disagree, the disagreement is a defect in one of the two.
+
+=== Documents in the series
+
+.Documents in the series
+[cols="1,3,2", options="headers"]
+|===
+|Number |Title |Subject
+
+|1001 |Math model |The formula tree, the node classes, the registry, the rendering surfaces
+|1002 |Uncertainty model |This document: the uncertainty node, its categories, its number discipline, its per-format encodings
+|1003 |Format interfaces |The per-format readers and writers
+|1004 |Evaluation |Numeric evaluation and uncertainty propagation
+|===
+
+=== Maintainers
+
+This document is maintained by the Plurimath project at https://github.com/plurimath/plurimath.

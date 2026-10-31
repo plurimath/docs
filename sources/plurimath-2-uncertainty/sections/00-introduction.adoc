@@ -1,3 +1,0 @@
-== Introduction
-
-`10.3 ± 0.2 cm` looks trivial and carries five distinct facts: the estimate, the magnitude, their unit, the category (standard uncertainty), and the convention by which the digits are aligned. Formats lose some of these facts silently — and a reader of the rendered form cannot tell what was dropped. The record model plus per-format markers exist so that what the author meant survives the rendering pipeline, and what a format cannot carry is declared, not hidden.
