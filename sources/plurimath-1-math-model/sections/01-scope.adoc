@@ -1,5 +1,0 @@
-== Scope
-
-This document specifies: the formula tree and its node classes, including the `Uncertainty` node's model-level identity (representation: Plurimath 2) and the `Unitsml` node; the shared registry (vocabulary v2); and the LML serialization contract.
-
-Input-language syntax is specified in asciimath Parts 1–2 and pma Part 1; format mappings in Plurimath 3; uncertainty representation in Plurimath 2; evaluation in Plurimath 4.

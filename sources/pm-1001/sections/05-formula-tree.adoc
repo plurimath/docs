@@ -1,0 +1,253 @@
+== The formula tree
+
+=== General
+
+The formula tree is specified as an LutaML model. The model is normative: classes, attributes, types and cardinalities are defined in the LML blocks of this clause, and the prose states the rules the diagrams cannot.
+
+=== The model
+
+[source,lml]
+----
+lml "1.0"
+
+models Plurimath {
+
+  package Structure {
+
+    class Node {
+      attribute kind, String[1]
+    }
+
+    class Formula {
+      attribute parameters, Node { cardinality 1..n }
+      attribute display_style, Boolean
+      attribute options, RenderingOptions
+    }
+
+    class Symbol {
+      attribute entry, SymbolEntry[1]
+    }
+
+    class Number {
+      attribute text, String[1]
+    }
+
+    class Text {
+      attribute content, String[1]
+    }
+  }
+
+  package Functions {
+
+    class Function {
+      attribute operands, Node { cardinality 0..n }
+    }
+
+    class UnaryFunction {
+      attribute operand, Node[1]
+    }
+
+    class BinaryFunction {
+      attribute first, Node[1]
+      attribute second, Node[1]
+    }
+
+    class TernaryFunction {
+      attribute first, Node[1]
+      attribute second, Node[1]
+      attribute third, Node[1]
+    }
+
+    class NaryFunction {
+      attribute operand, Node[1]
+      attribute lower_limit, Node
+      attribute upper_limit, Node
+      attribute nary_value, String[1]
+    }
+  }
+
+  package Layout {
+
+    class Table {
+      attribute rows, Tr { cardinality 1..n }
+    }
+
+    class Tr {
+      attribute cells, Td { cardinality 1..n }
+    }
+
+    class Td {
+      attribute content, Node { cardinality 0..n }
+    }
+
+    class FontStyle {
+      attribute variant, FontVariant[1]
+      attribute operand, Node[1]
+    }
+
+    class Fenced {
+      attribute content, Node { cardinality 1..n }
+      attribute open, Symbol[1]
+      attribute close, Symbol[1]
+    }
+
+    class Linebreak
+    class None
+
+    class Phantom {
+      attribute operand, Node[1]
+    }
+  }
+
+  package Measurement {
+
+    class Unitsml {
+      attribute expression, String[1]
+      attribute unicode_form, String[1]
+      attribute latex_form, String[1]
+      attribute mathml_form, String[1]
+      attribute xml_form, String[1]
+    }
+
+    class Uncertainty {
+      attribute estimate, Node[1]
+      attribute magnitude, Node[1]
+      attribute category, UncertaintyCategory[1]
+      attribute coverage, String
+    }
+
+    enum UncertaintyCategory {
+      value standard
+      value exponential
+      value coverage
+    }
+  }
+
+  enum FontVariant {
+    value "bold"
+    value "italic"
+    value "bold-italic"
+    value "sans-serif"
+    value "sans-serif-italic"
+    value "sans-serif-bold-italic"
+    value "bold-sans-serif"
+    value "monospace"
+    value "fraktur"
+    value "bold-fraktur"
+    value "script"
+    value "bold-script"
+    value "double-struck"
+    value "normal"
+  }
+}
+----
+
+=== The composition
+
+[source,lml]
+----
+diagram PlurimathComposition {
+  association HasParameters {
+    owner Formula
+    owner_type composition
+    member_type Structure::Node
+    member_multiplicity "1..n"
+  }
+
+  association HasOperands {
+    owner Functions::Function
+    owner_type composition
+    member_type Structure::Node
+    member_multiplicity "0..n"
+  }
+
+  association HasRows {
+    owner Layout::Table
+    owner_type composition
+    member_type Layout::Tr
+    member_multiplicity "1..n"
+  }
+
+  association HasCells {
+    owner Layout::Tr
+    owner_type composition
+    member_type Layout::Td
+    member_multiplicity "1..n"
+  }
+}
+----
+
+Every concrete function class of Annex A is a `Function` with a fixed operand count and order; the abstract shapes above (unary, binary, ternary, nary) are the families the concrete classes specialise.
+
+=== Root and ownership
+
+A formula tree has exactly one root, a `Formula`. The root holds the ordered top-level nodes and the presentation options; descendant nodes carry none. Display style, font defaults and line width are decided once, at the root, and applied during rendering.
+
+[example]
+A tree with one top-level node, a power of `x` to `2`.
+*Expected outcome.* Rendering to MathML yields a `<math>` element containing `<msup><mi>x</mi><mn>2</mn></msup>`; rendering to LaTeX yields `x^{2}`.
+
+=== Content nodes
+
+A `Symbol` holds one registry reference: a glyph, an operator name or a named constant from the symbol space of the registry (1 438 entries at this edition). The class carries the per-format renderings; the tree carries only the reference.
+
+A `Number` holds the numeral as written. The tree does not parse numbers into machine values — evaluation is a separate step (document 1004). Negative signs are not part of a `Number`; a minus is a `Symbol` sibling.
+
+[example]
+The tree for `10^3 + 0.5` is a `Power` over two `Number`s and an addition symbol over a further `Number`.
+*Expected outcome.* Rendering to LaTeX gives `10^{3}+0.5`; no rounding or normalization occurs at the model level.
+
+A `Text` holds literal text to be typeset upright, copied verbatim by every surface, escaping only what the target format requires.
+
+=== Function nodes
+
+A function node is an instance of one of the concrete classes of Annex A. Operand order is normative and stable across editions: `Frac` renders its first operand as the numerator and its second as the denominator in every surface; `Root` renders its first operand as the radicand and its second as the degree. A reader may not reverse operand order to accommodate a quirk of its input; the surface writers absorb those quirks.
+
+[example]
+`Root` with radicand `x` and degree `3`.
+*Expected outcome.* MathML: `<mroot><mi>x</mi><mn>3</mn></mroot>`. LaTeX: `\sqrt[3]{x}`. UnicodeMath: `∛(x&3)`.
+
+The nary family carries a `nary_value` (`∑`, `∏`, `∫`, `∮`) that the MathML and OMML surfaces emit on nary constructs.
+
+=== Tables, fonts and fences
+
+A `Table` holds `Tr` rows of `Td` cells; the concrete table class determines the delimiters and alignment semantics of the output, the row and cell structure is shared. `Mlabeledtr` is a row carrying a label. `Cases` renders a left brace with a null right delimiter on every surface.
+
+A `FontStyle` holds one operand and one `FontVariant`; MathML emits it as `mathvariant`, OMML as run properties, LaTeX as the corresponding command, UnicodeMath as the corresponding mathematical alphanumeric character where one exists.
+
+A `Fenced` holds its content and its open and close symbols; `Left` and `Right` declare the halves separately in the linear surfaces.
+
+=== Units and uncertainty
+
+A `Unitsml` embeds a unit expression written in the asciiunits content language (UnitsML 6) together with the four renderings the UnitsML system supplies (UnitsML 5). The tree performs no unit arithmetic: every surface emits the UnitsML-provided form for its format, and the XML form stays available machine-readably.
+
+An `Uncertainty` attaches an uncertainty to a value expression. Its fields are specified in document 1002; the model-level contract stated here is that an uncertainty is carried as a node, rendering never recomputes it, and a surface without a faithful form for its category renders the category's declared fallback from document 1002 and nothing else.
+
+=== Presentation constructs
+
+`Intent` and `Semantics` carry the MathML 4 `intent` and `semantics` constructs. `Phantom` renders its operand as space of the operand's measure. `Menclose`, `Merror`, `Mglyph`, `Mpadded`, `Ms`, `Msgroup`, `Msline`, `Multiscript`, `Mlabeledtr`, `Linebreak`, `None`, `Longdiv`, `Cancel`, `Scarry`, `Scarries`, `Obrace`, `Ubrace`, `Rule` and `Color` model their host-format constructs under the names of those constructs.
+
+=== Invariants
+
+These properties hold for every tree a conforming implementation produces and consumes.
+
+* *Syntax independence.* No node records the input notation the tree was read from. Two readers given equivalent inputs produce equal trees.
+* *Operand totality.* Every function node's operands are present and in the class-defined order before rendering; a class's operand count is fixed.
+* *Render totality.* Every surface renders every well-formed tree; where a construct has no faithful form in a format, the surface emits the construct's declared fallback for that format.
+* *No formatting in the tree.* Layout hints live at the root or in surface options, never in descendant nodes.
+* *Structural equality.* Two trees are equal when their classes, values and operand structure are equal. Equality does not consult rendering.
+* *Byte stability.* A writer given the same tree and the same model version emits the same bytes on every conforming implementation.
+
+=== Quantity assertions
+
+A tree may carry a quantity assertion: a statement that a subtree denotes a named quantity kind. The assertion is data — an intent annotation — and the tree performs no arithmetic gating with it. The semantics of assertions and their use in evaluation are specified in document 1004.
+
+=== Normalisation
+
+The tree form is canonical within a model version. Constructions that differ only in incidental ways — a lone parameter held directly versus wrapped in a single-child container, equivalent fence pairings, a unary function written with or without explicit grouping — produce the same canonical tree after normalisation, and normalisation is applied at construction time, not at render time. Writers therefore never normalise: they render what the tree holds.
+
+Structural equality (<<formula-tree>>) compares normalised trees. Two trees that are equal up to normalisation are equal.
+
+[example]
+The quadratic formula read from AsciiMath and read from MathML —
+*Expected outcome.* the two trees are equal after normalisation; neither required the other to adjust, and neither writer inserted normalisation steps.

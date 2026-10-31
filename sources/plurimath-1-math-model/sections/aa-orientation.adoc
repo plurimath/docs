@@ -1,5 +1,0 @@
-[[annex-orientation]]
-[appendix]
-== Annex A (informative): program orientation
-
-The layered stack, the artifact-first principle and the Ruby-first rule are described in UnitsML 1 and the program graph (unitsml/unitsml-ruby#95). The input-language series: asciimath Parts 1–2 (dialect L) and pma Part 1 (dialect P). Format interfaces: Plurimath 3; uncertainty representation: Plurimath 2; evaluation: Plurimath 4.

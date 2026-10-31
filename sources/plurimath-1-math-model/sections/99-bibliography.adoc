@@ -1,6 +1,0 @@
-[bibliography]
-== Bibliography
-
-* [[[lml1033,nofetch(lutaml-model#1033)]]] (LML as cross-language schema)
-* [[[parg,nofetch(parsanol PARG artifact format)]]] (parsanol/docs)
-* [[[isq-smart,nofetch(isq-smart concept-system methodology)]]]

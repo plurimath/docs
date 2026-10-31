@@ -1,7 +1,7 @@
 [bibliography]
 == Normative references
 
-* [[[plurimath-1,nofetch(Plurimath 1)]]] (model, registry)
+* [[[plurimath-1,nofetch(Plurimath 1001)]]] (model, registry)
 * [[[plurimath-2,nofetch(Plurimath 2)]]] (uncertainty model)
 * [[[unitsml-6,nofetch(UnitsML 6)]]] (`unit(...)` content grammar)
 * [[[unitsml-4,nofetch(UnitsML 4)]]]

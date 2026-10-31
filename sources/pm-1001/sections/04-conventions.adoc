@@ -1,0 +1,40 @@
+== Conventions
+
+=== Tree notation
+
+Trees are written as indented lines, one node per line:
+
+----
+Formula
+└─ Power
+   ├─ Symbol("x")
+   └─ Number("2")
+----
+
+The class name appears first; a quoted string after the name is the node's value (`Symbol`, `Number`, `Text`). This is the shape the math zone printer emits.
+
+=== Examples
+
+Examples appear in blocks titled *Example* and end with an *Expected outcome* paragraph. The expected outcome states what a conforming implementation does; an implementation that does something else does not conform to the clause the example illustrates.
+
+=== Identifiers
+
+Class names are written as they appear in the implementation: `Plurimath::Math::Function::Frac` is written `Frac` when the module is clear from context. The registry entries for symbols are written with the displayed glyph followed by the class name in parentheses when the glyph alone is ambiguous.
+
+=== Version references
+
+Behaviour is pinned to model versions. "0.11.x" names any version whose version string begins `0.11.`; a clause that names a specific version, such as 0.11.12, applies to that version and is revisited at the next edition of this document.
+
+=== Reading the LML blocks
+
+The LML blocks of this document are the model. Attribute lines read as `attribute name, Type` with the cardinality following in braces where it is not one: `attribute parameters, Node { cardinality 1..n }` reads "every Formula carries one or more parameters, each a Node". A cardinality left implicit is exactly one (`[1]`). Enumerations list their values; a node's attribute of enumeration type carries one of them.
+
+The LML blocks are checked: the model compiles with the LutaML toolchain, and a block that fails to compile fails the build of this document. The prose and the LML state the same model; where they appear to differ, the LML is corrected or the prose is — the two are never allowed to settle into disagreement.
+
+=== Names
+
+Conceptual class names are written without their implementation namespace: `Formula` stands for the implementation's `Plurimath::Math::Formula`. Implementation namespaces appear once, here, and in the conformance vectors where byte output is frozen. A reader of this document needs no Ruby knowledge; an implementer maps each conceptual class to the implementation class of the same name.
+
+=== The example format
+
+Examples carry an *Expected outcome* paragraph. The outcome is stated as the observable behaviour of a conforming implementation: rendered bytes where the example is about rendering, tree shape where it is about the model, and refusal behaviour where it is about a prohibition. An example whose outcome cannot be observed is a defect in this document.

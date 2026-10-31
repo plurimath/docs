@@ -1,3 +1,0 @@
-== Foreword
-
-The Plurimath series specifies the central math model of the stack and the languages and formats around it. Its center is the MODEL: a dialect-free formula tree into which every input language materializes and from which every output format renders. The companion UnitsML series (unitsml/docs) owns units, quantities, conversions, the register and the XML; this series references it at exactly three seams: the unit-expression content language (UnitsML 6), the units semantics (UnitsML 4, 5) and the conformance corpora (UnitsML 8).

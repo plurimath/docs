@@ -2,7 +2,7 @@
 metanorma:
   source:
     files:
-      - sources/plurimath-1-math-model/document.adoc
+      - sources/pm-1001/document.adoc
       - sources/plurimath-2-uncertainty/document.adoc
       - sources/plurimath-3-format-interfaces/document.adoc
       - sources/plurimath-4-evaluation/document.adoc

@@ -1,7 +1,7 @@
 [bibliography]
 == Normative references
 
-* [[[plurimath-1,nofetch(Plurimath 1)]]]
+* [[[plurimath-1,nofetch(Plurimath 1001)]]]
 * [[[unitsml-7,nofetch(UnitsML 7)]]] (`xref` target space)
 * [[[unitsml-1,nofetch(UnitsML 1)]]]
 * [[[mathml4,nofetch(MathML 4)]]] (W3C)

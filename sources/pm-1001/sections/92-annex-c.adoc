@@ -1,0 +1,77 @@
+== Annex C: test-suite examples
+
+=== General
+
+Vectors illustrative of the conformance classes of <<conformance-classes>>. Each vector states the construction, the property under test, and the expected outcome. The replay corpora carry the frozen versions of these vectors.
+
+=== Structural equality (class `model`)
+
+[example]
+Two trees built independently — one by nesting `Power` over `Frac`, one by rendering the equivalent LaTeX and reading it back with the LaTeX reader —
+*Expected outcome.* structural equality holds: same classes, same values, same operand structure at every node.
+
+[example]
+A tree containing a `Text` node whose content contains characters escaped differently in two constructions (raw `<` versus the escaped entity) —
+*Expected outcome.* the trees are equal; `Text` content is compared after unescaping, because content is data and escaping is a surface concern.
+
+=== Math zone (class `model`)
+
+[example]
+`Formula.new([Symbol.new("+")])` printed to the math zone —
+*Expected outcome.* the zone line is `Formula` followed by the indented line `└─ Symbol("+")`.
+
+=== Render replay (class `render-<format>`)
+
+[example]
+The tree for `x^2 + y_1` rendered to each surface —
+*Expected outcome.* MathML `x^{2}+y_{1}`-equivalent markup with `msup`/`msub`; LaTeX `x^{2}+y_{1}`; UnicodeMath `x^2+y_1`; AsciiMath `x^2+y_1`; OMML with run-based sub/superscript structures; HTML with sub/sup elements. All six byte-frozen in the corpus.
+
+[example]
+`Frac` with numerator `a+b` and denominator `c`, inside `Fenced` with round delimiters —
+*Expected outcome.* MathML `mrow(mo("("), mfrac(...), mo(")"))`; LaTeX `\left(\frac{a + b}{c}\right)`; UnicodeMath `(a+b)/c`; OMML fraction structure inside delimiter structure.
+
+=== Fallback verification (classes `render-*`)
+
+[example]
+A `Color` node rendering to LaTeX without colour context, and to MathML —
+*Expected outcome.* LaTeX output omits the colour and renders the operand; MathML output carries `mathcolor`. Both are the declared behaviours; neither emits a marker.
+
+=== Byte stability (all render classes)
+
+[example]
+The full render corpus replayed on two implementations, different operating systems, same model version —
+*Expected outcome.* byte-identical output for every entry of every surface; any difference is nonconformance.
+
+=== Model identity (class `model`)
+
+[example]
+The same formula constructed through two different paths — direct tree construction and reading its AsciiMath form —
+*Expected outcome.* the trees are structurally equal, and the math zones are identical line for line.
+
+[example]
+A tree containing an `Uncertainty` node with category `standard`, magnitude `0.2`, attached to an estimate `10.3` —
+*Expected outcome.* the node is carried as specified in document 1002; every surface renders the uncertainty in its declared form; no surface recomputes the magnitude; the math zone prints the node with its fields.
+
+=== Units embedding (classes `render-*`)
+
+[example]
+A tree whose top level is a `Unitsml` node with expression `kg*m/s^2` —
+*Expected outcome.* each surface emits the UnitsML-provided form for its format (MathML, OMML, LaTeX, Unicode, XML per UnitsML 5); the asciiunits expression is preserved verbatim in the model; no surface expands or rewrites the expression.
+
+=== Fallback discipline (classes `render-*`)
+
+[example]
+An `Mglyph` node rendered to OMML, and a `Color` node rendered to LaTeX without colour context —
+*Expected outcome.* `Mglyph` degrades to its alt text in OMML; the colour is dropped and its operand rendered. Neither output carries a marker or placeholder; both are the declared fallbacks of <<fallbacks>>.
+
+=== Registry stability (class `model`)
+
+[example]
+A tree containing the symbol entries `Alpha` and `Plusminus`, rendered before and after a registry regeneration within the same edition —
+*Expected outcome.* byte-identical output in all six surfaces; regeneration changes nothing observable. A change in observable output within an edition is a registry defect.
+
+=== Normalisation (class `model`)
+
+[example]
+The same expression constructed with and without an explicit single-child container around its operand —
+*Expected outcome.* the normalised trees are equal; the writers receive the same canonical form from both constructions and emit the same bytes in every surface.

@@ -1,7 +1,7 @@
 [bibliography]
 == Normative references
 
-* [[[plurimath-1,nofetch(Plurimath 1)]]]
+* [[[plurimath-1,nofetch(Plurimath 1001)]]]
 * [[[unitsml-1,nofetch(UnitsML 1)]]]
 * [[[unitsml-4,nofetch(UnitsML 4)]]]
 * [[[jcgm100,nofetch(JCGM 100:2008 + Amd.1:2026)]]], Clauses 6 and 7
