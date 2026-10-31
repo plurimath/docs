@@ -1,0 +1,3 @@
+== Introduction
+
+Embedding extensions directly would break every third-party asciimath processor on the internet. Riding the dialect's own string literal means the breakage never happens: humans see something visibly foreign, other tools see text, and conforming readers see the channel.

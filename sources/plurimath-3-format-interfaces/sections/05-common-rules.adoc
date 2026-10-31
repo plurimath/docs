@@ -1,0 +1,8 @@
+== Common emission rules
+
+- Number text is emitted verbatim from the model — never reformatted, never float-normalized.
+- Layout follows the model's structure; no presentation decision feeds back into stored values.
+- Units render as the visible symbol PLUS the machine bond (`xref`) — never as bare text when the model carries a UnitsML unit.
+
+[example]
+*Expected outcome.* The estimate `2.10` renders as `2.10` in MathML, OMML, UnicodeMath, LaTeX and HTML — five formats, one string.

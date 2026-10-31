@@ -1,0 +1,15 @@
+== Constructors
+
+Atomic `keyword(args)` forms; malformed = parse error.
+
+[listing]
+unit(kg m/s^2)                            unit expression — UnitsML 6 grammar
+ustd(10.3, 0.2) unit(m)                   measured value, standard u
+uexp(10.0, 0.3, 2, 0.95) unit(cm)         expanded U with k, p
+ucov(10.0, 9.7, 10.3, 0.95, shortest)     coverage interval
+diff(5 unit(degC))                        difference-typed quantity (name open: diff/delta/∆)
+
+A trailing `unit(...)` scopes value AND uncertainty magnitude (the magnitude is a difference in that unit). Constructors materialize as single math-model nodes.
+
+[example]
+*Expected outcome.* `ustd(10.3, 0.2) unit(m)` materializes one `Uncertainty` node (value 10.3, magnitude 0.2, category standard) with a Unitsml unit node m; `ustd(10.3)` is a parse error, not a partial record.

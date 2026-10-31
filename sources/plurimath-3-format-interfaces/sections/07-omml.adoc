@@ -1,0 +1,3 @@
+== OMML interface
+
+Emission: `m:oMath` regions with the OMML operator set. Reading: decodes including hidden phantoms (Plurimath 2). Word's editor behavior on phantom runs is documented as untested; the encoding never relies on custom parts.

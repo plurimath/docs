@@ -1,0 +1,29 @@
+[appendix]
+== Annex A (normative): the round-trip matrix
+
+(The "AsciiMath (L)" column is the quoted compatibility channel; pma carries every field natively.)
+
+|===
+|Field |AsciiMath (L) |MathML intent |OMML phantom |UnicodeMath |LaTeX |HTML |UnitsML XML
+
+|exact number text
+|✓ |✓ |✓ |✓ |visible |visible |no element
+
+|category
+|✓ |✓ |✓ |✓ |✗ |✗ |no element
+
+|k, p
+|✓ |✓ |✓ |✓ |visible |visible |no element
+
+|interval kind
+|✓ |✓ |✓ |✓ |✗ |✗ |no element
+
+|notation (`:concise`)
+|rendered only |✓ |✓ |✓ |visible |visible |no element
+
+|unit
+|exact via `"unitsml(...)"`; else lossy |`$unit` (re-read as formula) |rendered |rendered |rendered |rendered |unit in UnitsML; uncertainty not
+
+|read-back
+|✓ |✓ |✓ |✓ |none |none |—
+|===

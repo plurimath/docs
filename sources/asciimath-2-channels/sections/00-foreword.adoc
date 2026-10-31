@@ -1,0 +1,3 @@
+== Foreword
+
+One mechanism keeps the compatibility dialect useful without breaking it: quoted compatibility syntax. Everything asciimath can say beyond the asciimath.org language travels inside a string literal — visibly foreign to humans, harmless text to every other processor, a dispatchable channel to conforming readers.

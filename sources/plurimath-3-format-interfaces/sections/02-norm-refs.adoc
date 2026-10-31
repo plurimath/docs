@@ -1,0 +1,4 @@
+== Normative references
+
+* Plurimath 1; UnitsML 7 (`xref` target space); UnitsML 1
+* MathML 4 (W3C); ECMA-376 (OOXML/OMML); UnicodeMath linear format

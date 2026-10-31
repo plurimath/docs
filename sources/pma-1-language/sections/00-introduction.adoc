@@ -1,0 +1,3 @@
+== Introduction
+
+Measured quantities deserve first-class syntax. A metrology author should write `(10.3 +/- 0.2) unit(m)` and mean exactly that — not fight a math language's grouping rules, not mark up uncertainty through strings, not lose the unit's quantity kind to positional accident. Every rule below serves that author.

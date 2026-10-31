@@ -1,0 +1,5 @@
+== Normative references
+
+* UnitsML 1, 2, 4, 5; Plurimath 1, 2
+* **JCGM 100:2008 + Amd.1:2026** (Clause 4.1.4 NOTE 1; H.1.7; Annex G)
+* JCGM 101:2008; JCGM 106:2012; GUM-6:2020 (Annex F); GUM-5:2026 (Examples)

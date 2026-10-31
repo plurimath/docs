@@ -1,0 +1,3 @@
+== HTML interface
+
+Presentation fallback with MathML where the environment allows; losses as declared; a `data-*` annotation channel is a proposed extension for lossless HTML embedding (open decision).

@@ -1,0 +1,3 @@
+== Normative references
+
+* Plurimath 1 (model, registry); Plurimath 2 (uncertainty model); UnitsML 6 (`unit(...)` content grammar), UnitsML 4, UnitsML 5 (static semantics), UnitsML 2 (numeric contract)

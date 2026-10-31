@@ -1,0 +1,3 @@
+== Foreword
+
+pma (plurimath ascii) is where features live. It is a new language, owned end to end: reserved words are grammar terminals, `+/-` is one token, errors are strict, and nothing is sugar over a legacy parser. Its grammars are generated from the shared registry; its materialization target is the math model; its conformance is the frozen corpus.

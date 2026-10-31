@@ -1,0 +1,6 @@
+== Collision CI
+
+Reserved words (the pma constructors) are registry entries; the build FAILS on any collision between reserved words and registry ∪ unitsdb symbols/names.
+
+[example]
+*Expected outcome.* Proposing the reserved word `us` (a plausible abbreviation) fails the build: `us` is a unitsdb unit symbol. Proposing `unit`, `ustd`, `uexp`, `ucov`, `diff` passes — verified absent from both vocabularies.

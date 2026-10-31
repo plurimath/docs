@@ -1,0 +1,10 @@
+== Terms, definitions and abbreviated terms
+
+channel::
+a quoted string whose content begins `name(...)` and whose grammar is defined per namespace.
+
+namespace::
+the `name` in a channel; dispatch key for conforming readers.
+
+ledger entry::
+the asciimath 1 table row authorizing a namespace.

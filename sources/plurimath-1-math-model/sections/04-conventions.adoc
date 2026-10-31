@@ -1,0 +1,3 @@
+== Conventions
+
+Requirement language per UnitsML 1. The model never records which input language produced a tree, and never stores presentation decisions.

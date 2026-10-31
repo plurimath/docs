@@ -1,0 +1,11 @@
+[appendix]
+== Annex C (informative): additional test-suite examples
+
+[example]
+*Markers win.* A MathML document whose intent marker says `standard` but whose visible form shows an expanded layout raises on read — the disagreement is fatal, not reconciled.
+
+[example]
+*Factor-only magnitude.* The record `ustd(20.0, 0.2) unit(degC)` converted to kelvin yields magnitude `0.2` K; a result of 273.35 is the offset defect and fails the vector.
+
+[example]
+*Concise output discipline.* Rendering `ustd(1.230, 0.004)` to LaTeX yields `1.230(4)`; no input path accepts the concise string back (pma and dialect L reject `n(d)` literals).

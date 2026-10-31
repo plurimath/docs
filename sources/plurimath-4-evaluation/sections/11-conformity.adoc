@@ -1,0 +1,6 @@
+== Conformity decisions
+
+JCGM 106: conformance probability p_c = ∫_C g(η|y)dη (Eq. 4) with Table 1 normal one-sided z-values (p_c 0.80/0.90/0.95/0.99/0.999 at z 0.84/1.28/1.64/2.33/3.09); decision rules — simple acceptance (§8.2, shared risk), guarded acceptance/rejection (§8.3.2, w = r·U), ISO 14253-1 default w = U (false-accept ≤ 2.3 %); measurement capability C_m = T/(4u_m) (§7.6); specific consumer/producer risks (Eq. 15–20); global risks deferred (joint PDF required). The guarded-acceptance conditional zone is a first-class result.
+
+[example]
+*Expected outcome.* A guarded acceptance with w = U on T = 100 with u = 4 and T_max = 108 reports accept with the conditional zone flagged; simple acceptance on the same inputs reports accept with the shared-risk caveat — both name the rule.

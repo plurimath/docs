@@ -1,0 +1,6 @@
+== Monte Carlo evaluation
+
+JCGM 101: PDF assignment per its Table 1 (and GUM-5 Annex B families: Cauchy, CTrap, Gamma, LN, N, R, U, t); adaptive procedure with δ = ½·10^ℓ; coverage intervals — probabilistically symmetric and shortest; reproducibility per UnitsML 8 (byte-exact under pinned Wichmann–Hill with recorded seed and trials; distributional class otherwise). Expanded U propagates only through validated-linear models; a coverage interval without an underlying u refuses evaluation.
+
+[example]
+*Expected outcome (JCGM 101 §9.5).* Gauge block, non-linear model: GUF u(δL) = 32 nm; MCM u(δL) = 36 nm; shortest 99 % interval [745, 932] nm — the vector's third member, replayed byte-identically under the pinned generator.

@@ -1,0 +1,3 @@
+== UnicodeMath interface
+
+Emission: the linear format with `ⓐ(...)` for multi-letter units. Reading: decodes including `ⓘ` markers and invisible-bracket forms.

@@ -12,49 +12,34 @@
 :mn-output-extensions: xml,html,doc,pdf
 :imagesdir: images
 
-== Foreword
+include::sections/00-foreword.adoc[]
 
-The math model (Plurimath 1) meets the world through five format interfaces. Each interface is a bidirectional contract where reading is meaningful and an emission contract where it is not. Uncertainty's per-format encodings live in Plurimath 2; this part carries everything else.
+include::sections/00-introduction.adoc[]
 
-== Scope
+include::sections/01-scope.adoc[]
 
-This document specifies the common emission rules and one clause per format interface: node-to-format mappings, reader guarantees, and the UnitsML cross-reference channel.
+include::sections/02-norm-refs.adoc[]
 
-== Normative references
+include::sections/03-terms.adoc[]
 
-* Plurimath 1, Plurimath 2; UnitsML 7 (`xref` target space)
-* MathML 4 (W3C); ECMA-376 (OOXML/OMML); UnicodeMath linear format
+include::sections/04-conventions.adoc[]
 
-== Common emission rules
+include::sections/05-common-rules.adoc[]
 
-- Number text is emitted verbatim from the model — never reformatted, never float-normalized.
-- Layout follows the model's structure; no presentation decision feeds back into stored values.
-- Units render as the visible symbol PLUS the machine bond (`xref`) — never as bare text when the model carries a UnitsML unit.
+include::sections/06-mathml.adoc[]
 
-== MathML interface
+include::sections/07-omml.adoc[]
 
-Emission: `mn`/`mi`/`mo`/`mrow`/`mfrac`/`msqrt` per node class. Reading: the full model decodes back, including `intent` uncertainty markers (Plurimath 2); `$unit` references re-read as a formula, not a UnitsML reference — a recorded limit. A MathML 4 processor validation of the emitted markup is an open test item; the intent vocabulary is a proposal until adopted upstream.
+include::sections/08-unicodemath.adoc[]
 
-== OMML interface
+include::sections/09-latex.adoc[]
 
-Emission: `m:oMath` regions with the OMML operator set. Reading: decodes including hidden phantoms (Plurimath 2). Word's editor behavior on phantom runs is documented as untested; the encoding never relies on custom parts.
+include::sections/10-html.adoc[]
 
-== UnicodeMath interface
+include::sections/11-xref.adoc[]
 
-Emission: the linear format with `ⓐ(...)` for multi-letter units. Reading: decodes including `ⓘ` markers and invisible-bracket forms.
+include::sections/12-conformance.adoc[]
 
-== LaTeX interface
+include::sections/aa-test-suite.adoc[]
 
-Output contract only: no reader. Renders visible forms; concise uncertainty in siunitx-aligned shape; losses declared in Plurimath 2 Annex A. There is no intention to parse arbitrary LaTeX here.
-
-== HTML interface
-
-Presentation fallback with MathML where the environment allows; losses as declared; a `data-*` annotation channel is a proposed extension for lossless HTML embedding (open decision).
-
-== Cross-references into UnitsML documents
-
-Where the model carries a UnitsML unit, every format that can carry an IDREF emits the bond to the UnitsML 7 `xml:id` space; formats that cannot carry references emit the symbol only, and the loss is declared. This is the seam that keeps math and register machine-linked.
-
-== Conformance
-
-The render corpus (UnitsML 8): every model→format column and every readable format→model column replays byte-identically; lossy channels replay their declared subset.
+include::sections/99-bibliography.adoc[]

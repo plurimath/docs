@@ -1,0 +1,3 @@
+== Conventions
+
+Requirement language per UnitsML 1. Numeric discipline per UnitsML 2 (exact rationals; decimal strings; versioned quantile algorithm). Results name the rule that produced or refused them.

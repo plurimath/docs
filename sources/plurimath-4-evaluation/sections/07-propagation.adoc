@@ -1,0 +1,6 @@
+== Propagation (LPU)
+
+The law of propagation of uncertainty (JCGM 100 Eq. 10–11) with sensitivity coefficients from the expression tree: symbolic where rational; otherwise the GUM-6:2020 Annex F finite-difference fallback c_i ≈ (f_i⁺ − f_i⁻)/(2u(x_i)) — exact for quadratic-in-x_i models, inapplicable to zero-uncertainty inputs. Correlated inputs per Eq. 13–14 through the declared covariance channel; shared-effect correlations follow GUM-6 §10.6 (r ≈ 1, not root-sum). Welch–Satterthwaite ν_eff (Eq. G.2b) and Student-t coverage at stated p, using the versioned quantile algorithm (UnitsML 2).
+
+[example]
+*Expected outcome (GUM H.1).* For the gauge-block model with the H.1.3 inputs, the first-order propagation yields u_c(l) = 32 nm — the vector's first member.

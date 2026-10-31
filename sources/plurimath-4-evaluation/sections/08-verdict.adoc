@@ -1,0 +1,6 @@
+== The adequacy verdict
+
+An LPU result MUST carry a validity verdict: the 2N-point comparison (GUM-6 Annex F) or MCM validation (JCGM 101 §8). On failure the result is `lpu-not-validated` — a first-class outcome, not an error. GUM-5 Ex 2.6.3: "blind adherence to either approach would be dangerous."
+
+[example]
+*Expected outcome.* For the GUM-6 §13.1.4 bromine model at x₇₉ = 0.5, the LPU result is `lpu-not-validated` with u = 0 reported as the LPU value and the MCM value 0.00007 as the validated alternative — never 0 alone.

@@ -1,0 +1,6 @@
+== Type A and Type B evaluation
+
+Type A (JCGM 100 §4.2): mean ȳ; experimental variance of a single observation s²(q) (Eq. 3); of the mean s²(q̄) = s²(q)/n (Eq. 5); ν = n − 1. Type B (§4.3): from declared distributions — rectangular u = a/√3 (Eq. 7), triangular a/√6, U-shaped (arcsine) a/√2, normal U/k — with exact-where-possible arithmetic per UnitsML 2. Type A/B provenance is binding metadata, never syntax (Plurimath 2).
+
+[example]
+*Expected outcome.* A ±1×10⁻⁶ °C⁻¹ rectangular bound yields u = 0.58×10⁻⁶ °C⁻¹ (the H.1 δα input); a ±0.05 °C bound yields 0.029 °C (H.1 δθ) — exact rationals where the division is exact.

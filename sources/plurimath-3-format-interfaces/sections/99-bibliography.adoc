@@ -1,0 +1,3 @@
+== Bibliography
+
+* W3C MathML 4 · ECMA-376 · UnicodeMath linear format · siunitx documentation (presentation alignment)

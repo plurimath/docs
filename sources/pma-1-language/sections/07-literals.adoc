@@ -1,0 +1,13 @@
+== Measured literals
+
+[listing]
+(10.3 +/- 0.2) unit(m)          canonical
+(10.3 +/- 2%) unit(m)           relative — stored as absolute magnitude, exact rational u = value·p/100
+(3.85 +/- 0.23)e4 unit(m)       shared exponent — value and magnitude shift together
+(0.5 +/- 0.01) ~rect unit(m)    distribution tag — closed JCGM family set
+(10.3 ± 0.2) unit(m)            ± sugar — fenced only; `+/-` remains canonical ASCII
+
+`+/-` is ONE terminal: `3 +/- 1` cannot re-lex as `3 + (/1)`; `3 + (-1)` remains arithmetic. `~` tags are Type-B distribution INPUTS; Type A/B provenance is evaluation metadata, never syntax (Plurimath 2).
+
+[example]
+*Expected outcome.* `(3.85 +/- 0.23)e4` stores value `"3.85"`, magnitude `"0.23"` and exponent shift 4 — the digits are exact-decimal text shifted, never multiplied as floats.

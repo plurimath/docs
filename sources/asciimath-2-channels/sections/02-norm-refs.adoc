@@ -1,0 +1,3 @@
+== Normative references
+
+* asciimath 1; UnitsML 6 (content grammar); Plurimath 2 (uncertainty model); UnitsML 1

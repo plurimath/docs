@@ -1,0 +1,3 @@
+== Conformance
+
+UnitsML 8 Annex A replays the matrix of Annex A below; the property under test: every field survives every lossless channel byte-identically. Class coverage: `parse/render` and `full-series`.

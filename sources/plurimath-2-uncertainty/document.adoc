@@ -12,130 +12,38 @@
 :mn-output-extensions: xml,html,doc,pdf
 :imagesdir: images
 
-== Foreword
+include::sections/00-foreword.adoc[]
 
-Uncertainty is a RECORD of what the author wrote, represented across every format this series supports, and round-tripped wherever the host format can carry it. This part defines the record once, then one clause per representation. There is no cross-format standard for uncertainty; where a host format has no native mechanism, this series defines a novel extension and says so.
+include::sections/00-introduction.adoc[]
 
-== Scope
+include::sections/01-scope.adoc[]
 
-This document specifies: the uncertainty model and its invariants; the round-trip policy; the concrete representations for MathML 4, OMML, UnicodeMath, LaTeX, HTML; and the ASCII channel boundary (asciimath 2, pma 1). Evaluation of uncertainty is out of scope (Plurimath 4).
+include::sections/02-norm-refs.adoc[]
 
-== Normative references
+include::sections/03-terms.adoc[]
 
-* Plurimath 1; UnitsML 1, UnitsML 4
-* JCGM 100:2008 Clauses 6 and 7 + Amd.1:2026; JCGM 101:2008; VIM 2.30–2.38
-* GUM-5:2026 Annex A (terminology rulings: coverage interval, never "confidence interval")
-* MathML 4 (intent); OOXML (OMML); UnicodeMath linear format
+include::sections/04-conventions.adoc[]
 
-== The model
+include::sections/05-model.adoc[]
 
-An `Uncertainty` node carries exactly:
+include::sections/06-round-trip-policy.adoc[]
 
-[cols="1,2,2"]
-|===
-|Field |Values |Notes
+include::sections/07-mathml.adoc[]
 
-|value
-|exact decimal text
-|the estimate; text verbatim (`2.10 ≠ 2.1`)
+include::sections/08-omml.adoc[]
 
-|category
-|standard \| expanded \| coverage_interval
-|
+include::sections/09-unicodemath.adoc[]
 
-|magnitude
-|exact decimal text
-|u, or U for expanded
+include::sections/10-latex-html.adoc[]
 
-|coverage_factor
-|exact decimal text
-|k; expanded only
+include::sections/11-ascii-channels.adoc[]
 
-|coverage_probability
-|decimal in (0,1)
-|p; never derived from k (JCGM 100 §6.3.2)
+include::sections/12-conformance.adoc[]
 
-|lower, upper
-|exact decimal text
-|coverage_interval only
+include::sections/aa-matrix.adoc[]
 
-|interval_kind
-|shortest \| probabilistically_symmetric
-|coverage_interval only
+include::sections/ab-decisions.adoc[]
 
-|notation
-|absolute \| concise
-|standard only; set ONLY via lossless markers
+include::sections/ac-test-suite.adoc[]
 
-|unit
-|UnitsML unit or text
-|scopes value AND magnitude
-|===
-
-Invariants: malformed input raises `InvalidUncertainty`; the node never computes (GUM §7.2.2: rounding is the author's); the magnitude is a DIFFERENCE quantity — conversion applies the factor, never the offset (UnitsML 4, I4). Concise form `10.3(2)` is a reporting convention: output-only; `n((d))` is the held-in-reserve input fallback should transcription demand be proven. Rejected everywhere: `+-` (the `3+-1` reading), `pm`/`\pm` (picometre), bare `±` as uncertainty (it stays `Pm`; fenced sugar is a pma-1 decision).
-
-== Round-trip policy
-
-Markers win. The visible form is presentation; the marker (or native pma literal) is the lossless channel. Read-time disagreement between marker and visible form raises. Every lossless channel MUST carry every field of Clause "The model"; lossy channels declare their losses in the matrix (Annex A).
-
-== MathML 4 — intent markers
-
-Markers ride the standard `intent` mechanism with novel vocabulary:
-
-[listing]
-standard-uncertainty(1.230,0.004)
-standard-uncertainty:concise(1.230,0.004)
-expanded-uncertainty(10.0,0.3,2[,0.95][,$unit])
-coverage-interval[:shortest|:probabilistically-symmetric](10.0,9.7,10.3,0.95[,$unit])
-
-Names are NCName-shaped; `:property` lists follow the MathML 4 intent grammar; `$unit` references the `arg="unit"` element. A recognized name with a malformed shape raises; unknown names are left untouched (they are other vocabularies).
-
-== OMML — hidden phantom encoding
-
-Markers travel as invisible `m:phant` runs carrying the same marker text. Writers hide; readers decode; recognized-malformed raises. Documented risks: phantom-stripping consumers display the marker text; Word's edit behavior is untested. Non-goals: custom XML parts, content controls.
-
-== UnicodeMath — the ⓘ annotation
-
-`ⓘ("marker")` adjacent to the annotated expression; visible form `(value±magnitude)`; leading negatives wrapped in invisible `〖…〗`; units via `ⓐ(...)`; plain `±` remains `Pm`; recognized-malformed raises.
-
-== LaTeX and HTML — presentation contracts
-
-Output-only. LaTeX renders `value \pm magnitude` and siunitx-aligned concise forms; HTML renders the visible form. Both LOSE category, interval kind and machine-readable k/p — declared lossiness, not fixed by encoding. A lossless LaTeX reader would require a novel macro family (`\plrmuncert{…}`) — an open decision; siunitx is third-party and receives no filings from this series.
-
-== ASCII channels
-
-Dialect L (asciimath 2): quoted compatibility channel `"ustd(10.3, 0.2)"`. Dialect P (pma 1): native literals and constructors. Both reference this part for the model.
-
-[appendix]
-== Annex A (normative): the round-trip matrix
-
-(The "AsciiMath (L)" column is the quoted compatibility channel; pma carries every field natively.)
-
-|===
-|Field |AsciiMath (L) |MathML intent |OMML phantom |UnicodeMath |LaTeX |HTML |UnitsML XML
-
-|exact number text
-|✓ |✓ |✓ |✓ |visible |visible |no element
-
-|category
-|✓ |✓ |✓ |✓ |✗ |✗ |no element
-
-|k, p
-|✓ |✓ |✓ |✓ |visible |visible |no element
-
-|interval kind
-|✓ |✓ |✓ |✓ |✗ |✗ |no element
-
-|notation (`:concise`)
-|rendered only |✓ |✓ |✓ |visible |visible |no element
-
-|unit
-|exact via `"unitsml(...)"`; else lossy |`$unit` (re-read as formula) |rendered |rendered |rendered |rendered |unit in UnitsML; uncertainty not
-
-|read-back
-|✓ |✓ |✓ |✓ |none |none |—
-|===
-
-== Conformance
-
-UnitsML 8 Annex A replays this matrix; the property under test: every field survives every lossless channel byte-identically.
+include::sections/99-bibliography.adoc[]

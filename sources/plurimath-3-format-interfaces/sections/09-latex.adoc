@@ -1,0 +1,3 @@
+== LaTeX interface
+
+Output contract only: no reader. Renders visible forms; concise uncertainty in siunitx-aligned shape; losses declared in Plurimath 2 Annex A. There is no intention to parse arbitrary LaTeX here.
