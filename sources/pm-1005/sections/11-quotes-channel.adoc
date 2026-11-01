@@ -30,7 +30,7 @@ Inside a quoted string, the only escape is the doubled quote for a quote. Backsl
 
 === The channel's content grammar
 
-The channel's expression is the asciiunits content language (UnitsML 6), read by the unit reader at reading time. The reader's refusal propagates as a reading error — the channel never stores an expression it could not read, because the unit embedding is constructed, not deferred. A unit the language accepts but the registry lacks symbols for is a unit-reader matter, and its refusal names the missing piece.
+The channel's expression is the asciiunits content language (UnitsML 36817), read by the unit reader at reading time. The reader's refusal propagates as a reading error — the channel never stores an expression it could not read, because the unit embedding is constructed, not deferred. A unit the language accepts but the registry lacks symbols for is a unit-reader matter, and its refusal names the missing piece.
 
 === Placement in expressions
 

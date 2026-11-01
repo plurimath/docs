@@ -14,4 +14,4 @@ This document specifies the notation for implementation. Rules stated here are t
 
 === The artifact references
 
-Where a clause says the grammar carries a form, the artifact is the carrier: this document states the form, the artifact makes it runnable, and the two are checked against each other in the build. References to UnitsML 6's grammar are by content, not by copy — the unit grammar appears once, in its own series, and both notations point at it.
+Where a clause says the grammar carries a form, the artifact is the carrier: this document states the form, the artifact makes it runnable, and the two are checked against each other in the build. References to UnitsML 36817's grammar are by content, not by copy — the unit grammar appears once, in its own series, and both notations point at it.
