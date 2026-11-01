@@ -2,9 +2,9 @@
 
 === General
 
-The grammar of pma is stated here in full, in PARG — the grammar language of the asciiunits artifact pattern (UnitsML 36817) — as the normative source the pma artifact generates from. A developer implements the reader from this grammar, the materialization rules of clauses 7 and 8, and nothing else: every input is derivable to exactly one tree, or refused by exactly one error.
+The grammar of pma is stated here in full, in PARG — the grammar language of the asciiunits artifact pattern (CalConnect 36817) — as the normative source the pma artifact generates from. A developer implements the reader from this grammar, the materialization rules of clauses 7 and 8, and nothing else: every input is derivable to exactly one tree, or refused by exactly one error.
 
-The unit expressions inside `unit(...)` are not re-stated here: the rule references the UnitsML 36817 grammar (the `UnitsmlAscii` artifact), embedded by reference at compile time — one unit grammar, two notations.
+The unit expressions inside `unit(...)` are not re-stated here: the rule references the CalConnect 36817 grammar (the `UnitsmlAscii` artifact), embedded by reference at compile time — one unit grammar, two notations.
 
 === The grammar
 
@@ -62,7 +62,7 @@ grammar Pma version "0.1.0" edition 1 {
   # distribution tags: the closed set
   tag_name = ("rect" / "tri" / "u") as distribution
 
-  # unit expressions: the UnitsML 36817 grammar, embedded by reference
+  # unit expressions: the CalConnect 36817 grammar, embedded by reference
   unit_expression = @UnitsmlAscii.expression
 
   kind_name = from_table "kinds" column "name" as kind
@@ -139,7 +139,7 @@ grammar Pma version "0.1.0" edition 1 {
 * The repetition, option and alternative operators are PARG's (`1*`, `[...]`, ordered `/`), as in the asciiunits artifact; the ordered choice makes the alternative order decisive, exactly as it is there.
 * The `as` captures name the tree positions the materializer consumes: `number`, `name`, `literal`, `magnitude`, `exponent`, `distribution`, `kind`.
 * The `name` rule's table is generated as the identifier shape minus the reserved words — the generation-time subtraction, the same discipline the unit tables use, so a reserved word can never read as a name.
-* `@UnitsmlAscii.expression` embeds the UnitsML 36817 grammar by reference at compile time; the unit expressions carry that grammar's captures into the tree under the unit node.
+* `@UnitsmlAscii.expression` embeds the CalConnect 36817 grammar by reference at compile time; the unit expressions carry that grammar's captures into the tree under the unit node.
 * The `test` block is normative: the artifact's conformance runs the accepts and rejects on every build, and this document's vectors extend them.
 
 === What the grammar deliberately lacks

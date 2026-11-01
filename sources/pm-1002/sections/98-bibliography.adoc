@@ -7,4 +7,4 @@
 * Pendrill, L. R. (2024), _Quantities and units: order amongst complexity_, De Gruyter
 * Python `uncertainties` package documentation (rejected design, Annex B)
 * Wolfram Language `Around` documentation (rejected design, Annex B)
-* UnitsML 36813 — the exact-decimal discipline applied across the stack
+* CalConnect 36813 — the exact-decimal discipline applied across the stack

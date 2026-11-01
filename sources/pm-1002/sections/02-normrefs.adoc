@@ -5,5 +5,5 @@ The following documents are referred to in the text in such a way that their con
 * [[[jcgm100,JCGM 100:2008]]], _Evaluation of measurement data — Guide to the expression of uncertainty in measurement (GUM)_. Clause 6.2.1 and 7.2.3 (expanded uncertainty and its coverage factor), 7.2.1 and 7.2.2 (standard uncertainty and the reporting forms), and Annex G.
 * [[[jcgm101,JCGM 101:2008]]], _Supplement 1 — Propagation of distributions using a Monte Carlo method_. Clauses 5.3 and 5.5 (coverage intervals, shortest and probabilistically symmetric).
 * [[[jcgm200,JCGM 200:2012]]], _International vocabulary of metrology — Basic and general concepts and associated terms (VIM)_, entries 2.30–2.38.
-* UnitsML 36813 (numeric contract) and UnitsML 36817 (asciiunits content language) of the UnitsML series, for the exact-decimal discipline and the unit embedding.
+* CalConnect 36813 (numeric contract) and CalConnect 36817 (asciiunits content language) of the UnitsML series, for the exact-decimal discipline and the unit embedding.
 * PM 1001 (math model) of this series, for the tree and the rendering surfaces.

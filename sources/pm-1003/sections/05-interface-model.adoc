@@ -76,7 +76,7 @@ Four invariants hold at both boundaries, and the clauses that follow make each p
 
 === Where the units reader sits
 
-The `unitsml` type is a reader without a writer: it reads one unit expression (UnitsML 36817) into the unit embedding the tree carries. It exists so applications can validate and embed units independently of a surrounding formula, and its failure mode is the parse error naming the unit expression.
+The `unitsml` type is a reader without a writer: it reads one unit expression (CalConnect 36817) into the unit embedding the tree carries. It exists so applications can validate and embed units independently of a surrounding formula, and its failure mode is the parse error naming the unit expression.
 
 === The contracts as obligations
 

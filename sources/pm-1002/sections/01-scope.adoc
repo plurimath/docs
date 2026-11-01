@@ -16,7 +16,7 @@ This document does not specify:
 
 * the syntax with which each input notation writes an uncertainty, beyond what the per-format encodings of clause 9 imply for the formats that read (document 1003 specifies the reading contracts);
 * uncertainty arithmetic: propagation, combination, degrees of freedom, coverage-factor computation — evaluation is document 1004;
-* which numerical tolerance conventions apply to evaluation output (UnitsML 36813 governs those).
+* which numerical tolerance conventions apply to evaluation output (CalConnect 36813 governs those).
 
 === Relationship to the series
 
@@ -34,7 +34,7 @@ This document does not specify:
 |1004 Evaluation
 |consumes uncertainty nodes numerically; this node never computes
 
-|UnitsML 36813, 5, 6
+|CalConnect 36813, 5, 6
 |numeric contract, XML usage, and the content language of the unit embedding
 
 |===

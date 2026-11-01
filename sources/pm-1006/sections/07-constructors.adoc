@@ -6,7 +6,7 @@ A constructor is atomic: `keyword(args)` with the argument list its table fixes,
 
 === unit
 
-`unit(<expression>)` carries one unit expression in the UnitsML 36817 grammar and materialises a `Unitsml` node (PM 1001). Alone it states a unit; following a value or a literal it scopes the unit of the whole quantity (the trailing-unit rule below).
+`unit(<expression>)` carries one unit expression in the CalConnect 36817 grammar and materialises a `Unitsml` node (PM 1001). Alone it states a unit; following a value or a literal it scopes the unit of the whole quantity (the trailing-unit rule below).
 
 === ustd, uexp, ucov
 
@@ -40,7 +40,7 @@ A `unit(...)` following a value or a measured literal scopes the unit of the ent
 
 [example]
 `unit(kg m/s^2)`.
-*Expected outcome.* the `Unitsml` node of the newton's unit expression — the UnitsML 36817 grammar's reading, one grammar for both notations.
+*Expected outcome.* the `Unitsml` node of the newton's unit expression — the CalConnect 36817 grammar's reading, one grammar for both notations.
 
 === The constructors against PM 1002's rules
 
@@ -66,4 +66,4 @@ The error shapes are this document's, the rules are PM 1002's, and the split is 
 
 === The unit expression's strictness
 
-The expression inside `unit(...)` is the UnitsML 36817 grammar, and its strictness is that grammar's: an expression the unit reader refuses is a parse error here naming the expression and the unit reader's message. The channel-less design pays here — in AsciiMath the channel's content was quoted data; here it is grammar, and the errors are parse errors with positions, not text-channel refusals.
+The expression inside `unit(...)` is the CalConnect 36817 grammar, and its strictness is that grammar's: an expression the unit reader refuses is a parse error here naming the expression and the unit reader's message. The channel-less design pays here — in AsciiMath the channel's content was quoted data; here it is grammar, and the errors are parse errors with positions, not text-channel refusals.

@@ -55,7 +55,7 @@ Adjacency means multiplication where the notation puts values side by side: a nu
 
 === Exactness
 
-The evaluator's arithmetic runs on the platform's real numbers with the platform's precision. This document does not promise decimal exactness — that discipline belongs to the data layer (UnitsML 36813) and to a future exact-arithmetic backend. What this document promises is the contract: whatever the platform computes, the result is delivered as computed, refused when it is not real-and-finite, and never silently rounded at the boundary. The corpus records the expected values the contract requires, platform and version pinned.
+The evaluator's arithmetic runs on the platform's real numbers with the platform's precision. This document does not promise decimal exactness — that discipline belongs to the data layer (CalConnect 36813) and to a future exact-arithmetic backend. What this document promises is the contract: whatever the platform computes, the result is delivered as computed, refused when it is not real-and-finite, and never silently rounded at the boundary. The corpus records the expected values the contract requires, platform and version pinned.
 
 === Order of folds
 

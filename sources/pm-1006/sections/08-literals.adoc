@@ -10,7 +10,7 @@
 |Form |Reads as |Desugars to
 
 |`(10.3 +/- 0.2) unit(m)` |canonical literal with trailing unit |`ustd(10.3, 0.2) unit(m)`
-|`(10.3 +/- 2%) unit(m)` |relative: 2 percent of the value |the magnitude computed at materialisation: `0.206`, exact per UnitsML 36813
+|`(10.3 +/- 2%) unit(m)` |relative: 2 percent of the value |the magnitude computed at materialisation: `0.206`, exact per CalConnect 36813
 |`(3.85 +/- 0.23)e4 unit(m)` |shared exponent: both shift |`ustd(38500, 2300) unit(m)`
 |`(0.5 +/- 0.01) ~rect unit(m)` |distribution tag attached |the standard literal with tag `rect`
 |`(10.3 ± 0.2) unit(m)` |the fenced sugar |the canonical literal, identically
