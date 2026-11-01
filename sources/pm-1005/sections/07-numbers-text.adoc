@@ -31,4 +31,4 @@ A token boundary ends a number: `2x` is the number 2 then the name `x` (an impli
 
 === Verbatim, one more time
 
-The exact-decimal discipline (UnitsML 2, PM 1002) is visible here at the notation's front door: `2.10` reads to a `Number` whose text is `2.10`, and every writer emits those digits. An author who writes the trailing zero made a precision statement; the notation's job is to carry it to every surface, and it does.
+The exact-decimal discipline (UnitsML 36813, PM 1002) is visible here at the notation's front door: `2.10` reads to a `Number` whose text is `2.10`, and every writer emits those digits. An author who writes the trailing zero made a precision statement; the notation's job is to carry it to every surface, and it does.

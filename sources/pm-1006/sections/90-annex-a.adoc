@@ -5,7 +5,7 @@
 |===
 |Constructor |Arguments |Materialises |Refusals
 
-|`unit(e)` |one unit expression (UnitsML 6) |`Unitsml` node |unreadable expression → parse error naming it
+|`unit(e)` |one unit expression (UnitsML 36817) |`Unitsml` node |unreadable expression → parse error naming it
 |`ustd(v, m)` |value, magnitude |standard uncertainty, absolute |field rules of PM 1002
 |`uexp(v, m, k, p?)` |value, magnitude, factor, optional probability |expanded uncertainty |factor ≤ 0, probability outside (0, 1)
 |`ucov(v, l, u, p?, kind)` |value, endpoints, optional probability, kind |coverage interval |forbidden magnitude/factor present; unknown kind

@@ -6,7 +6,7 @@ A node may carry one unit, held as a UnitsML embedding (PM 1001, `Unitsml` node)
 
 === Expressibility
 
-When the unit is expressible in the asciiunits content language (UnitsML 6) — a single symbol such as `g`, `kg`, `m/s2` — the AsciiMath encoding embeds it in the quoted UnitsML channel: `ustd(10.3, 0.2) "unitsml(g)"`. The embedding is attempted at encoding time; the attempt uses the UnitsML reader, and a unit the reader refuses falls back to visible placement.
+When the unit is expressible in the asciiunits content language (UnitsML 36817) — a single symbol such as `g`, `kg`, `m/s2` — the AsciiMath encoding embeds it in the quoted UnitsML channel: `ustd(10.3, 0.2) "unitsml(g)"`. The embedding is attempted at encoding time; the attempt uses the UnitsML reader, and a unit the reader refuses falls back to visible placement.
 
 [example]
 A node with unit `g` in AsciiMath.
