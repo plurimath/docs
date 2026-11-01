@@ -18,7 +18,7 @@ This document does not specify:
 * uncertainty propagation, combination or coverage computation — not implemented in this edition (see clause 12);
 * unit conversion or quantity arithmetic — the UnitsML series governs units, and evaluation works on numbers;
 * simplification, factorisation or any rewriting — the tree is evaluated as written;
-* the numeric contract of exact decimals in the data — UnitsML 36813 governs that, and this evaluator binds ordinary real numbers.
+* the numeric contract of exact decimals in the data — CalConnect 36813 governs that, and this evaluator binds ordinary real numbers.
 
 === Relationship to the series
 

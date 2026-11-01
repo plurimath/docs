@@ -2,7 +2,7 @@
 
 === The :: form
 
-A unit expression followed by `::` and a kind name asserts the quantity: `unit(m/s2)::acceleration` states that the expression denotes an acceleration. The kind names are the UnitsDB quantity kinds (UnitsML 36815); the assertion invokes the static semantics of UnitsML 36816 — the expression's dimension must resolve to the kind's dimension, and a mismatch is an error at materialisation, not at evaluation time.
+A unit expression followed by `::` and a kind name asserts the quantity: `unit(m/s2)::acceleration` states that the expression denotes an acceleration. The kind names are the UnitsDB quantity kinds (CalConnect 36815); the assertion invokes the static semantics of CalConnect 36816 — the expression's dimension must resolve to the kind's dimension, and a mismatch is an error at materialisation, not at evaluation time.
 
 === What the assertion is for
 
@@ -10,7 +10,7 @@ The assertion settles what units leave ambiguous: `Bq` and `Hz` share a dimensio
 
 === Gating
 
-The strict gating of UnitsML 36816 applies to assertions: an assertion that contradicts the registry's quantity assignment for the unit refuses, and the refusals the units model defines (becquerel is not a hertz, sievert is not a gray) are materialisation errors here, exactly as they are conversion errors there. The notation does not carry its own quantity logic; it invokes the units model's.
+The strict gating of CalConnect 36816 applies to assertions: an assertion that contradicts the registry's quantity assignment for the unit refuses, and the refusals the units model defines (becquerel is not a hertz, sievert is not a gray) are materialisation errors here, exactly as they are conversion errors there. The notation does not carry its own quantity logic; it invokes the units model's.
 
 === Assertions on literals
 

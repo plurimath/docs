@@ -14,7 +14,7 @@ This document specifies the pma notation:
 * the artifact and runtime model;
 * conformance.
 
-This document does not specify: the model the notation materialises into (PM 1001), the uncertainty fields (PM 1002), the evaluation that will consume it (PM 1004), the units grammar behind `unit(...)` (UnitsML 36817), or the quantity semantics behind the assertions (UnitsML 36815 and 5) — each is referenced where it applies.
+This document does not specify: the model the notation materialises into (PM 1001), the uncertainty fields (PM 1002), the evaluation that will consume it (PM 1004), the units grammar behind `unit(...)` (CalConnect 36817), or the quantity semantics behind the assertions (CalConnect 36815 and 5) — each is referenced where it applies.
 
 === Relationship to the series
 
@@ -32,7 +32,7 @@ This document does not specify: the model the notation materialises into (PM 100
 |1005 The AsciiMath notation
 |the sibling notation; shares the registry, differs in promises; the rendering relationship of clause 11
 
-|UnitsML 36813, 4, 5, 6
+|CalConnect 36813, 4, 5, 6
 |the numeric contract, the quantity kinds, the static semantics, and the `unit(...)` content grammar
 
 |===

@@ -2,7 +2,7 @@
 
 === The artifact pattern
 
-The pma grammar is carried by a checksummed artifact, generated from the shared registry — the pattern the asciiunits content language established (UnitsML 36817): the grammar source lives with the registry, generation is deterministic, the artifact is committed with its checksum, and consumers verify the checksum before use. Artifact bytes are authoritative; nothing re-derives them at runtime.
+The pma grammar is carried by a checksummed artifact, generated from the shared registry — the pattern the asciiunits content language established (CalConnect 36817): the grammar source lives with the registry, generation is deterministic, the artifact is committed with its checksum, and consumers verify the checksum before use. Artifact bytes are authoritative; nothing re-derives them at runtime.
 
 === The runtimes
 

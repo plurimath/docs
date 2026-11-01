@@ -25,7 +25,7 @@ A node with value `10.30`, magnitude `0.20`.
 
 === Rounding is the author's act
 
-The node never calculates, rounds or converts its numbers (JCGM 100 7.2.2). Where evaluation (document 1004) produces numbers, they are produced as exact decimals by the evaluation rules of UnitsML 36813 and attached to new nodes; an existing node's fields are never rewritten in place.
+The node never calculates, rounds or converts its numbers (JCGM 100 7.2.2). Where evaluation (document 1004) produces numbers, they are produced as exact decimals by the evaluation rules of CalConnect 36813 and attached to new nodes; an existing node's fields are never rewritten in place.
 
 === Comparisons without floating point
 
@@ -66,4 +66,4 @@ Magnitude `0.02` against value `10.3` for conciseness: decimal places 2 and 1.
 
 === Where the discipline comes from
 
-JCGM 100 7.2.2 fixes the reporting forms and assigns rounding to the reporter. The exact-decimal discipline is that assignment made executable: the model cannot round because it does not compute, and it cannot silently normalise because its numbers are text. The same discipline governs the whole Plurimath stack through UnitsML 36813; this document applies it to the uncertainty fields.
+JCGM 100 7.2.2 fixes the reporting forms and assigns rounding to the reporter. The exact-decimal discipline is that assignment made executable: the model cannot round because it does not compute, and it cannot silently normalise because its numbers are text. The same discipline governs the whole Plurimath stack through CalConnect 36813; this document applies it to the uncertainty fields.
