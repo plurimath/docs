@@ -3,7 +3,6 @@
 
 === General
 
-The registry is the versioned catalogue=== General
 
 The registry is the versioned catalogue of everything the model can name: the symbol entries (<<symbols-space>>) and the function entries (<<annex-a>>). It exists so that the vocabulary of the system is data, not code spread across readers and writers.
 

@@ -3,7 +3,6 @@
 
 === General
 
-This annex enumerates=== General
 
 This annex enumerates every function class of the model at this edition: 103 function classes, 14 font styles and 10 table classes. The list is normative. A class's operands column uses `1`, `2`, `3`, or "rows" for the table containers.
 
