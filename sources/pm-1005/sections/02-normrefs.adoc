@@ -1,7 +1,10 @@
+[bibliography]
 == Normative references
 
 The following documents are referred to in the text.
 
-* PM 1001 (math model), PM 1002 (uncertainty model) and PM 1003 (format interfaces) of this series.
-* CalConnect 36817 (asciiunits content language) of the UnitsML series — the content of the quoted channel of clause 11.
-* asciimath.org — the public AsciiMath definition, cited in the compatibility notes as the baseline this surface descends from.
+* [[[pm1001,nofetch(PM 1001 (math model))]]] of this series.
+* [[[pm1002,nofetch(PM 1002 (uncertainty model))]]] of this series.
+* [[[pm1003,nofetch(PM 1003 (format interfaces))]]] of this series.
+* [[[cc36817,nofetch(CalConnect 36817 (asciiunits content language))]]] of the UnitsML series — the content of the quoted channel of clause 11.
+* [[[asciimath-org,nofetch(asciimath.org)]]] — the public AsciiMath definition, cited in the compatibility notes as the baseline this surface descends from.

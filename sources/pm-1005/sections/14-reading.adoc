@@ -58,7 +58,7 @@ Every error of clause 14 carries its input position: the tokeniser's offsets sur
 === Tokenisation's edge cases, pinned
 
 * `(:` opens an angle fence only where a fence can open — inside a construct argument it is still a fence; the construct's argument grammar wraps it.
-* `((` is two opens, not one special token; the table recognition of clause 9 happens at the construct-argument level.
+* pass:[((] is two opens, not one special token; the table recognition of clause 9 happens at the construct-argument level.
 * `2.10` is one number; `2.1.0` is a number then a fault; `..` is two faults in a row and the reader reports the first.
 * The reader is Unicode-native: symbol tokens are Unicode where the registry says so, and the letter-pair fences are ASCII. A lookalike character (a fullwidth parenthesis for `(`) is an unresolvable run, named and positioned.
 

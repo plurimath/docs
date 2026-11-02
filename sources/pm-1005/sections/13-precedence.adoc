@@ -22,7 +22,7 @@ Each level binds tighter than the ones below it; the construct parentheses of le
 
 === Groups override
 
-Parentheses group an expression into one operand: `x^(2+1)` scripts the whole sum; `sqrt(x+1)` roots the whole sum; `((n(n+1))/2)^2` scripts the whole fenced fraction. Grouping is the author's precedence tool and always wins.
+Parentheses group an expression into one operand: `x^(2+1)` scripts the whole sum; `sqrt(x+1)` roots the whole sum; stem:[((n(n+1))/2)^2] scripts the whole fenced fraction. Grouping is the author's precedence tool and always wins.
 
 === Ambiguity is resolved, never negotiated
 

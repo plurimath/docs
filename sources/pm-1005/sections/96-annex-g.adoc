@@ -64,7 +64,7 @@ Twenty inputs, their trees in brief, and the rule each exercises. These are the 
 |`a/bc`
 |`a/b` times `c` — the smallest-operand rule.
 
-|`((n(n+1))/2)^2`
+|stem:[((n(n+1))/2)^2]
 |the fenced fraction, scripted — grouping offers the fraction, the script takes it.
 |===
 

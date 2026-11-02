@@ -22,14 +22,14 @@ The reader of this notation (PM 1003, clause 8) is total on this surface: every 
 
 === A first reading, token by token
 
-The sum of cubes, `sum_(i=1)^n i^3 = ((n(n+1))/2)^2`, as the reader sees it:
+The sum of cubes, stem:[sum_(i=1)^n i^3 = ((n(n+1))/2)^2], as the reader sees it:
 
 . `sum` — the ternary token; its scripts follow;
 . `_(i=1)` — the lower limit: an index definition `i = 1` (evaluation reads it per PM 1004; the tree carries the limit as written);
 . `^n` — the upper limit: the name `n`;
 . `i^3` — the summand: a power;
 . `=` — the relation symbol;
-. `((n(n+1))/2)^2` — the right side: a power over a fenced fraction — the inner fence holds the product `n(n+1)`, the fraction takes the fence and the `2`, the outer fence groups the fraction, and `^2` scripts it all.
+. stem:[((n(n+1))/2)^2] — the right side: a power over a fenced fraction — the inner fence holds the product `n(n+1)`, the fraction takes the fence and the `2`, the outer fence groups the fraction, and `^2` scripts it all.
 
 *Expected outcome.* one relation between a limited nary and a scripted fraction — the tree PM 1001's introduction carries, read from characters a mathematician typed without thinking about markup.
 

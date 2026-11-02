@@ -24,7 +24,7 @@ The multi-glyph pairs (`ᑕ`/`ᑐ`, `ℒ`/`ℛ`) and the letter pair `(:`/`:)` a
 
 === Nesting
 
-Fences nest: `((a),(b))` is a parenthesised group containing a comma-adjacent pair — the table-reader sees the grid only in the bracketed forms of clause 9. The open stack tracks pairs by opener identity; the table forms are recognised at their own positions, not by the fence stack.
+Fences nest: stem:[((a),(b))] is a parenthesised group containing a comma-adjacent pair — the table-reader sees the grid only in the bracketed forms of clause 9. The open stack tracks pairs by opener identity; the table forms are recognised at their own positions, not by the fence stack.
 
 === Fences as constructs
 
@@ -41,7 +41,7 @@ Fences nest: `((a),(b))` is a parenthesised group containing a comma-adjacent pa
 |`ᑕaᑐ` |the single-glyph bracket pair, content ordinary
 |`ℒxℛ` |the script-letter pair, content ordinary
 |bar-x-bar |the bar pair grouping — or `abs x`, which carries its fence on the node
-|`((a),(b))` |two opens — adjacency, not a table; the grid reading needs the bracketed form
+|stem:[((a),(b))] |two opens — adjacency, not a table; the grid reading needs the bracketed form
 |===
 
 The bar pair's dual role (grouping here, `Vmatrix` delimiter there) is resolved by position: around a bracketed grid it delimits the matrix, elsewhere it groups. The corpus carries both positions.

@@ -1,6 +1,9 @@
+[bibliography]
 == Bibliography
 
-* Plurimath repository — https://github.com/plurimath/plurimath
-* `Plurimath::Math::Evaluation` implementation — the reference implementation of this document
-* PM 1001, PM 1002, PM 1003 of this series
+* [[[plurimath-repo,nofetch(Plurimath repository)]]] — https://github.com/plurimath/plurimath
+* [[[pm-eval-impl,nofetch(`Plurimath::Math::Evaluation` implementation)]]] — the reference implementation of this document
+* [[[pm1001-b,nofetch(PM 1001)]]] of this series
+* [[[pm1002-b,nofetch(PM 1002)]]] of this series
+* [[[pm1003-b,nofetch(PM 1003)]]] of this series
 * [[[jcgm100-c,JCGM 100:2008]]] — the metrological context the propagation rules of a future edition will formalise

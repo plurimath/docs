@@ -1,9 +1,10 @@
+[bibliography]
 == Bibliography
 
-* Plurimath repository — https://github.com/plurimath/plurimath
-* Plurimath specification set overview — the design corpus underlying this series
-* Pendrill, L. R. (2024), _Quantities and units: order amongst complexity_, De Gruyter
-* isq-smart methodology, concept systems — https://metanorma.github.io/isq-smart/methodology/concept-system/
-* MathML 4 — https://www.w3.org/TR/MathML4/
-* ECMA-376, Office Open XML File Formats
-* Unicode Technical Report #28, Unicode Support for Mathematics
+* [[[plurimath-repo,nofetch(Plurimath repository)]]] — https://github.com/plurimath/plurimath
+* [[[pm-spec-overview,nofetch(Plurimath specification set overview)]]] — the design corpus underlying this series
+* [[[pendrill2024,nofetch(Pendrill, L. R. (2024))]]], _Quantities and units: order amongst complexity_, De Gruyter
+* [[[isq-smart,nofetch(isq-smart methodology)]]], concept systems — https://metanorma.github.io/isq-smart/methodology/concept-system/
+* [[[mathml4-b,nofetch(MathML 4)]]] — https://www.w3.org/TR/MathML4/
+* [[[ecma376-b,nofetch(ECMA-376)]]], Office Open XML File Formats
+* [[[utr28-b,nofetch(Unicode Technical Report #28)]]], Unicode Support for Mathematics
