@@ -1,6 +1,6 @@
 == Introduction
 
-AsciiMath writes mathematics the way mathematicians type it: `sum_(i=1)^n i^3 = ((n(n+1))/2)^2` is the sum of cubes, written with no markup at all — tokens for symbols, `^` and `_` for scripts, parentheses for grouping, `/` for fractions, and function names for the rest. The format's genius is that its text is already unambiguous to a trained eye; the reader's work is to make that reading mechanical.
+AsciiMath writes mathematics the way mathematicians type it: stem:[sum_(i=1)^n i^3 = ((n(n+1))/2)^2] is the sum of cubes, written with no markup at all — tokens for symbols, `^` and `_` for scripts, parentheses for grouping, `/` for fractions, and function names for the rest. The format's genius is that its text is already unambiguous to a trained eye; the reader's work is to make that reading mechanical.
 
 This document makes it mechanical. Every token the reader accepts is listed; every construct's shape, precedence and yielded tree is stated; the fences — including the multi-character and letter-pair fences the implementation adds — are tabulated; the quoted-string channels are defined; the uncertainty forms of PM 1002 are given their reading rules; and the whole surface is pinned by a corpus that replays byte-identically, generation after generation.
 

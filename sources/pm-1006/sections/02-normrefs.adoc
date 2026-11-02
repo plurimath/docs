@@ -1,10 +1,16 @@
+[bibliography]
 == Normative references
 
 The following documents are referred to in the text.
 
-* PM 1001 (math model), PM 1002 (uncertainty model), PM 1003 (format interfaces), PM 1004 (evaluation) and PM 1005 (the AsciiMath notation) of this series.
-* CalConnect 36813 (numeric contract) — the exact-decimal discipline of the values the literals carry.
-* CalConnect 36815 (units model) — the quantity kinds the assertions name.
-* CalConnect 36816 (conversions) — the static semantics the assertions invoke.
-* CalConnect 36817 (asciiunits content language) — the grammar inside `unit(...)`, and the artifact pattern of clause 13.
-* JCGM 100:2008 + Amd.1:2026 and JCGM 101:2008 — the metrological grounding of the uncertainty categories and the distribution families.
+* [[[pm1001,nofetch(PM 1001 (math model))]]] of this series.
+* [[[pm1002,nofetch(PM 1002 (uncertainty model))]]] of this series.
+* [[[pm1003,nofetch(PM 1003 (format interfaces))]]] of this series.
+* [[[pm1004,nofetch(PM 1004 (evaluation))]]] of this series.
+* [[[pm1005,nofetch(PM 1005 (the AsciiMath notation))]]] of this series.
+* [[[cc36813,nofetch(CalConnect 36813 (numeric contract))]]] — the exact-decimal discipline of the values the literals carry.
+* [[[cc36815,nofetch(CalConnect 36815 (units model))]]] — the quantity kinds the assertions name.
+* [[[cc36816,nofetch(CalConnect 36816 (conversions))]]] — the static semantics the assertions invoke.
+* [[[cc36817,nofetch(CalConnect 36817 (asciiunits content language))]]] — the grammar inside `unit(...)`, and the artifact pattern of clause 13.
+* [[[jcgm100,JCGM 100:2008]]], with Amd.1:2026 — the metrological grounding of the uncertainty categories.
+* [[[jcgm101,JCGM 101:2008]]] — the distribution families of the uncertainty categories.

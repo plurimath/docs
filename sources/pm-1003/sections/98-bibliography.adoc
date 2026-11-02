@@ -1,8 +1,10 @@
+[bibliography]
 == Bibliography
 
-* Plurimath repository — https://github.com/plurimath/plurimath
-* PM 1001, PM 1002 of this series
-* MathML 4 — https://www.w3.org/TR/MathML4/
-* ECMA-376, Office Open XML File Formats
-* Unicode Technical Report #28, Unicode Support for Mathematics
-* lasem — the rendering library behind the image surface
+* [[[plurimath-repo,nofetch(Plurimath repository)]]] — https://github.com/plurimath/plurimath
+* [[[pm1001-b,nofetch(PM 1001)]]] of this series
+* [[[pm1002-b,nofetch(PM 1002)]]] of this series
+* [[[mathml4-b,nofetch(MathML 4)]]] — https://www.w3.org/TR/MathML4/
+* [[[ecma376-b,nofetch(ECMA-376)]]], Office Open XML File Formats
+* [[[utr28-b,nofetch(Unicode Technical Report #28)]]], Unicode Support for Mathematics
+* [[[lasem,nofetch(lasem)]]] — the rendering library behind the image surface

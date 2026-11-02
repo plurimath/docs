@@ -1,7 +1,11 @@
+[bibliography]
 == Bibliography
 
-* Plurimath repository — https://github.com/plurimath/plurimath
-* asciimath.org — the public AsciiMath definition (the compatibility baseline)
-* PM 1001, PM 1002, PM 1003, PM 1004 of this series
-* CalConnect 36817 — the asciiunits content language (the channel's content)
-* plurimath-testsuite — the pinned corpus repository and its generations
+* [[[plurimath-repo,nofetch(Plurimath repository)]]] — https://github.com/plurimath/plurimath
+* [[[asciimath-org-b,nofetch(asciimath.org)]]] — the public AsciiMath definition (the compatibility baseline)
+* [[[pm1001-b,nofetch(PM 1001)]]] of this series
+* [[[pm1002-b,nofetch(PM 1002)]]] of this series
+* [[[pm1003-b,nofetch(PM 1003)]]] of this series
+* [[[pm1004-b,nofetch(PM 1004)]]] of this series
+* [[[cc36817-b,nofetch(CalConnect 36817)]]] — the asciiunits content language (the channel's content)
+* [[[pm-testsuite,nofetch(plurimath-testsuite)]]] — the pinned corpus repository and its generations

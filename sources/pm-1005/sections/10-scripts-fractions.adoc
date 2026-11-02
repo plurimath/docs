@@ -14,7 +14,7 @@ Scripts attach to the construct that just closed: `sum_(i=1)^n`, `lim_(x->0)`, `
 
 === Fractions
 
-`a/b` reads to `Frac`: the operand before the slash is the numerator, the operand after is the denominator, each being a token or a group. `((n(n+1))/2)` shows the idiom — groups on both sides of the slash. The slash binds tighter than addition and looser than scripts: `a/b^2` is a over `b²`, and `a^2/b` is `a²` over `b`.
+`a/b` reads to `Frac`: the operand before the slash is the numerator, the operand after is the denominator, each being a token or a group. stem:[((n(n+1))/2)] shows the idiom — groups on both sides of the slash. The slash binds tighter than addition and looser than scripts: `a/b^2` is a over `b²`, and `a^2/b` is `a²` over `b`.
 
 === Precedence interplay
 
@@ -22,7 +22,7 @@ The full precedence is clause 13; this clause states the local rules: scripts bi
 
 === Scripts on fences and constructs, worked
 
-`((n(n+1))/2)^2` — the worked case of clause 5 — and its kin:
+stem:[((n(n+1))/2)^2] — the worked case of clause 5 — and its kin:
 
 [cols="2,4", options="headers"]
 ..Script attachments

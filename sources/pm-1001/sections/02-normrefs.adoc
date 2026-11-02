@@ -1,9 +1,11 @@
+[bibliography]
 == Normative references
 
 The following documents are referred to in the text in such a way that their content applies to the construction of this model.
 
-* MathML 4, W3C Recommendation. The `Math::Function::Intent` and `Math::Function::Semantics` nodes carry the MathML 4 `intent` and `semantics` elements; the MathML rendering surface targets MathML 4.
-* ECMA-376, Office Open XML File Formats, Part 1. The OMML rendering surface produces DrawingML mathematics (`m:` namespace) as defined there.
-* Unicode Technical Report #28, Unicode Support for Mathematics (the UnicodeMath linear format). The UnicodeMath surface reads and writes it.
+* [[[mathml4,nofetch(MathML 4)]]], W3C Recommendation. The `Math::Function::Intent` and `Math::Function::Semantics` nodes carry the MathML 4 `intent` and `semantics` elements; the MathML rendering surface targets MathML 4.
+* [[[ecma376,nofetch(ECMA-376)]]], Office Open XML File Formats, Part 1. The OMML rendering surface produces DrawingML mathematics (`m:` namespace) as defined there.
+* [[[utr28,nofetch(Unicode Technical Report #28)]]], Unicode Support for Mathematics (the UnicodeMath linear format). The UnicodeMath surface reads and writes it.
 * [[[jcgm200,JCGM 200:2012]]], International vocabulary of metrology — Basic and general concepts and associated terms (VIM). Used by the uncertainty document (1002) for the terms carried by uncertainty nodes.
-* CalConnect 36813 (numeric contract) and CalConnect 36816 (XML usage) of the UnitsML series, for the contract of the `Unitsml` node.
+* [[[cc36813,nofetch(CalConnect 36813 (numeric contract))]]] of the UnitsML series
+* [[[cc36816,nofetch(CalConnect 36816 (XML usage))]]] of the UnitsML series, together with 36813, for the contract of the `Unitsml` node.

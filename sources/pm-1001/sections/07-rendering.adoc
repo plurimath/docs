@@ -50,7 +50,7 @@ Some constructs have no faithful form in some surfaces. Each such pair has one d
 A surface is lossless when reading its output back yields a tree equal to the rendered tree. AsciiMath, MathML, OMML, LaTeX and UnicodeMath are the lossless directions of the readers defined in document 1003, each with the exceptions that document enumerates. HTML is a display surface: reading it back is not part of the contract, and its renderings optimise presentation.
 
 [example]
-Rendering the tree of `((n(n+1))/2)^2` to all six surfaces and reading the MathML, OMML, LaTeX and UnicodeMath outputs back:
+Rendering the tree of stem:[((n(n+1))/2)^2] to all six surfaces and reading the MathML, OMML, LaTeX and UnicodeMath outputs back:
 *Expected outcome.* All four read back to a tree structurally equal to the original. The HTML output is not required to read back.
 
 === Construct mapping
