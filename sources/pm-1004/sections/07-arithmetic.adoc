@@ -53,9 +53,27 @@ Every fold's result passes the real-and-finite check before it feeds the next. A
 
 Adjacency means multiplication where the notation puts values side by side: a number before a name, a name before a group, a group before a group. It does not mean multiplication between two numbers (`2 3` is not a valid product — the corpus refuses it as a token fault) nor between a name and the keyword introducing an iteration. The normalisation of clause 6 makes every implicit product explicit before folding.
 
-=== Exactness
+=== Accuracy classes
 
-The evaluator's arithmetic runs on the platform's real numbers with the platform's precision. This document does not promise decimal exactness — that discipline belongs to the data layer (CalConnect 36813) and to a future exact-arithmetic backend. What this document promises is the contract: whatever the platform computes, the result is delivered as computed, refused when it is not real-and-finite, and never silently rounded at the boundary. The corpus records the expected values the contract requires, platform and version pinned.
+Every value an evaluation carries belongs to an accuracy class. Integers and rationals are _exact_: their add, subtract, multiply and rational division are exact operations, and an exact operand list yields an exact result. Floats are _limited_ with undeclared accuracy (the platform's bits); guard-digit decimals are _limited_ to their declared precision. Limited operands contaminate exact ones: the accuracy of an operation's result is the accuracy of its least precise operand. A five-digit value times a six-digit value is defined to five digits — the class algebra states this, the corpus vectors pin it.
+
+=== Boundaries
+
+A _boundary_ is an operation that would replace exact values with platform approximations: a transcendental function, an irrational root, a non-exact power on exact operands. The evaluator processes until a boundary and never violates one silently — every crossing is reported.
+
+=== Modes
+
+The caller chooses the mode at the entry point; the default is approximate.
+
+* _Approximate_ mode crosses every boundary: the computation runs on platform floats, and the result reports each boundary it crossed — the operation, the operands and their accuracy classes, and the produced value. This is the mode of the original contract: whatever the platform computes is delivered as computed, refused when not real-and-finite, never silently rounded. The corpus records its expected values, platform and version pinned.
+* _Strict_ mode never crosses an exactness boundary: the first boundary defers the evaluation. The result then carries no value, the boundary record, and the unevaluated expression in source form — a partially evaluated result whose accuracy is undiminished, which the caller can re-run in approximate mode or with declared guard digits. Limited operands degrade as defined: a transcendental over a limited value computes without deferring, since there is no exactness left to lose.
+* _Guard digits_ extend strict mode: with a declared digit count, a boundary is crossed by computing a decimal result to that declared precision (an exact rational square root stays exact without any declaration). Functions without a guard-digit implementation are refused with a typed error naming the function.
+
+Exact vectors — whole expressions evaluated without a crossed boundary — are byte-identical across runtimes: their results are integers and rationals, not platform values. The exact-decimal discipline of the data layer (CalConnect 36813) is the same discipline strict mode evaluates under.
+
+=== Results
+
+Evaluation returns a result object, not a bare number: the value, the ordered boundary records (operation, operands, operand accuracy, action — approximated, guarded or deferred — and the produced value), and the unevaluated expressions when strict mode deferred. A result whose boundaries contain no approximation is exact; a deferred result carries the residual expression.
 
 === Order of folds
 
