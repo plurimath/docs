@@ -12,6 +12,6 @@
 * [[[cc36815-b,nofetch(CalConnect 36815)]]] of the UnitsML series
 * [[[cc36816-b,nofetch(CalConnect 36816)]]] of the UnitsML series
 * [[[jcgm100-b,JCGM 100:2008]]], together with Amd.1:2026
-* [[[jcgm101-b,JCGM 101:2008]]]
+* [[[jcgm101-b,JCGM 101:2008]]], the Monte Carlo reference for the coverage-interval category
 * [[[python-uncertainties,nofetch(Python `uncertainties` package documentation)]]] (the `+-` precedent, Annex C)
 * [[[asciiunits-artifact,nofetch(asciiunits)]]] — the artifact pattern this notation's grammar follows (CalConnect 36817)

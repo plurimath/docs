@@ -1,0 +1,73 @@
+<bibdata type="standard" schema-version="v1.5.6">
+  <fetched>2026-11-02</fetched>
+  <title language="en" script="Latn">Office Open XML file formats</title>
+  <uri type="src">https://ecma-international.org/publications-and-standards/standards/ecma-376/</uri>
+  <uri type="pdf">https://ecma-international.org/wp-content/uploads/ECMA-376-1_5th_edition_december_2016.zip</uri>
+  <docidentifier type="ECMA" primary="true">ECMA-376</docidentifier>
+  <date type="published">
+    <on>2021-12</on>
+  </date>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      <name language="en" script="Latn">Ecma International</name>
+    </organization>
+  </contributor>
+  <edition>5</edition>
+  <language>en</language>
+  <script>Latn</script>
+  <abstract language="en" script="Latn">This Standard defines Office Open XML’s vocabularies and document representation and packaging. It also specifies requirements for consumers and producers of Office Open XML. ECMA-376 contains 4 parts but only part 2 has been adopted in the last edition of the Standard.
+An Office Open XML overview is available below under ressources.
+The four parts of the Standard are the following:</abstract>
+  <relation type="updates">
+    <bibitem>
+      <formattedref>ECMA-376</formattedref>
+      <uri type="pdf">https://ecma-international.org/wp-content/uploads/ECMA-376_1st_edition_december_2006.zip</uri>
+      <docidentifier type="ECMA" primary="true">ECMA-376</docidentifier>
+      <date type="published">
+        <on>2006-12</on>
+      </date>
+      <edition>1</edition>
+    </bibitem>
+  </relation>
+  <relation type="updates">
+    <bibitem>
+      <formattedref>ECMA-376</formattedref>
+      <uri type="pdf">https://ecma-international.org/wp-content/uploads/ECMA-376_2nd_edition_december_2008.zip</uri>
+      <docidentifier type="ECMA" primary="true">ECMA-376</docidentifier>
+      <date type="published">
+        <on>2008-12</on>
+      </date>
+      <edition>2</edition>
+    </bibitem>
+  </relation>
+  <relation type="updates">
+    <bibitem>
+      <formattedref>ECMA-376</formattedref>
+      <uri type="pdf">https://ecma-international.org/wp-content/uploads/ECMA-376_3rd_edition_june_2011.zip</uri>
+      <docidentifier type="ECMA" primary="true">ECMA-376</docidentifier>
+      <date type="published">
+        <on>2011-06</on>
+      </date>
+      <edition>3</edition>
+    </bibitem>
+  </relation>
+  <relation type="updates">
+    <bibitem>
+      <formattedref>ECMA-376</formattedref>
+      <uri type="pdf">https://ecma-international.org/wp-content/uploads/ECMA-376_4th_edition_december_2012.zip</uri>
+      <docidentifier type="ECMA" primary="true">ECMA-376</docidentifier>
+      <date type="published">
+        <on>2012-12</on>
+      </date>
+      <edition>4</edition>
+    </bibitem>
+  </relation>
+  <place>
+    <city>Geneva</city>
+  </place>
+  <ext schema-version="v1.0.0">
+    <doctype>document</doctype>
+    <flavor>ecma</flavor>
+  </ext>
+</bibdata>
