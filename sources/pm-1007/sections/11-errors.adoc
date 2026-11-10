@@ -1,0 +1,21 @@
+== Errors
+
+=== Refusal by the grammar
+
+Input the grammar does not match raises `Latexmath::ParseError`. The error gives the position as a character and byte offset in the caller's text, and the position in the rewritten text as `grammar_char_offset` and `grammar_byte_offset`. The wording of the message is not part of the contract. Input nested deeper than the native engine allows is parsed with the Ruby engine by default, or raises `Latexmath::NestingTooDeep` when the native engine is requested.
+
+=== Refusal at the Plurimath boundary
+
+`Plurimath::Math.parse(text, :latex)` raises `Plurimath::Math::ParseError` when `latexmath` refuses the text, including text with no formula (empty, or only spaces and newlines). The parser first turns `Latexmath::ParseError` into a `Parsanol::ParseFailed` at the position the grammar reports; the error the caller gets has no `cause`.
+
+[source,ruby]
+----
+Plurimath::Math.parse("\\frac{a}{", :latex)
+----
+
+[source]
+----
+raises Plurimath::Math::ParseError
+----
+
+A parse refusal is a refusal of the text by the grammar. It is distinct from a failure to write a formula that was read: `\overbrace` with only a label reads, and writing it raises `Plurimath::Math::ParseError` because the mapper builds no node for it (clause "Constructs").

@@ -1,0 +1,13 @@
+== Conventions
+
+=== General
+
+LaTeX text is shown verbatim in monospace. Model classes and fields are named as the `latexmath` gem names them. Formula-tree nodes are named in the terms of PM 1001. AsciiMath is used in examples to show a formula tree, in the notation of PM 1005.
+
+=== Provenance of the content
+
+The notation clauses are taken from the `docs/latex.adoc` page of the `latexmath` gem, and the clauses on reading, writing, loss and errors from `docs/latex.adoc` of the `plurimath` gem. The exact commits are named in the clause "The grammar artifact". Examples marked as produced were run at those commits.
+
+=== Status
+
+Each part of the behaviour is stated as implemented or proposed. A part that is not stated as proposed is implemented at the pinned commits.

@@ -1,0 +1,7 @@
+== Introduction
+
+UnicodeMath is a linear notation: a formula is one line of text in which fractions, scripts, roots and matrices are written with operator characters and brackets. Plurimath reads a subset of it and a few variations, and writes it with the conventions of this document. Measurement results are carried in it with the intent form `ⓘ(...)` and units with the argument form `ⓐ(...)`.
+
+The grammar accepts what Plurimath accepted at the pinned commit; it is not a validator of UTN 28. For each construct of UTN 28 the corpus shows whether the grammar reads it, refuses it, or is silent (clause "Coverage of UTN 28"). This document records that behaviour so that it can be implemented again, in another runtime, and checked against the same corpora.
+
+The document has two halves. The first describes the notation the grammar accepts and the model it builds; its content is taken from the `umath` gem. The second describes what Plurimath does around the grammar: reading, writing, measurement results and units, round trips, errors; its content is taken from the `plurimath` gem.

@@ -1,0 +1,152 @@
+== Plurimath behaviour around the grammar
+
+=== Status
+
+.Status of the parts
+[cols="3,1,3", options="headers"]
+|===
+|Part |Status |Where
+
+|Reading LaTeX with the `latexmath` gem and mapping its typed model
+|implemented
+|https://github.com/plurimath/plurimath/issues/531[plurimath#531]
+
+|Writing LaTeX
+|implemented
+|
+
+|Measurement results written as plain LaTeX
+|implemented
+|https://github.com/plurimath/plurimath/pull/496[plurimath#496]
+
+|Reading measurement results from LaTeX (for example `siunitx`)
+|proposed
+|https://github.com/plurimath/plurimath/issues/524[plurimath#524]
+|===
+
+=== Reading
+
+`Plurimath::Math.parse(text, :latex)` creates a `Plurimath::Latex::Parser`, which calls `Latexmath.parse(text, decimal: Plurimath.configuration.decimal)` and maps the returned `Latexmath::Model::Document` to a `Plurimath::Math::Formula` with `Plurimath::Latex::Mapper`. The preparation of the input is the one of the clause "Preparation of the input".
+
+.Reading a formula (produced at the pinned `plurimath` commit)
+[source,ruby]
+----
+Plurimath::Math.parse("\\frac{a}{b} + \\sqrt{x}", :latex).to_asciimath
+----
+
+[source]
+----
+frac(a)(b) + sqrt(x)
+----
+
+LaTeX takes the `locale:` parse option. It sets the decimal marker that `latexmath` is called with, so `1,5` is one number under a comma locale and two numbers with a comma between them otherwise:
+
+[source,ruby]
+----
+Plurimath::Math.parse("1,5", :latex).value.map(&:class)
+----
+
+[source]
+----
+[Plurimath::Math::Number, Plurimath::Math::Symbols::Comma, Plurimath::Math::Number]
+----
+
+[source,ruby]
+----
+Plurimath::Math.parse("1,5", :latex, locale: :de).value.map(&:class)
+----
+
+[source]
+----
+[Plurimath::Math::Number]
+----
+
+`latexmath` is a runtime dependency. If it cannot be loaded, the parser raises `Plurimath::Math::MissingDependencyError` with the Gemfile line to add.
+
+=== Writing
+
+`Formula#to_latex` joins the output of each node with a space. It needs no LaTeX package beyond what the output commands themselves need. It takes the keyword options `formatter:` (default `nil`), `unitsml:` (default `{}`) and `options:` (default `nil`). `formatter:` and `unitsml:` work as for MathML (PM 1003). `options:` is a prepared options hash and takes the place of the other two.
+
+[source,ruby]
+----
+Plurimath::Math.parse("frac(a)(b) + sqrt(x) + sum_(i=1)^n i", :asciimath).to_latex
+----
+
+[source]
+----
+\frac{a}{b} + \sqrt{x} + \sum_{i = 1}^{n} i
+----
+
+[source,ruby]
+----
+Plurimath::Math.parse(%q("speed" = d/t), :asciimath).to_latex
+----
+
+[source]
+----
+\text{speed} = \frac{d}{t}
+----
+
+[source,ruby]
+----
+Plurimath::Math.parse("alpha + oo", :asciimath).to_latex
+----
+
+[source]
+----
+\alpha + \infty
+----
+
+[source,ruby]
+----
+Plurimath::Math.parse("color(red)(x)", :asciimath).to_latex
+----
+
+[source]
+----
+{\color{red} x}
+----
+
+=== Constructs
+
+Each row below is read as LaTeX, written as AsciiMath, and written back as LaTeX from the same formula. The "Written back" column is what `Formula#to_latex` gives, so a difference from the input shows what is normalised or lost:
+
+* spaces are put around operators and between terms, and `\left` and `\right` are followed by a space;
+* `\binom` becomes a matrix between braces, and `\operatorname` is dropped;
+* `\sin x` is written as `\sin{x}`.
+
+Two rows fail. The grammar has no `cases` environment, so `\begin{cases}` is refused. `\overbrace` with only a label above it is read, but the mapper builds no node for it, so writing the formula raises `Plurimath::Math::ParseError`; `\overbrace` reads when it has both a subscript and a superscript.
+
+.Constructs read and written back (produced at the pinned `plurimath` commit)
+[cols="2,3l,3l,3l",options="header"]
+|===
+|Construct |Input |AsciiMath |Written back
+|Number |12.5 |12.5 |12.5
+|Letter |x |x |x
+|Superscript |x^{2} |x^(2) |x^{2}
+|Subscript |x_{i} |x_(i) |x_{i}
+|Both scripts |x_{i}^{2} |x_(i)^(2) |x_{i}^{2}
+|Fraction |\frac{a}{b} |frac(a)(b) |\frac{a}{b}
+|Binomial |\binom{n}{k} |{[n], [k]} |\left \{\begin{matrix}n \\ k\end{matrix}\right \}
+|Square root |\sqrt{x} |sqrt(x) |\sqrt{x}
+|Root with index |\sqrt[3]{x} |root(3)(x) |\sqrt[3]{x}
+|Sum with limits |\sum_{i=1}^{n} i |sum_(i = 1)^(n) i |\sum_{i = 1}^{n} i
+|Integral |\int_{0}^{1} f(x) dx |int_(0)^(1) f (x) d x |\int_{0}^{1} f ( x ) d x
+|Limit |\lim_{x \to 0} x |lim_(x to 0) x |\lim_{x \to 0} x
+|Function name |\sin x |sinx |\sin{x}
+|Operator name |\operatorname{sgn} x |sgn x |sgn x
+|Symbols |\alpha + \infty |alpha + oo |\alpha + \infty
+|Relation |x \le y |x le y |x \le y
+|Brackets |\left( x \right) |left( x right) |\left ( x \right )
+|Bracket on one side |\left\{ x \right. |left{ x right |\left \{ x \right .
+|Matrix |\begin{matrix} a & b \\ c & d \end{matrix} |{:[a, b], [c, d]:} |\begin{matrix}a & b \\ c & d\end{matrix}
+|Matrix in brackets |\begin{pmatrix} a & b \end{pmatrix} |([a, b]) |\begin{pmatrix}a & b\end{pmatrix}
+|Cases |\begin{cases} a & b \end{cases} |refused: Plurimath::Math::ParseError |-
+|Text |\text{if} |"if" |\text{if}
+|Font |\mathbf{x} |mathbf(x) |\mathbf{x}
+|Upright font |\mathrm{d}x |rm(d) x |\mathrm{d} x
+|Accent |\hat{x} |hat(x) |\hat{x}
+|Overline |\overline{x} |bar(x) |\overline{x}
+|Brace with label |\overbrace{x}^{n} |raises Plurimath::Math::ParseError |raises Plurimath::Math::ParseError
+|Colour |\color{red}{x} |color(red)(x) |{\color{red} x}
+|===

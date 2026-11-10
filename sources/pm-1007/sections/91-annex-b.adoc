@@ -1,0 +1,8 @@
+== Annex B: open questions
+
+These points are not specified; the notation described here is what the pinned artifact does.
+
+* Whether the mismatch between `\begin{name}` and `\end{other}` should be refused: not specified.
+* Whether `\left` without `\right` is intended or a legacy leniency: not specified.
+* The meaning of the model for commands that the legacy grammar keeps without a dedicated class (for example `\rule`): not specified beyond the captures.
+* Reading measurement results from LaTeX: proposed, https://github.com/plurimath/plurimath/issues/524[plurimath#524].

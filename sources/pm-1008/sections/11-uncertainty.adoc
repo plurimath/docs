@@ -1,0 +1,51 @@
+== Measurement uncertainty and units
+
+A measurement result is written in the intent form `ⓘ("marker"visible)`. The marker is the same string MathML puts in `intent`; its grammar is specified in PM 1002. On reading, the marker is used and the visible content is regenerated.
+
+[source,ruby]
+----
+Plurimath::Math.parse("ustd(1.230, 0.004)", :asciimath).to_unicodemath
+----
+
+[source]
+----
+ⓘ("standard-uncertainty(1.230,0.004)"1.230(0.004))
+----
+
+The reader cannot take a marker string followed directly by `-`, so a negative value that would start the visible content is put in the invisible `〖〗` group. The marker is unchanged:
+
+[source,ruby]
+----
+Plurimath::Math.parse("ustd(-1.230, 0.004)", :asciimath).to_unicodemath
+----
+
+[source]
+----
+ⓘ("standard-uncertainty(-1.230,0.004)"〖-1.230〗(0.004))
+----
+
+A unit is written as `ⓐ(unit ...)` after the visible content and is referred to by `$unit` in the marker. A unit symbol of more than one character is written as quoted upright text, `\mup"kg"`, because UnicodeMath reads `\mupkg` as an upright `k` followed by `g`:
+
+[source,ruby]
+----
+Plurimath::Math.parse(%q(ustd(1.2, 0.1, "unitsml(kg)")), :asciimath).to_unicodemath
+----
+
+[source]
+----
+ⓘ("standard-uncertainty(1.2,0.1,$unit)"1.2(0.1)ⓐ(unit \mup"kg"))
+----
+
+[source,ruby]
+----
+Plurimath::Math.parse("ⓘ(\"standard-uncertainty(1.2,0.1,$unit)\"1.2(0.1)ⓐ(unit \\mup\"kg\"))", :unicode).to_asciimath
+----
+
+[source]
+----
+ustd(1.2, 0.1, "unitsml(kg)")
+----
+
+=== Round trips
+
+A unit read from UnicodeMath comes back as its rendered formula, not as a UnitsML node; written on to AsciiMath it becomes `"unitsml(...)"` again when its symbols are ASCII letters. A multi-letter unit written by hand as `\mupkg`, and `µm`, do not come back as one unit. The cases are in the round-trip matrix of PM 1002.

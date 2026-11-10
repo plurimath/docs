@@ -1,0 +1,38 @@
+== The grammar artifact
+
+=== The artifact pattern
+
+The grammar of this notation is carried by a checksummed artifact, in the pattern of the asciimath and pma artifacts: the grammar source is committed together with the files generated from it and their checksums, and consumers verify the checksums before use. The artifact bytes are authoritative. This document states the notation; the artifact makes it runnable; the two are not copied into each other. Where this document quotes the grammar, the quotation is a statement of what the pinned artifact accepts, and it is valid only for the checksums below.
+
+=== Pinned sources
+
+.Sources of this document
+[cols="2,4", options="headers"]
+|===
+|Item |Pin
+
+|`latexmath` repository |https://github.com/plurimath/latexmath, commit `70b0f48dec837647be9e06efa4a675ac7dce2629`, gem version 1.0.0
+|`latexmath` notation page |`docs/latex.adoc` at that commit
+|origin of the grammar |the LaTeX grammar of Plurimath at commit `e7ab4a5186c9be96f62d670574bc2c72f9365ad4`
+|`plurimath` repository |https://github.com/plurimath/plurimath, commit `f04c688fbfaa6ccdf019af03b34ec0fc0d229226`
+|`plurimath` format page |`docs/latex.adoc` at that commit
+|testsuite |https://github.com/plurimath/plurimath-testsuite, commit `337262eda0483ceaa43a02cc52362c5b721e5eb3`
+|===
+
+=== Pinned checksums
+
+.Checksums of the artifact (`artifacts/latex.checksums.txt`, edition 2, compiler 1.3.134)
+[cols="3,5", options="headers"]
+|===
+|File |SHA-256
+
+|`grammars/latex.parg` |`f0694ce57b0f3e99e536b3749eb6b9c56570e4311b1d7aca0047c9e25a668cbf`
+|`artifacts/latex.json` |`7ec430367616556f1ca163ced6d7db10af00298ec5ac527e942fbf99afdc7590`
+|`model/latex.lml.json` |`b39479e2751d37c2b4d2d42f7dd630173d0360d1e9b03c1d035bd24f7f7c0f84`
+|===
+
+The artifact checksum recorded by the compiler is `sha256:a54e622526283de67b9a3d0dbb532558c75b296b5644e88f5f99ca24685ce82d`, and its source hash is the checksum of `grammars/latex.parg` above. The checksums of the four runtime bindings (Ruby, Rust, TypeScript, Python) are in the same checksum file. The three file checksums above were recomputed from the files at the pinned commit when this document was written.
+
+=== Rule for the excerpts
+
+An excerpt of the grammar in this document is normative only as a statement about the pinned artifact. A change of the grammar changes the checksums; an implementation then makes a different claim (clause "Conformance"), and this document is revised to the new pin. The grammar is never edited by hand in this document.

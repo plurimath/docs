@@ -1,0 +1,228 @@
+== Plurimath behaviour around the grammar
+
+=== Status
+
+.Status of the parts
+[cols="3,1,3", options="headers"]
+|===
+|Part |Status |Where
+
+|Reading UnicodeMath with the `umath` gem and mapping its typed model
+|implemented
+|https://github.com/plurimath/plurimath/pull/555[plurimath#555]; issue https://github.com/plurimath/plurimath/issues/531[plurimath#531]
+
+|Writing UnicodeMath
+|implemented
+|
+
+|Measurement results as `ⓘ("marker" ...)`, read and written
+|implemented
+|https://github.com/plurimath/plurimath/pull/496[plurimath#496], https://github.com/plurimath/plurimath/pull/497[plurimath#497], https://github.com/plurimath/plurimath/pull/502[plurimath#502], https://github.com/plurimath/plurimath/pull/506[plurimath#506]
+
+|Units as `ⓐ(unit ...)`, multi-letter symbols as quoted upright text
+|implemented
+|https://github.com/plurimath/plurimath/pull/507[plurimath#507], https://github.com/plurimath/plurimath/pull/549[plurimath#549]
+|===
+
+=== Reading
+
+The format name is `:unicode`. `Plurimath::Math.parse(text, :unicode)` creates a `Plurimath::UnicodeMath::Parser`, which calls `Umath.parse(text, decimal: Plurimath.configuration.decimal)` and turns the returned typed model into a `Plurimath::Math::Formula` with `Plurimath::UnicodeMath::Mapper`. `umath` is a runtime dependency; if it cannot be loaded, the parser raises `Plurimath::Math::MissingDependencyError` with the Gemfile line to add.
+
+The `umath` gem prepares the text before its grammar runs, in the way Plurimath did before the grammar moved (the clause "Preparation of the input"). Plurimath splits off the label itself, in the same way. Together they:
+
+. split the text at every `#`, except one inside `✎(...)`. The text before the first `#` is the formula and the text after the last `#` is the label of a labelled row; anything between is dropped. A `#` inside a quoted string is split too;
+. write every non-ASCII character, and every character that HTML escapes other than `&` and `"`, as a hexadecimal character reference;
+. remove everything from the first `⫷` to the last `⫸`, which UnicodeMath uses for comments;
+. replace `\\` by `\` and turn each `\u` escape into a character reference;
+. strip leading and trailing whitespace.
+
+.Reading a formula (produced at the pinned `plurimath` commit)
+[source,ruby]
+----
+Plurimath::Math.parse("(a)/(b) + √(x)", :unicode).to_asciimath
+----
+
+[source]
+----
+frac(a)(b) + sqrt(x)
+----
+
+A `\u` escape takes up to five hexadecimal digits, which are copied into the reference as written, and drops up to five letters or digits that follow them. The symbol table only knows references without leading zeros, so `\u3b1` is read as α but `α` stays an unknown character, and in `αx` the `x` is lost:
+
+[source,ruby]
+----
+Plurimath::Math.parse("\\u3b1+1", :unicode).to_latex
+----
+
+[source]
+----
+\alpha + 1
+----
+
+[source,ruby]
+----
+Plurimath::Math.parse("\\u03B1+1", :unicode).to_latex
+----
+
+[source]
+----
+&#x03B1; + 1
+----
+
+[source,ruby]
+----
+Plurimath::Math.parse("\\u03B1x+1", :unicode).to_latex
+----
+
+[source]
+----
+&#x03B1; + 1
+----
+
+The label is the text after the last `#`:
+
+[source,ruby]
+----
+Plurimath::Math.parse("E=mc^2#(1)", :unicode).to_mathml
+----
+
+[source,xml]
+----
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mstyle displaystyle="true">
+    <mtable>
+      <mlabeledtr>
+        <mtd>
+          <mtext>(1)</mtext>
+        </mtd>
+        <mtd>
+          <mrow>
+            <mi>E</mi>
+            <mo>=</mo>
+            <mrow>
+              <mi>m</mi>
+              <msup>
+                <mi>c</mi>
+                <mn>2</mn>
+              </msup>
+            </mrow>
+          </mrow>
+        </mtd>
+      </mlabeledtr>
+    </mtable>
+  </mstyle>
+</math>
+----
+
+[source,ruby]
+----
+Plurimath::Math.parse("x#(1)#(2)", :unicode).to_asciimath
+----
+
+[source]
+----
+mlabeledtr(x)("(2)")
+----
+
+[source,ruby]
+----
+Plurimath::Math.parse(%q("a#b"), :unicode)
+----
+
+[source]
+----
+raises Plurimath::Math::ParseError
+----
+
+UnicodeMath takes the `locale:` parse option, which sets the decimal marker:
+
+[source,ruby]
+----
+Plurimath::Math.parse("1,5", :unicode, locale: :de).value.map(&:class)
+----
+
+[source]
+----
+[Plurimath::Math::Number]
+----
+
+The writer method is `to_unicodemath`, but the input format is `:unicode`; `:unicodemath` is not a format name:
+
+[source,ruby]
+----
+Plurimath::Math.parse("x^2", :unicodemath)
+----
+
+[source]
+----
+raises Plurimath::Math::InvalidTypeError
+----
+
+=== Writing
+
+`Formula#to_unicodemath` joins the output of each node with a space, then replaces every character reference with its character and every ` / ` with `/`. It takes the keyword options `formatter:` (default `nil`), `unitsml:` (default `{}`) and `options:` (default `nil`). `formatter:` and `unitsml:` work as for MathML (PM 1003). `options:` is a prepared options hash and takes the place of the other two.
+
+[source,ruby]
+----
+Plurimath::Math.parse("x^2 + frac(a)(b) + sqrt(x)", :asciimath).to_unicodemath
+----
+
+[source]
+----
+x^(2) + (a)/(b) + √(x)
+----
+
+[source,ruby]
+----
+Plurimath::Math.parse("alpha + oo", :asciimath).to_unicodemath
+----
+
+[source]
+----
+α + ∞
+----
+
+=== Constructs
+
+Each row below is read as UnicodeMath, written as AsciiMath, and written back as UnicodeMath from the same formula. A difference between the input and the "Written back" column shows what the writer normalises or changes:
+
+* scripts, fractions and roots are written with brackets, and operators with spaces around them;
+* the operand of a large operator such as `∑` or `∫` is written after `▒` in `〖〗`;
+* a function name is followed by U+2061 FUNCTION APPLICATION, which is invisible;
+* a combining accent or overline is written after its base in brackets;
+* `a¦b`, which UTN 28 defines as a stack without a bar, is read as a fraction, and written back with `¦`;
+* a matrix in round brackets is written with `⒨`; a matrix with a bracket on one side is read with the right bracket as an unknown character, and written back as `Ⓢ`;
+* a bold letter such as `𝐱` is kept as its character, which AsciiMath can only write as a character reference.
+
+.Constructs read and written back (produced at the pinned `plurimath` commit)
+[cols="2,3l,3l,3l",options="header"]
+|===
+|Construct |Input |AsciiMath |Written back
+|Number |12.5 |12.5 |12.5
+|Letter |x |x |x
+|Superscript |x^2 |x^(2) |x^(2)
+|Subscript |x_i |x_(i) |x_(i)
+|Both scripts |x_i^2 |x_(i)^(2) |x_(i)^(2)
+|Fraction |a/b |frac(a)(b) |(a)/(b)
+|Stacked, no bar |a¦b |frac(a)(b) |(a)¦(b)
+|Square root |√x |sqrt(x) |√(x)
+|Cube root |∛x |root(3)(x) |√(3&x)
+|Root with index |√(3&x) |root(3)(x) |√(3&x)
+|Sum with limits |∑_(i=1)^n i |sum_(i = 1)^(n) i |∑_(i = 1)^(n)▒〖i〗
+|Integral |∫_0^1 f(x) dx |int_(0)^(1) f (x) d x |∫_(0)^(1)▒〖f (x)〗 d x
+|Limit |lim_(x→0) x |lim_(x to 0) x |lim_(x → 0) x
+|Function name |sin x |sinx |sin⁡x
+|Symbols |α+∞ |alpha + oo |α + ∞
+|Control word |\alpha |alpha |α
+|Relation |x≤y |x le y |x ≤ y
+|Brackets |(x) |(x) |(x)
+|Matrix |■(a&b@c&d) |[[a, b], [c, d]] |■(a&b@c&d)
+|Matrix in brackets |(■(a&b@c&d)) |([a, b], [c, d]) |⒨(a&b@c&d)
+|Matrix in brackets, short form |⒨(a&b) |([a, b]) |⒨(a&b)
+|Bracket on one side |{■(a&b)┤ |{[a, b]&#x2524; |Ⓢ(a&b)
+|Text |"if" |"if" |"if"
+|Bold letter |𝐱 |&#x1d431; |𝐱
+|Combining accent |x̂ |overset(^)(x) |(x)̂
+|Combining overline |x̅ |overset("P{overbar}")(x) |(x)̅
+|Brace with label |⏞(x)^n |overset(n)(obrace(x)) |⏞(x)^(n)
+|===

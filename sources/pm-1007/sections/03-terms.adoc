@@ -1,0 +1,24 @@
+== Terms and definitions
+
+For the purposes of this document, the following terms and definitions apply.
+
+=== grammar
+the PARG grammar `grammars/latex.parg` of the `latexmath` gem, generated from the LaTeX grammar of Plurimath at the commit named in the clause "The grammar artifact"
+
+=== artifact
+the compiled form of the grammar, `artifacts/latex.json`, with its bindings and the checksum file `artifacts/latex.checksums.txt`
+
+=== rewritten text
+the copy of the input that the grammar reads, produced by the preparation steps
+
+=== typed model
+the tree of `Latexmath::Model` classes that parsing returns; `Latexmath::Model::Document` is its root
+
+=== capture
+a named part of a grammar rule; the captures give the fields of the typed model
+
+=== mapper
+the part of the `plurimath` gem that turns the typed model into a formula tree, `Plurimath::Latex::Mapper`
+
+=== construct
+a form of the notation, such as a script, a fraction or an environment

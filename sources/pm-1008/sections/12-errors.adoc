@@ -1,0 +1,9 @@
+== Errors
+
+=== Refusal by the grammar
+
+Input the grammar does not match raises `Umath::ParseError`, with `char_offset` and `byte_offset` in the caller's text. The wording of the message is not part of the contract. Input nested too deeply for the engine raises `Umath::NestingTooDeep`.
+
+=== Refusal at the Plurimath boundary
+
+`Plurimath::Math.parse(text, :unicode)` raises `Plurimath::Math::ParseError` when the grammar rejects the text or the transform cannot build a node; the original error is not kept as the `cause`. A marker that does not match the marker grammar raises `Plurimath::Errors::InvalidUncertainty` inside, which also reaches the caller as a `ParseError`. A parse refusal is a refusal of the text; it is distinct from a refusal to name the format, which raises `Plurimath::Math::InvalidTypeError` (clause "Reading").

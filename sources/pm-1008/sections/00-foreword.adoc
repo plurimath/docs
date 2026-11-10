@@ -1,0 +1,30 @@
+== Foreword
+
+=== General
+
+This document is the eighth document of the Plurimath specifications series. It specifies the UnicodeMath notation that Plurimath reads and writes: the grammar that accepts it, the typed model the grammar produces, what Plurimath makes of that model, how measurement results and units are carried, what does not survive a round trip, and the corpora that check all of this.
+
+UnicodeMath is the linear format of Unicode Technical Note 28 (UTN 28). The notation specified here is the subset, and the variations of it, that Plurimath read at Plurimath 0.11.17 (commit `e7ab4a5186c9be96f62d670574bc2c72f9365ad4`), when the grammar was still part of the `plurimath` gem. The grammar now lives in the `umath` gem and is carried by a checksummed artifact (clause "The grammar artifact"). It does not read all of UTN 28. Where this document and the implementation disagree, the disagreement is a defect in one of the two.
+
+This document is the PM UnicodeMath document of the specification set tracked in https://github.com/plurimath/plurimath/issues/525[plurimath#525].
+
+=== Documents in the series
+
+.Documents in the series
+[cols="1,3,2", options="headers"]
+|===
+|Number |Title |Subject
+
+|1001 |Math model |The formula tree, the node classes, the registry, the rendering surfaces
+|1002 |Uncertainty model |The uncertainty node, its categories, its encodings
+|1003 |Format interfaces |The readers and writers per format
+|1004 |Evaluation |Numeric evaluation of trees
+|1005 |The AsciiMath notation |The complete AsciiMath surface
+|1006 |The pma notation |The featureful notation
+|1007 |The PM LaTeX notation |The LaTeX math notation
+|1008 |The PM UnicodeMath notation |This document: the UnicodeMath notation
+|===
+
+=== Maintainers
+
+This document is maintained by the Plurimath project at https://github.com/plurimath/plurimath.

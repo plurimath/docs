@@ -1,0 +1,7 @@
+== Introduction
+
+Plurimath reads LaTeX math, not TeX. There is no macro expansion, no `\def` and no catcode handling. The grammar is a fixed set of commands, symbols and environments. A formula is a sequence of terms; each term can carry a subscript and a superscript; some commands take arguments in braces or brackets.
+
+The grammar is not a LaTeX validator. It accepts what Plurimath accepted at the pinned commit, including some forms that LaTeX itself would not, and it refuses what Plurimath refused. This document records that behaviour so that it can be implemented again, in another runtime, and checked against the same corpora.
+
+The document has two halves. The first describes the notation the grammar accepts and the model it builds; its content is taken from the `latexmath` gem. The second describes what Plurimath does around the grammar: reading, writing, measurement results, loss, errors; its content is taken from the `plurimath` gem.

@@ -1,0 +1,102 @@
+== Structure of a formula
+
+The root rule is `expression`. An expression is a sequence of elements.
+Elements may be separated by spaces, by relational symbols such as `=` or
+`≤`, and by operators. An element is one of the constructs below, or a plain
+operand: a letter, a number, a symbol or a bracketed group.
+
+=== Fractions
+
+.Fraction forms
+[cols="2,3", options="headers"]
+|===
+|Form |Meaning
+
+|`a/b`, `a\over b` |fraction (`Frac`, with `numerator` and `denominator`)
+|`a⁄b`, `a\sdiv b`, `a\sfrac b` |bevelled fraction
+|`a⊘b`, `a\ndiv b` |fraction not in display style
+|`a∕b`, `a\ldiv b` |linear fraction
+|`a¦b`, `a\atop b` |stack without a bar
+|`a⒞b`, `a\choose b` |binomial
+|`½`, `⅓` and the other vulgar fraction characters |a fraction symbol
+|===
+
+A superscript character, a fraction bar and a subscript character, such as
+`ᵃ/ₙ`, make a small fraction (`mini_numerator`, `mini_denominator`).
+
+=== Scripts
+
+`_` gives a subscript and `^` a superscript, in either order. A script is
+one operand or a bracketed group; the brackets of `x_(i+1)` are not part of
+the script. Unicode subscript and superscript characters, such as `x²` or
+`xᵢ`, are read as scripts too. The grammar also has rules for scripts written before a base
+(`pre_subsup`).
+
+=== Large operators
+
+Characters such as `∑`, `∏`, `∫`, `∮`, `⋃` and `⋂`, and command names such
+as `\sum`, `\bigcup` and `\amalg`, are n-ary operators (capture
+`nary_class`). They take limits as scripts and an operand after them.
+
+=== Functions
+
+The function names
+
+`arccos arcsin arctan arg cos cosh cot csc csch def deg det dim erf exp gcd
+hom Im inf ker lim ln log max min mod Pr Re sec sech sin sinh sup tan tanh tg`
+
+are read as functions (capture `unary_functions`) and take the operand that
+follows (class `UnarySubsup` for `sin x`).
+
+=== Roots
+
+* `√x`, `\sqrt x` is a square root, `∛x` a cube root and `∜x` a fourth
+  root.
+* `√(n&x)` is the `n`-th root of `x`.
+* `⒭`, `\root` take the index and then the radicand.
+
+=== Matrices and arrays
+
+`■(a&b@c&d)` is a matrix: `@` separates rows and `&` separates cells. The
+grammar also reads the bracketed matrix characters `⒨`, `⒱`, `⒩`, `ⓢ`,
+`Ⓢ`, `█` and `Ⓒ`, and `\array`. A matrix character followed by one digit,
+such as `■3`, is an identity matrix of that size
+(`identity_matrix_number`).
+
+=== Brackets
+
+`(`, `[`, `{` and their closers make a bracketed group; so do commands such
+as `\langle`, `\lceil`, `\lfloor`, `\lbrack` and `\begin`, with their
+closers. A group may mix a bracket with `|`. In the model the brackets are
+`open_paren` and `close_paren`, both of class `Paren`.
+
+=== Accents, enclosures and styling
+
+* Combining accents after an operand, such as `x̂` or `x⃗`, are accents
+  (capture `accents`). Overlays and marks below are `diacritics_accents`.
+* Horizontal brackets `⏞`, `⏟`, `⎴`, `⎵`, `⏜`, `⏝`, `⏠`, `⏡` take the
+  operand that follows (`hbrack`).
+* `▭(...)`, `\rect(...)` is an enclosure, `⟡(...)`, `\phantom(...)` a
+  phantom. The grammar has a box rule for `□`, but it matches the raw
+  character, which preprocessing has already encoded, so `□a` is read as
+  the symbol `□` followed by `a` (Annex A).
+* `✎(colour&x)`, `\color(...)` sets a colour and `☁(...)`, `\backcolor(...)`
+  a background colour.
+* `ⓘ(...)` carries an intent, and `ⓐ(...)` an argument function.
+* Font commands such as `\mbf`, `\mit`, `\Bbb`, `\mscr`, `\mfrak`,
+  `\msans` and `\mtt` followed by a letter set a font. A mathematical
+  alphanumeric character such as `𝐱` is read as a Unicode symbol, not as a
+  font. `ￗ(...)` is monospace text.
+
+=== Symbols and numbers
+
+Each symbol in the model is a `MathSymbol` (or a `SymbolNode` or `Paren`)
+with `spelling` (the text matched, such as `&#x3b1;` for `α` or `alpha` for
+`\alpha`), `value` (its Unicode text from `data/umath-symbols.json`) and
+`kind`. A spelling the catalog lacks has kind `unlisted`.
+
+Numbers are kept as written. `1.5` is a `DecimalNumber` with `whole`,
+`decimal` and `fractional`. The decimal marker is `.` unless the caller
+passes `decimal: ","` or `decimal: "٫"`. Hexadecimal, binary and octal
+numbers are separate forms.
+
