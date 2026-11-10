@@ -1,0 +1,41 @@
+== Measurement uncertainty
+
+LaTeX has no marker for a measurement result. Plurimath writes the visible form only, in plain math with no package, and reads it back as ordinary numbers, brackets and text, never as an uncertainty. LaTeX is therefore an output-only format for measurement results. The forms in all formats are in PM 1002.
+
+[source,ruby]
+----
+Plurimath::Math.parse("ustd(1.230, 0.004)", :asciimath).to_latex
+----
+
+[source]
+----
+1.230(0.004)
+----
+
+[source,ruby]
+----
+Plurimath::Math.parse("ucov(1.024, 0.983, 1.088, 0.95, shortest)", :asciimath).to_latex
+----
+
+[source]
+----
+1.024,\ [0.983, 1.088],\ p = 0.95
+----
+
+Reading the interval form back gives no uncertainty node:
+
+[source,ruby]
+----
+Plurimath::Math.parse("1.024,\\ [0.983, 1.088],\\ p = 0.95", :latex).to_asciimath
+----
+
+[source]
+----
+1.024 , " " [0.983 , 1.088] , " " p = 0.95
+----
+
+=== What LaTeX output loses
+
+* *The interval kind.* A coverage interval written as LaTeX does not say whether it is the shortest or the probabilistically symmetric interval.
+* *The category.* Standard, expanded and coverage-interval results are told apart only by their layout; reading the LaTeX back gives no uncertainty node.
+* *The unit as a unit.* A UnitsML unit is written as its rendered symbols, such as `\mathrm{m}`; it cannot be read back as a unit.

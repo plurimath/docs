@@ -9,6 +9,7 @@ ISO-style specifications for the Plurimath stack, organized as **series with par
   - Part 4 — Evaluation (bindings, propagation, Monte Carlo, conformity decisions; Annex A: the H.1.7 second-order derivation)
 - **asciimath** — the legacy input language: Part 1 the language; Part 2 extension channels
 - **pma** — the featureful strict input language: Part 1 the language
+- **PM LaTeX** (PM 1007) and **PM UnicodeMath** (PM 1008) — the LaTeX and UnicodeMath notations Plurimath reads and writes, each with its grammar artifact checksums pinned
 
 The companion **UnitsML** series (units, quantities, conversions, the register, XML) lives in [unitsml/docs](https://github.com/unitsml/docs). Dependency direction: asciimath/pma → math model → UnitsML semantics; the only inter-series seams are the unit-expression content grammar (UnitsML 6), the units semantics (UnitsML 4/5), and the conformance corpora (UnitsML 8).
 

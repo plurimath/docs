@@ -1,0 +1,10 @@
+[bibliography]
+== Normative references
+
+The following documents are referred to in the text.
+
+* [[[pm1001,nofetch(PM 1001 (math model))]]] of this series.
+* [[[pm1002,nofetch(PM 1002 (uncertainty model))]]] of this series.
+* [[[pm1003,nofetch(PM 1003 (format interfaces))]]] of this series.
+* [[[latexmath-docs,nofetch(latexmath docs/latex.adoc)]]] — the notation page of the `latexmath` gem, at the commit named in the clause "The grammar artifact".
+* [[[latexmath-artifact,nofetch(latexmath grammar artifact)]]] — `grammars/latex.parg` and the files generated from it, with the checksums of the clause "The grammar artifact".

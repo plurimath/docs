@@ -1,0 +1,9 @@
+== Preparation of the input
+
+The grammar reads a rewritten copy of the input. The steps are specified in full in the parser contract of the `umath` gem. In short:
+
+* A `#` starts an equation label. The text after the last `#` becomes the document's `label`; a `#` inside `✎(...)` does not count.
+* Every non-ASCII character becomes a hexadecimal character reference, so `α` reaches the grammar as `&#x3b1;`. `&` and `"` stay as they are.
+* Everything from the first `⫷` to the last `⫸` is a comment and is removed.
+* `\\` becomes `\`, and `\uXXXX` escapes become the character they name.
+* Leading and trailing whitespace is removed.

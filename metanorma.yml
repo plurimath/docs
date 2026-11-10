@@ -8,6 +8,8 @@ metanorma:
       - sources/pm-1004/document.adoc
       - sources/pm-1005/document.adoc
       - sources/pm-1006/document.adoc
+      - sources/pm-1007/document.adoc
+      - sources/pm-1008/document.adoc
 
   collection:
     organization: "Plurimath"

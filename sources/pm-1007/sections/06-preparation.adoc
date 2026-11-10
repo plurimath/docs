@@ -1,0 +1,13 @@
+== Preparation of the input
+
+The grammar reads a rewritten copy of the input, not the input itself. The steps are specified in full in the parser contract of the `latexmath` gem. In short:
+
+* Spaces are removed, except a space after a backslash (`\ `), and newlines are removed.
+* Every non-ASCII character, and the characters `<`, `>` and `'`, become hexadecimal character references such as `&#x3b1;`. `&` and `"` stay as they are.
+* The contents of `\text{...}` and `\mbox{...}` are put back exactly as written, spaces and non-ASCII characters included.
+
+So `\alpha` and `α` reach the grammar as different text (`\alpha` and `&#x3b1;`), and both are symbols. Spaces never separate terms: `ab` and `a b` are the same input.
+
+=== The decimal marker
+
+The decimal marker is `.` unless the caller passes `decimal: ","` or `decimal: "٫"`. The grammar has one entry for each marker, and only the chosen marker is read as part of a number.

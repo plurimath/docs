@@ -1,0 +1,3 @@
+== The typed model
+
+`Umath.parse` returns a `Umath::Model::Document` with `expression`, `label` and `decimal`. Input with no formula gives a document whose `expression` is nil. The model has 74 generated classes plus `Document`; captures that can hold a whole expression share the class `Model::Expression`. Every field with its type is listed in `model/umath.lml.json`, whose checksum is pinned in the clause "The grammar artifact".

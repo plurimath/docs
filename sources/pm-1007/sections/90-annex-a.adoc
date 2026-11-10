@@ -1,0 +1,71 @@
+== Annex A: examples of the typed model
+
+These results were produced by parsing each input with `Latexmath.parse` at the pinned `latexmath` commit and printing the non-empty fields of the model. A symbol is shown as `MathSymbol(spelling)`. The root of the expression is a `LatexTree`. Fields inside each class are printed in the order the class declares them, not in input order.
+
+[source]
+----
+a^2
+  LatexTree(power: Power(supscript: Supscript(number: "2"), symbols: MathSymbol("a")))
+
+x_i^2
+  LatexTree(power_base: PowerBase(subscript: Subscript(symbols: MathSymbol("i")),
+    supscript: Supscript(number: "2"), symbols: MathSymbol("x")))
+
+\frac{a}{b}
+  LatexTree(binary: Binary(binary: Binary(literal: "frac"),
+    first_value: FirstValue(expression: Expression(symbols: MathSymbol("a"))),
+    second_value: SecondValue(expression: Expression(symbols: MathSymbol("b")))))
+
+{a \over b}
+  LatexTree(over: Over(dividend: Dividend(items: [ItemsItem(symbols: MathSymbol("a"))]),
+    divisor: Divisor(items: [ItemsItem(symbols: MathSymbol("b"))])))
+
+\sqrt[3]{x}
+  LatexTree(binary: Binary(first_value: FirstValue(expression: Expression(items: [ItemsItem(number: "3")]),
+    lparen: "[", rparen: "]"), root: "sqrt",
+    second_value: SecondValue(expression: Expression(symbols: MathSymbol("x")))))
+
+\sin x
+  LatexTree(unary_functions: UnaryFunctions(first_value: FirstValue(symbols: MathSymbol("x")), unary: "sin"))
+
+\sum_{i=1}^{n} i
+  LatexTree(ternary_class: TernaryClass(subscript: Subscript(expression: Expression(
+    expression: Expression(expression: Expression(number: "1"), sequence: Sequence(operant: "=")),
+    sequence: Sequence(symbols: MathSymbol("i")))),
+    supscript: Supscript(expression: Expression(symbols: MathSymbol("n"))),
+    ternary_functions: "sum", third_value: ThirdValue(symbols: MathSymbol("i"))))
+
+\left( x \right)
+  LatexTree(left_right: LeftRight(expression: Expression(symbols: MathSymbol("x")),
+    left: "\\left", left_paren: LeftParen(literal: "("),
+    right: "\\right", right_paren: RightParen(literal: ")")))
+
+\left( x
+  LatexTree(left_right: LeftRight(expression: Expression(symbols: MathSymbol("x")),
+    left: "\\left", left_paren: LeftParen(literal: "(")))
+
+\begin{pmatrix} a & b \\ c & d \end{pmatrix}
+  LatexTree(environment: Environment(ending: Ending(environment: Environment(literal: "pmatrix")),
+    environment: Environment(literal: "pmatrix"),
+    table_data: TableData(expression: Expression(expression: Expression(expression: Expression(
+      expression: Expression(expression: Expression(expression: Expression(symbols: MathSymbol("d")),
+      sequence: Sequence(operant: "&")), sequence: Sequence(symbols: MathSymbol("c"))),
+      sequence: Sequence(row_break: "\\\\")), sequence: Sequence(symbols: MathSymbol("b"))),
+      sequence: Sequence(operant: "&")), sequence: Sequence(symbols: MathSymbol("a")))))
+
+\mathbf{x}
+  LatexTree(fonts: "mathbf", intermediate_exp: IntermediateExp(expression: Expression(symbols: MathSymbol("x"))))
+
+\text{if } x
+  LatexTree(expression: Expression(symbols: MathSymbol("x")),
+    sequence: Sequence(first_value: FirstValue(text_list: "if "), text: "text"))
+
+\alpha
+  LatexTree(symbols: MathSymbol("alpha"))
+
+1.5
+  LatexTree(number: "1.5")
+
+\frac{a}
+  Latexmath::ParseError at char 8
+----

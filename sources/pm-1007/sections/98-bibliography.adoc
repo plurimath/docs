@@ -1,0 +1,8 @@
+[bibliography]
+== Bibliography
+
+* [[[plurimath-repo,nofetch(Plurimath repository)]]] — https://github.com/plurimath/plurimath
+* [[[latexmath-repo,nofetch(latexmath repository)]]] — https://github.com/plurimath/latexmath
+* [[[pm-testsuite,nofetch(plurimath-testsuite)]]] — the pinned corpus repository and its generations
+* [[[pm1005-b,nofetch(PM 1005)]]] of this series
+* [[[pm1006-b,nofetch(PM 1006)]]] of this series

@@ -1,0 +1,11 @@
+[bibliography]
+== Normative references
+
+The following documents are referred to in the text.
+
+* [[[pm1001,nofetch(PM 1001 (math model))]]] of this series.
+* [[[pm1002,nofetch(PM 1002 (uncertainty model))]]] of this series.
+* [[[pm1003,nofetch(PM 1003 (format interfaces))]]] of this series.
+* [[[utn28,nofetch(Unicode Technical Note 28)]]] — UnicodeMath, a Nearly Plain-Text Encoding of Mathematics, version 3.2 (April 13, 2023), https://www.unicode.org/notes/tn28/.
+* [[[umath-docs,nofetch(umath docs/unicodemath.adoc)]]] — the notation page of the `umath` gem, at the commit named in the clause "The grammar artifact".
+* [[[umath-artifact,nofetch(umath grammar artifact)]]] — `grammars/umath.parg` and the files generated from it, with the checksums of the clause "The grammar artifact".

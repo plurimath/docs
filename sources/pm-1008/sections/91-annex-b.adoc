@@ -1,0 +1,7 @@
+== Annex B: open questions
+
+These points are not specified; the notation described here is what the pinned artifact does.
+
+* The grammar spells `\cbrt` for both the cube root and the fourth root (rules `cbrt_symbols` and `qdrt_symbols`), so the fourth root has no command name of its own. Whether that is intended: not specified.
+* When the examples of the `umath` page were generated, parsing `(`, `a/` and `\cbrt x` did not finish within several minutes, so that page shows no refusal example and no result for `\cbrt`. Whether these inputs are expected to be slow: not specified.
+* Labels: parts between the first and the last `#` are dropped. Whether that is intended: not specified.

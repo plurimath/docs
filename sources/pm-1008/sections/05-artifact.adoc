@@ -1,0 +1,39 @@
+== The grammar artifact
+
+=== The artifact pattern
+
+The grammar of this notation is carried by a checksummed artifact, in the pattern of the asciimath and pma artifacts: the grammar source is committed together with the files generated from it and their checksums, and consumers verify the checksums before use. The artifact bytes are authoritative. This document states the notation; the artifact makes it runnable; the two are not copied into each other. Where this document quotes the grammar, the quotation is a statement of what the pinned artifact accepts, and it is valid only for the checksums below.
+
+=== Pinned sources
+
+.Sources of this document
+[cols="2,4", options="headers"]
+|===
+|Item |Pin
+
+|`umath` repository |https://github.com/plurimath/unicodemath, commit `ef11954aa61034a529150922faa6ea02e8274b18`, gem version 0.1.0
+|`umath` notation page |`docs/unicodemath.adoc` at that commit
+|origin of the grammar |the legacy UnicodeMath grammar of Plurimath at commit `e7ab4a5186c9be96f62d670574bc2c72f9365ad4` (Plurimath 0.11.17)
+|`plurimath` repository |https://github.com/plurimath/plurimath, commit `f04c688fbfaa6ccdf019af03b34ec0fc0d229226`
+|`plurimath` format page |`docs/unicodemath.adoc` at that commit
+|testsuite for the `plurimath` gem |https://github.com/plurimath/plurimath-testsuite, commit `337262eda0483ceaa43a02cc52362c5b721e5eb3`
+|testsuite for the `umath` gem |https://github.com/plurimath/plurimath-testsuite, commit `85c7be8fd56f0cc64b4869e74716acc4f0dbe746`, `stages/unicode/` generation 4
+|===
+
+=== Pinned checksums
+
+.Checksums of the artifact (`artifacts/umath.checksums.txt`, edition 2, compiler 1.3.134)
+[cols="3,5", options="headers"]
+|===
+|File |SHA-256
+
+|`grammars/umath.parg` |`8fbf980d93a4e7a47638c795ae86c519626956b6a68a65d1e36b610587602fcc`
+|`artifacts/umath.json` |`703824533584b29e17ee807a30868c9f6923e26d0ee40c9a0a7b6c7de793220f`
+|`model/umath.lml.json` |`4714028eb15188f2d36543d1e272802556207cf056923868ef57ff8911220839`
+|===
+
+The artifact checksum recorded by the compiler is `sha256:a58c0bb7778b56b503d6b0aaf1a8d3a1c171de7e509dcaa0e655b59088657c2f`, and its source hash is the checksum of `grammars/umath.parg` above. The checksums of the four runtime bindings (Ruby, Rust, TypeScript, Python) are in the same checksum file. The three file checksums above were recomputed from the files at the pinned commit when this document was written.
+
+=== Rule for the excerpts
+
+An excerpt of the grammar in this document is normative only as a statement about the pinned artifact. A change of the grammar changes the checksums; an implementation then makes a different claim (clause "Conformance"), and this document is revised to the new pin. The grammar is never edited by hand in this document.

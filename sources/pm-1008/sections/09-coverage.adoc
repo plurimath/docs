@@ -1,0 +1,11 @@
+== Coverage of UTN 28
+
+The constructs are taken from UTN 28 version 3.2 (April 13, 2023). The mapping from construct to corpus rows is `docs/utn28-coverage.yml` of the `umath` gem. Its script `scripts/utn28_coverage.rb` parses every mapped row, checks that its outcome is the one the row expects, and writes the table in `docs/unicodemath.adoc` of the `umath` gem; with `--check` it fails when the table is out of date. The table is not copied here, because it is regenerated from the corpus: the full table is the one in that file at the commit named in the clause "The grammar artifact".
+
+The table lists 82 constructs of UTN 28 version 3.2. Of the 82 constructs, 25 are covered, 1 is refused and 56 are untested.
+
+* Covered means that every row listed for the construct parses to the model the row expects.
+* Refused means that the rows give input UTN 28 defines and that the grammar refuses it on purpose. The one such construct is the alignment mark `&` outside a matrix, `a&=b` (UTN 28 section 3.23).
+* Untested means that no row exercises the construct, so the corpus does not show whether the grammar reads it. An untested construct may still be read by the grammar.
+
+Rows that give incomplete input, such as a trailing `/` or an unclosed bracket, are refused by the grammar; they are listed with their construct and do not change its status.

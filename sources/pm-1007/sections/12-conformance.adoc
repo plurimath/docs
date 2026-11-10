@@ -1,0 +1,34 @@
+== Conformance
+
+=== General
+
+Conformance to this document is the implementation of the LaTeX reader per the clauses on preparation, structure and the typed model, and of the writer per the clause on Plurimath behaviour, against the artifact pinned in the clause "The grammar artifact".
+
+=== Conformance classes
+
+.Conformance classes
+[cols="1,3,3", options="headers"]
+|===
+|Class |Licenses the implementation to claim |Replay requirements
+
+|read-latex
+|reads the notation of this document and refuses what the grammar refuses
+|the `corpus/latex/` rows of the testsuite, and the `stages/latex/` generation pinned by `spec/fixtures/testsuite-pin.yml` of the `latexmath` gem
+
+|write-latex
+|writes LaTeX from the formula tree
+|the `latex` target of every `corpus/*/` case, byte for byte
+|===
+
+=== The corpora
+
+* `spec/model/parse_spec.rb` of the `latexmath` gem checks the public parse and its errors.
+* `spec/corpus/replay_corpus_spec.rb` and `spec/stage_cases/` of the `latexmath` gem replay the stage corpus generation pinned in `spec/fixtures/testsuite-pin.yml` (plurimath-testsuite `stages/latex/`, commit `337262eda0483ceaa43a02cc52362c5b721e5eb3`, generation 3).
+* `spec/parser/oracle_parity_spec.rb` of the `latexmath` gem compares the raw tree with captures of the Plurimath parser.
+* `spec/conformance/shared_corpus_spec.rb` of the `plurimath` gem replays every `corpus/` case, comparing each target byte for byte. At testsuite commit `337262eda0483ceaa43a02cc52362c5b721e5eb3` these are 125 `corpus/latex/` inputs read (groups `accents`, `colour`, `fences`, `fonts`, `frac`, `left-right`, `matrices`, `mod`, `nary`, `numbers`, `operators`, `over-under`, `powers`, `quoted-text`, `roots`, `symbols`, `unary-functions`, `whitespace`), 14 `corpus/latex/rejections.yaml` inputs refused, and 780 `corpus/*/` cases with a `latex` output in 74 payloads.
+* The roundtrip generation of the testsuite has no LaTeX targets, because LaTeX output is not read back as an uncertainty.
+* The `stages/latex/` generations are replayed by the `latexmath` gem, not by the `plurimath` gem.
+
+=== Claims
+
+A claim names the artifact checksum of the clause "The grammar artifact" and the testsuite commit and generation. An implementation against a moved artifact makes a different claim.

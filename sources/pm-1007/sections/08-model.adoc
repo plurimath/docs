@@ -1,0 +1,5 @@
+== The typed model
+
+`Latexmath.parse` returns a `Latexmath::Model::Document` with `expression` (the formula) and `decimal` (the marker). Input with no formula gives a document whose `expression` is nil. The model has 33 generated classes; the names follow the grammar captures (`Binary`, `UnaryFunctions`, `LeftRight`, `Environment`, `TableData`, `PowerBase` and so on). Every field with its type is listed in `model/latex.lml.json`, whose checksum is pinned in the clause "The grammar artifact".
+
+The model is generated from the grammar and is not edited by hand. The model does not specify the meaning of commands that the legacy grammar kept without a dedicated class, such as `\rule`, beyond their captures.

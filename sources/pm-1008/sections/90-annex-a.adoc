@@ -1,0 +1,80 @@
+== Annex A: examples of the typed model
+
+These results were produced by parsing each input with `Umath.parse` at the pinned `umath` commit and printing the non-empty fields of the model. A symbol is shown as `MathSymbol(spelling)`; the spelling is the encoded text the grammar matched. Fields inside each class are printed in the order the class declares them, not in input order.
+
+[source]
+----
+a/b
+  Expression(frac: Frac(denominator: Expression(factor: Expression(atom: Atom(alphanumeric: MathSymbol("b")))),
+    numerator: Expression(atom: Atom(alphanumeric: MathSymbol("a")))))
+
+x^2
+  Expression(sup_exp: SupExp(base: Expression(symbol: SymbolNode(spelling: "x")),
+    sup: Expression(sup_script: Expression(operand: Operand(factor: Expression(digit: Digit(number: "2")))))))
+
+√x
+  Expression(factor: Expression(root: RootNode(first_value: Expression(factor: Expression(atom:
+    Atom(alphanumeric: MathSymbol("x")))), root_symbol: MathSymbol("&#x221a;"))))
+
+√(3&x)
+  Expression(factor: Expression(root: RootNode(
+    first_value: Expression(expr: Expression(empty: "", factor: Expression(digit: Digit(number: "3")))),
+    second_value: SecondValue(expr: Expression(empty: "", factor: Expression(atom: Atom(alphanumeric: MathSymbol("x"))))))))
+
+sin x
+  Expression(unary_subsup: UnarySubsup(first_value: Expression(factor: Expression(atom:
+    Atom(alphanumeric: MathSymbol("x")))), unary_functions: "sin"))
+
+(a+b)
+  Expression(factor: Expression(intermediate_exp: Expression(close_paren: Paren(spelling: ")"),
+    exp: Expression(exp: Expression(factor: Expression(atom: Atom(alphanumeric: MathSymbol("b")))),
+    operator: MathSymbol("+")), factor: Expression(atom: Atom(alphanumeric: MathSymbol("a"))),
+    open_paren: Paren(spelling: "("))))
+
+■(a&b@c&d)
+  Expression(table: Table(array: ArrayNode(
+    tr: Tr(td: Td(exp: Expression(factor: Expression(atom: Atom(alphanumeric: MathSymbol("a"))))),
+      tds: Tds(td: Td(exp: Expression(factor: Expression(atom: Atom(alphanumeric: MathSymbol("b"))))))),
+    trs: Trs(tr: Tr(td: Td(exp: Expression(factor: Expression(atom: Atom(alphanumeric: MathSymbol("c"))))),
+      tds: Tds(td: Td(exp: Expression(factor: Expression(atom: Atom(alphanumeric: MathSymbol("d"))))))))),
+    matrixs: "&#x25a0;"))
+
+■3
+  Expression(table: Table(identity_matrix_number: "3", matrixs: "&#x25a0;"))
+
+ᵃ/ₙ
+  Expression(frac: Frac(mini_denominator: MiniDenominator(sub_alpha: "&#x2099;"),
+    mini_numerator: MiniNumerator(sup_alpha: "&#x1d43;")))
+
+(a¦b)
+  Expression(factor: Expression(intermediate_exp: Expression(close_paren: Paren(spelling: ")"),
+    frac: Frac(atop: "&#xa6;", denominator: Expression(factor: Expression(atom: Atom(alphanumeric: MathSymbol("b")))),
+    numerator: Expression(atom: Atom(alphanumeric: MathSymbol("a")))), open_paren: Paren(spelling: "("))))
+
+x̂
+  Expression(accents: Accents(empty: "", first_value: Expression(atom: Atom(alphanumeric: MathSymbol("x"))),
+    list: [ListItem(accent_symbols: MathSymbol("&#x302;"))]))
+
+□a
+  Expression(factor: Expression(ordinary_symbols: MathSymbol("&#x25a1;")),
+    operand: Operand(factor: Expression(atom: Atom(alphanumeric: MathSymbol("a")))))
+
+α
+  Expression(factor: Expression(ordinary_symbols: MathSymbol("&#x3b1;")))
+
+\alpha
+  Expression(factor: Expression(ordinary_symbols: MathSymbol("alpha")))
+
+𝐱
+  Expression(factor: Expression(atom: Atom(char: Char(unicode_symbols: MathSymbol("&#x1d431;")))))
+
+1.5
+  Expression(factor: Expression(decimal_number: DecimalNumber(decimal: ".",
+    fractional: Fractional(number: "5"), whole: Whole(number: "1"))))
+
+a#(1)
+  Expression(factor: Expression(atom: Atom(alphanumeric: MathSymbol("a")))), label "(1)"
+
+⫷c⫸x
+  Expression(factor: Expression(atom: Atom(alphanumeric: MathSymbol("x"))))
+----
