@@ -7,6 +7,7 @@
 :language: en
 :script: Latn
 :title: Plurimath specifications -- Math model
+:title-fr: Spécifications Plurimath -- Modèle mathématique
 :doctype: standard
 :status: draft-standard
 :committee: Plurimath
