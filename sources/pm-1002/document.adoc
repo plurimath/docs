@@ -7,6 +7,7 @@
 :language: en
 :script: Latn
 :title: Plurimath specifications -- Uncertainty model
+:title-fr: Spécifications Plurimath -- Modèle d'incertitude
 :doctype: standard
 :status: draft-standard
 :committee: Plurimath

@@ -7,6 +7,7 @@
 :language: en
 :script: Latn
 :title: Plurimath specifications -- The PM UnicodeMath notation
+:title-fr: Spécifications Plurimath -- La notation PM UnicodeMath
 :doctype: standard
 :status: draft-standard
 :committee: Plurimath
