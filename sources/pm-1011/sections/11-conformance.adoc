@@ -58,7 +58,7 @@ A claim names the repository, the commit and the generations below, per class. T
 |H.2
 |`gum-annex-methods`: `h2-derived-vector`, `h2-correlations`, `h2-derived-observations`; `host-evaluator/v1`: `producer-00` to `producer-03`
 |H.3
-|`gum-annex-methods`: the `h3-fit-*`, `h3-predict-*`, `h3-correlation-*` and `h3-refusal-*` rows; `host-evaluator/v1`: `producer-00` to `producer-03`
+|`gum-annex-methods`: the `h3-fit-*`, `h3-predict-*`, `h3-correlation-*` and `h3-refusal-*` rows
 |H.4
 |`gum-annex-methods`: `h4-derived-covariance`, `h4-ratio-approach`; `host-evaluator/v1`: `producer-04`, `producer-05`
 |H.5
