@@ -1,0 +1,9 @@
+[bibliography]
+== Normative references
+
+* [[[pm1009,nofetch(PM 1009 (quantity type system))]]] of this series — the quantity types the surface serializes.
+* [[[pm1010,nofetch(PM 1010 (expression language))]]] of this series — the grammar artifacts the surface pins.
+* [[[pm1011,nofetch(PM 1011 (evaluation processing))]]] of this series — the evaluation the surface drives.
+* [[[pm1012,nofetch(PM 1012 (constraint evaluation))]]] of this series — the verdicts the surface returns.
+* [[[parsanol,nofetch(Parsanol)]]] — the PARG toolchain; the binding declarations of parsanol#432.
+* [[[lutamlmodel1033,nofetch(lutaml-model #1033)]]] — the LML cross-language schema realizations.

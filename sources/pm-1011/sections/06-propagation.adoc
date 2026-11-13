@@ -1,0 +1,29 @@
+== The propagation of uncertainty
+
+=== The law
+
+For an expression f over the input quantities xᵢ, each carrying a standard uncertainty uᵢ, the combined standard uncertainty of the result is
+
+`u_c = √( Σᵢ (∂f/∂xᵢ · uᵢ)² + 2 Σᵢ<ⱼ (∂f/∂xᵢ)(∂f/∂xⱼ) u(xᵢ,xⱼ) )`
+
+— the partials evaluated symbolically over the expression tree or numerically at the bound point, per the stated mode. The independence term is the first sum; the correlation term is stated and carried per clause 6.4.
+
+=== The inputs
+
+The input uncertainties arrive as PM 1002 nodes or as the declared components of the serialized request (PM 1013): the standard uncertainty, or the distribution and its parameters for a type B input (rectangular, triangular, normal, U-shaped — the division per R-C2, never inferred from notation per #524), or the series for a type A input (clause 8). The type B standard uncertainty is the distribution's standard uncertainty: `a/√3` rectangular, `a/√6` triangular, per the stated forms of JCGM 100 §4.3.
+
+=== The degrees of freedom and the coverage factor
+
+The effective degrees of freedom follow Welch–Satterthwaite over the type A components and the stated dof of the type B components. The coverage factor k is taken from the stated coverage probability and the effective dof; where the probability is not stated, k defaults to 2 and the default is recorded in the result. The expanded uncertainty is `U = k·u_c`.
+
+=== The result
+
+The propagated result is a quantity value per PM 1009 carrying the standard uncertainty as a PM 1002 standard-category node, and the expanded form as the stated expanded-category node where k is stated — the categories and their encodings are PM 1002's, unchanged.
+
+[example]
+The GUM budget: the result of an expression over the input quantities with their standard uncertainties.
+*Expected outcome.* the propagated quantity: the value per the arithmetic, the combined standard uncertainty per the law, the dimension per the unit algebra — and the verdict of clause 7 attached.
+
+=== The presentation
+
+The propagated result renders with its uncertainty through the existing renderers — the `1,15 ± 0,06 V` form — per the rendering surfaces of PM 1003. The rendering adds no rounding: the stated decimals render as stated.

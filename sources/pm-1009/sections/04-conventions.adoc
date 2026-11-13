@@ -1,0 +1,13 @@
+== Conventions
+
+=== General
+
+Quantities are written as number, space, unit: `3 kV`. Unit expressions are written in the ordinary notation (`kg/m^3`, `V·A`, `kW`) with `^` for integer powers and `/` for quotients.
+
+=== Examples
+
+Examples carry an *Expected outcome* paragraph stating the constructed quantity, the reduced dimension, or the typed error with its data.
+
+=== Units
+
+Unit names in examples are the SI spellings and symbols; the authority reference is the UnitsML code, written `unitsml(m)` where the code matters.

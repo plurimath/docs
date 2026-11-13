@@ -1,0 +1,25 @@
+== The serialized surface
+
+=== The request
+
+[source,json]
+----
+{
+  "expressions": [ "..." ],
+  "bindings": { "V": { "value": "1.2", "unit": "V", "uncertainty": { "category": "standard", "magnitude": "0.06" } } },
+  "unit_register": [ "unitsml(V)", "unitsml(kg)" ],
+  "uncertainty_components": [ "..." ],
+  "limits": [ "..." ],
+  "rule": { "kind": "guarded", "k": 2 }
+}
+----
+
+The fields are normative; the shapes of the quantities and the uncertainties follow PM 1009 and PM 1002's encodings as serialized data.
+
+=== The response
+
+The response states the results (the quantities, the propagated uncertainties, the version stamps), the diagnostics (the typed errors with their carried data), the verdicts (per PM 1012, with the rules and the residuals), and the render traces where requested.
+
+=== The stamps
+
+Every response carries the engine version, the grammar-artifact checksum and the corpus generation the claims name. A response without stamps is not conforming.

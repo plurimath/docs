@@ -1,0 +1,24 @@
+== Terms and definitions
+
+For the purposes of this document, the following terms and definitions apply.
+
+=== expression language
+the closed grammar of this document: its constructs, types and errors, stated completely
+
+=== grammar artifact
+the checksummed compiled output of the PARG grammar for one runtime
+
+=== typed AST
+the parse result: a tree whose nodes carry their constructs and their static types
+
+=== static type-check
+the pass that reports scale and dimension violations before evaluation
+
+=== exact-decimal literal
+a decimal literal whose trailing digits are preserved as stated (`2.10`)
+
+=== undefined-aware literal
+the literal form for an explicitly undefined value, distinct from zero and from an error
+
+=== round trip
+parse → render → parse: the property that rendering an AST to a notation format and re-parsing yields an equal AST

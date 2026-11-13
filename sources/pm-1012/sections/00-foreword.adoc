@@ -1,0 +1,29 @@
+== Foreword
+
+=== General
+
+This document is the twelfth document of the Plurimath specifications series. It specifies constraint evaluation: the evaluation of a stated limit against a measured or computed result, the decision rules that turn the comparison into a verdict, the signed residual that is the verdict's evidence, the applicability guards, and the rendering of the whole evaluation trace.
+
+The document builds on PM 1011: the constraint's operands are the propagated quantities of PM 1011, the uncertainty that feeds the guard band is PM 1011's expanded uncertainty, and the boundary exactness is PM 1004's accuracy-class discipline.
+
+=== Documents in the series
+
+.Documents in the series
+[cols="1,3,2", options="headers"]
+|===
+|Number |Title |Subject
+
+|1001 |Math model |The formula tree, the node classes, the registry, the rendering surfaces
+|1002 |Uncertainty model |The uncertainty node, its categories, its encodings
+|1003 |Format interfaces |The readers and writers per format
+|1004 |Evaluation |Numeric evaluation of trees
+|1009 |Quantity type system |Quantities, units, dimensions, typed errors
+|1010 |Expression language |The closed expression grammar and the typed AST
+|1011 |Evaluation processing |Unit-aware evaluation, propagation, series, second-order modes
+|1012 |Constraint evaluation |This document: the decision rules and the verdicts
+|1013 |Embedded-consumer contract |The serialized request surface and the parity claims
+|===
+
+=== Maintainers
+
+This document is maintained by the Plurimath project at https://github.com/plurimath/plurimath.

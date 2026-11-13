@@ -1,0 +1,16 @@
+== Introduction
+
+An expression language that a metrology document can embed has two obligations that general expression languages do not: it must be *closed* — every construct stated, every operator's types and errors stated, nothing implied — and it must be *preserving* — `2.10` is not `2.1`, a quoted unit reads back as a quoted unit, and an expression renders back to every notation format without drift.
+
+The grammar is written once, in PARG, and compiled: the Ruby runtime, the TypeScript runtime and the wasm runtime parse the same artifact, so acceptance cannot diverge between them. The typed AST carries the accuracy classes of PM 1004 and the quantity types of PM 1009, and the static type-check reports scale and dimension violations before any evaluation runs.
+
+[example]
+The expression `2.10`.
+*Expected outcome.* parsed as the exact decimal `2.10` — the trailing zero is preserved as part of the value's statement, per the exact-decimal discipline; the expression does not parse to `2.1`.
+
+=== The design forces
+
+* *One grammar, every runtime.* The PARG artifact is the acceptance; no target hand-writes the precedence climbing.
+* *Closed.* Every operator, literal and error stated here; a construct outside this document is refused by name.
+* *Preserving.* Exact decimals, quoted units and uncertainty markers round-trip.
+* *Typed before run.* The static check reports the scale and dimension violations first; evaluation then never sees an incoherent tree.

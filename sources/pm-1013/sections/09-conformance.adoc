@@ -1,0 +1,11 @@
+== Conformance
+
+=== The conformance class
+
+A binding conforms to this document when it drives the serialized surface per clause 7, verifies the artifact checksums at load, states the stamps in every response, and replays the corpus generation with byte-identical responses across every runtime it claims.
+
+=== The acceptance vectors
+
+* the parity vectors of PM 1011's serialized class, replayed across the runtimes;
+* the checksum-verification refusal on a pinned-mismatched artifact;
+* the stamp presence and correctness on every response.

@@ -1,0 +1,30 @@
+== Terms and definitions
+
+For the purposes of this document, the following terms and definitions apply.
+
+=== quantity value
+a typed pair of a number and a unit expression, with an optional uncertainty
+
+=== unit expression
+an algebraic composition of units — products, quotients, integer powers, scale prefixes — that reduces to one dimension vector and one scale factor
+
+=== base unit
+one of the SI base units, the identity elements of the unit algebra
+
+=== scaled unit
+a unit multiplied by a scale prefix (kilo, milli, …); the scale is a factor, not a distinct dimension
+
+=== affine unit
+a unit whose conversion to its dimension's canonical unit carries a non-zero offset (degree Celsius, degree Fahrenheit); an affine unit breaks the multiplication ring and is handled explicitly, never implicitly
+
+=== dimension vector
+the exponent tuple over the SI base dimensions a unit expression reduces to
+
+=== coherence
+the rule that an operation's operands carry the dimensions the operation defines; coherence is checked on dimension vectors, mechanically
+
+=== conversion
+the registered mapping between two unit expressions of the same dimension, by factor, or by factor and offset for affine units
+
+=== typed error
+one of the diagnostic values of clause 6, constructed with the identifying data and raised at the evaluation boundary

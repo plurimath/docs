@@ -1,0 +1,14 @@
+[bibliography]
+== Normative references
+
+* [[[pm1001,nofetch(PM 1001 (math model))]]] of this series — the formula tree.
+* [[[pm1002,nofetch(PM 1002 (uncertainty model))]]] of this series — the uncertainty nodes this document evaluates.
+* [[[pm1004,nofetch(PM 1004 (evaluation))]]] of this series — the arithmetic evaluator this document extends; its contracts hold.
+* [[[pm1009,nofetch(PM 1009 (quantity type system))]]] of this series — the quantity types, the unit algebra, the coherence checks.
+* [[[pm1010,nofetch(PM 1010 (expression language))]]] of this series — the grammar and the typed AST.
+* [[[jcgm100,nofetch(JCGM 100:2008 (GUM))]]] — the propagation law, the type A and B evaluations.
+* [[[jcgm100amd1,nofetch(JCGM 100:2008/Amd.1:2026)]]] — the nonlinearity note, the second-order terms, the H.1.7 rewrite.
+* [[[jcgm101,nofetch(JCGM 101 (MCM))]]] — the Monte Carlo fallback the verdicts name.
+* [[[jcgm106,nofetch(JCGM 106)]]] — the decision-rule framing PM 1012 builds on.
+* [[[gum6,nofetch(GUM-6:2020)]]] — the LPU-adequacy check (Annex F) and the GUF₂ terminology.
+* [[[cc36813,nofetch(CalConnect 36813 (numeric contract))]]] of the UnitsML series — the exact-decimal discipline of the data.

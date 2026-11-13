@@ -1,0 +1,9 @@
+== Conventions
+
+=== General
+
+Evaluations are written as: tree, bindings, result — as in PM 1004, extended by the types of PM 1009. Propagations are written as: expression, input quantities with their uncertainties, result with its combined uncertainty and its verdict. Errors are written as their class names of clause 9 with the identifying data.
+
+=== Examples
+
+Examples carry an *Expected outcome* paragraph stating the quantities yielded, the propagated uncertainty, the verdict, or the error raised. Numbers are exact where they are exact; the uncertainty values carry their stated decimals unchanged.

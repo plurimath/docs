@@ -1,0 +1,16 @@
+== Introduction
+
+A limit states a requirement; an evaluation produces a result; the constraint evaluation is the step that turns the pair into a **verdict** — satisfied or not, with the signed residual that shows how far from the boundary, in the limit's own unit, and with the conditional zone stated where the uncertainty leaves the decision in doubt.
+
+The design centre is the decision rule stated as data. Simple acceptance and guarded acceptance (the guard band = k·U, the ILAC-G8 family) are the two rules this document specifies; the rule travels with the verdict, because the same boundary passes under one rule and lands conditional under the other, and a verdict without its rule is an answer without its question.
+
+[example]
+The limit `L ≤ 100,0 V` against the result `99,7 V ± 0,5 V` under guarded acceptance at k = 2.
+*Expected outcome.* the conditional verdict: the result passes the boundary but sits inside the guard band `± 1,0 V` — the conditional zone is a first-class result, never a silent pass.
+
+=== The design forces
+
+* *The rule travels with the verdict.* Every verdict names its decision rule and its guard band.
+* *The residual is the evidence.* The signed distance to the boundary, in the limit's unit, per the accuracy classes.
+* *The conditional is first-class.* The guard-band zone is a verdict kind, not a warning.
+* *The trace renders.* The substitution steps render through the existing surfaces — the explanation is the renderer's output too.

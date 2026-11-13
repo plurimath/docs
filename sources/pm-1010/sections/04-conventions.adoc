@@ -1,0 +1,9 @@
+== Conventions
+
+=== General
+
+Expressions are written in the ordinary notation: `x^2 + 1`, `(a and b) implies c`, `mean_of(series)`. The operator table of Annex A states every operator with its argument types, result type, precedence level and error behaviour.
+
+=== Examples
+
+Examples carry an *Expected outcome* paragraph stating the parse, the type-check result, or the round-trip outcome. Grammar excerpts are in PARG form as compiled.

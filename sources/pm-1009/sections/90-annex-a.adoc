@@ -1,0 +1,17 @@
+== Annex A: the dimension table
+
+The SI base dimensions and the derived dimensions this document's corpus exercises:
+
+|===
+|Dimension |Vector entry |Coherent unit
+
+|length |L |m
+|mass |M |kg
+|time |T |s
+|electric current |I |A
+|thermodynamic temperature |Θ |K
+|amount of substance |N |mol
+|luminous intensity |J |cd
+|===
+
+Derived units reduce: `V` to `kg·m^2·s^−3·A^−1`; `W` to `kg·m^2·s^−3`; `N` to `kg·m·s^−2`; `Hz` to `s^−1`.

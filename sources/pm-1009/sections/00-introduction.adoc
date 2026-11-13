@@ -1,0 +1,22 @@
+== Introduction
+
+A number without a unit is an answer to a different question. `1.2` is a number; `1,2 V` is a measurement — and the questions a measurement answers ("is it within the limit?", "does it combine with this other result?", "what does it render as?") all need the unit, and the coherence rules that guard the unit, to travel with the number.
+
+This document specifies that carrier. A quantity value binds one number — its accuracy class carried per PM 1004 — to one unit expression, and optionally to one uncertainty in the model of PM 1002. The unit expression is an algebra: units multiply, divide and scale, and every unit expression reduces to a dimension vector against which coherence is checked mechanically.
+
+The design centre is the typed refusal. Dimension mismatches, unknown unit codes and impossible conversions are not runtime accidents to be trapped; they are values — diagnostics carrying the expected and the received — produced by the same total-evaluation discipline PM 1004 states for arithmetic. Nothing here computes a plausible answer and hopes.
+
+[example]
+Multiplying `3 kV` by `2 A`.
+*Expected outcome.* the quantity `6 kW` — the unit algebra reduces `kV·A` through the dimension vectors to the power unit at the kilo scale, and the number multiplies per the accuracy classes.
+
+=== The design forces
+
+* *Coherence is mechanical.* Dimension vectors decide; prose never does.
+* *Units are data.* Every unit name resolves through the registered authority (the UnitsML codes); an unregistered unit is a typed error naming the code.
+* *The number keeps its class.* The accuracy class of PM 1004 travels on the quantity; the unit algebra multiplies and divides classes exactly as it multiplies and divides units.
+* *Errors are values.* The diagnostics of clause 6 are constructed results, raised only at the evaluation boundary — the same boundary discipline as PM 1004's.
+
+=== The precedents
+
+The design descends from systems that carry units through arithmetic: Wolfram Language's `Quantity` composes units through operations and checks coherence mechanically (`CompatibleUnitQ`) — this document's clause 7; its accuracy/precision distinction — digits after the point against total significant digits, tracked through every operation — is the refined form of the accuracy classes this document carries per PM 1004. This document states where it follows that precedent and where it is stricter: the typed refusals of clause 6 replace the message-and-continue behaviour, because a metrology pipeline must not continue into a wrong answer.

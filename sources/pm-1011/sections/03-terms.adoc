@@ -1,0 +1,24 @@
+== Terms and definitions
+
+For the purposes of this document, the terms and definitions of PM 1004 apply, and the following apply.
+
+=== quantity evaluation
+an evaluation whose operands and results are quantity values of PM 1009
+
+=== sensitivity coefficient
+the partial derivative of the evaluated expression with respect to one input quantity, evaluated at the bound point
+
+=== combined standard uncertainty
+the standard uncertainty of the result, propagated from the input components under clause 6
+
+=== LPU-adequacy verdict
+the first-class result stating whether the law of propagation of uncertainty is validated for the evaluation, or that MCM must be used instead
+
+=== GUF₂ mode
+the second-order evaluation mode: the corrected estimate and the second-order correction to the combined standard uncertainty, for declared-normal inputs
+
+=== series
+the ordered quantity values with an optional index axis, per clause 8
+
+=== serialized evaluation
+the pure-function interface of clause 10: the request in, the response out, no environment

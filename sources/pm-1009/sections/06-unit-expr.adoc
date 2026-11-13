@@ -1,0 +1,28 @@
+== The unit expression algebra
+
+=== The forms
+
+A unit expression is one of:
+
+* a **base or derived unit symbol** — `m`, `kg`, `s`, `A`, `K`, `mol`, `cd`, and the registered derived units (`V`, `W`, `Hz`, `N`, `Pa`, …);
+* a **scaled unit** — a scale prefix (kilo, milli, micro, …) applied to a unit symbol (`kV`, `mm`, `µm`);
+* a **product** — `UnitExpr · UnitExpr`;
+* a **quotient** — `UnitExpr / UnitExpr`;
+* an **integer power** — `UnitExpr^n`, n a non-zero integer; the zero power is the dimensionless unit `1`;
+* the **dimensionless unit** — `1`.
+
+=== The algebra
+
+Unit expressions form a commutative ring over the dimension vectors and a multiplicative group over the scale factors, with one stated exception: the affine units of clause 7 are excluded from implicit multiplication and division. Multiplying `degC` by anything is a typed error (`AffineUnitInAlgebra`), not a silent treatment of the offset as a factor.
+
+=== Reduction
+
+Every unit expression reduces to a canonical pair: one dimension vector (clause 7) and one scale factor relative to the coherent SI unit of that dimension (`kV` reduces to `V·10^3`). Two unit expressions are the same unit exactly when their canonical pairs are equal; `V·A` and `W` are the same unit at the same scale only when the registered derived-unit relation says so, and otherwise they are different units of the same dimension — stated, never silently normalised.
+
+[example]
+Reducing `kV·A`.
+*Expected outcome.* dimension vector `[1, 1, −3, −1, …]` (the power dimension), scale factor `10^3` relative to `W` — the quantity is a kilowatt-class quantity.
+
+=== The registry
+
+Every unit symbol resolves through the registered authority — the UnitsML codes. An unregistered symbol constructs `UnknownUnit{code}`. Registration is data: the register carries the symbol, its dimension contribution, its scale and its authority code, and nothing else about the unit.

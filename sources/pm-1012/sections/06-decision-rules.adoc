@@ -1,0 +1,23 @@
+== The decision rules
+
+=== Simple acceptance
+
+The comparison decides: the result satisfies the limit or it does not. No guard band, no conditional — a boundary-exact comparison yields a boundary-exact verdict.
+
+=== Guarded acceptance
+
+The guard band is `k·U` — the coverage factor times the expanded uncertainty of the result (PM 1011). The zone `[L − k·U, L]` for an upper limit (mirrored for a lower) is the conditional zone:
+
+* the result below `L − k·U`: satisfied;
+* the result above `L`: not satisfied;
+* the result inside the zone: conditional — the rule does not decide, and the verdict carries the zone.
+
+The k and the rule travel with the verdict; the conditional verdict's evidence is the residual and the band.
+
+[example]
+The limit `L ≤ 100,0 V` against `99,7 V ± 0,5 V`, guarded at k = 2.
+*Expected outcome.* conditional — the result is inside the band `[99,0 V, 100,0 V]`; the signed residual is `−0,3 V` and the band is `1,0 V`.
+
+[example]
+The same limit against `99,0 V ± 0,5 V`, guarded at k = 2.
+*Expected outcome.* conditional at the band's edge — the corpus carries the boundary case and its rule's answer; the accuracy classes decide the edge.

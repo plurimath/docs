@@ -1,0 +1,15 @@
+== Scope
+
+This document specifies:
+
+* the closed grammar: the constructs, their precedence chain, and their argument and result types;
+* the PARG artifact discipline: one grammar source, checksummed artifacts per runtime, and the conformance suites over the same artifact;
+* the typed AST and the static type-check that reports quantity violations before evaluation;
+* the exact-decimal literal preservation and the undefined-aware literal;
+* the round-trip contract: parse → render identity over the corpus for every notation format.
+
+This document does not specify:
+
+* evaluation semantics (PM 1011) — the AST type-checks here, evaluates there;
+* the constraint and decision-rule layer (PM 1012);
+* the serialized request surface (PM 1013).

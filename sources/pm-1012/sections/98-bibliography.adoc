@@ -1,0 +1,5 @@
+[bibliography]
+== Bibliography
+
+* [[[ref-ilac-g8-guidelines-on-decision-rules-and,nofetch(ILAC-G8)]]] — ILAC-G8 — Guidelines on Decision Rules and Statements of Conformity
+* [[[ref-jcgm-106-the-decision-rule-framing-the-g,nofetch(JCGM 106)]]] — JCGM 106 — the decision-rule framing the guarded rule follows

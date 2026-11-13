@@ -1,0 +1,13 @@
+== The static type-check
+
+=== The pass
+
+The type-check walks the AST before evaluation: every operator's argument types and result type are stated in the operator table (Annex A), and a violation — a scale mismatch, a dimension mismatch, a non-boolean condition, a non-series aggregate operand — is reported as a static diagnostic carrying the node and the expected types.
+
+=== The delegation
+
+Quantity-typed operations delegate to the quantity algebra of PM 1009 — the host adds no arithmetic of its own. The static check calls the same reduction and coherence rules; a violation found statically is the same diagnostic the evaluation would construct, found earlier.
+
+=== The guarantee
+
+An AST that passes the static check evaluates without dimension or scale refusals: the dynamic refusals of PM 1011 are the runtime's restatements of static truths, and the corpus carries each static diagnostic as a vector alongside its dynamic counterpart.

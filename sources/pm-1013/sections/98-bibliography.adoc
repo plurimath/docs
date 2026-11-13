@@ -1,0 +1,6 @@
+[bibliography]
+== Bibliography
+
+* [[[ref-pm-1001-1012-of-this-series-the-specifi,nofetch(*PM 1001–1012 of this series*)]]] — *PM 1001–1012 of this series* — the specifications the surface drives
+* [[[ref-parsanol-432-the-declared-per-target-bin,nofetch(parsanol#432)]]] — parsanol#432 — the declared per-target binding layer
+* [[[ref-lutaml-model-1033-the-lml-cross-language,nofetch(lutaml-model#1033)]]] — lutaml-model#1033 — the LML cross-language schema realizations

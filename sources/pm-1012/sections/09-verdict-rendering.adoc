@@ -1,0 +1,9 @@
+== The verdict rendering
+
+=== The trace
+
+The constraint evaluation renders its trace through the existing renderers: the limit as stated, the result as evaluated, the substitution steps of PM 1011's evaluation, the comparison at the boundary, the rule with its guard band, and the verdict with its signed residual. The explanation is the renderer's output — every surface, per PM 1003's interfaces.
+
+[example]
+The rendered trace of a guarded R 60 constraint.
+*Expected outcome.* the limit, the propagated result with its uncertainty, the band, the zone, the conditional verdict and the residual — in MathML, LaTeX and UnicodeMath, per the corpus's render vectors.

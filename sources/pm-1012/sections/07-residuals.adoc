@@ -1,0 +1,13 @@
+== The signed residual
+
+=== The residual
+
+The signed residual is `result − L` in the limit's unit, signed to the satisfied side: negative for a result under an upper limit, positive for a result over it. The residual's accuracy class follows PM 1004's contamination rule; the residual is the verdict's evidence — how far from the boundary, in the limit's own unit.
+
+=== The residual with uncertainty
+
+Under guarded acceptance the residual carries the propagated uncertainty: the verdict states the residual, its expanded uncertainty, and the band — the three numbers the reader needs to check the decision.
+
+[example]
+The limit `L ≥ 10,00 kΩ` against `10,02 kΩ`.
+*Expected outcome.* satisfied; the signed residual `+0,02 kΩ` — exact per the operands' classes.

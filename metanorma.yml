@@ -10,6 +10,11 @@ metanorma:
       - sources/pm-1006/document.adoc
       - sources/pm-1007/document.adoc
       - sources/pm-1008/document.adoc
+      - sources/pm-1009/document.adoc
+      - sources/pm-1010/document.adoc
+      - sources/pm-1011/document.adoc
+      - sources/pm-1012/document.adoc
+      - sources/pm-1013/document.adoc
 
   collection:
     organization: "Plurimath"

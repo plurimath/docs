@@ -1,0 +1,14 @@
+== Introduction
+
+PM 1004 built the evaluator and stated, in its clause 6, what it refuses: an uncertainty node makes the whole evaluation raise `UnsupportedExpressionError`. That refusal was the contract of an arithmetic evaluator. This document lifts it — with the semantics the refusal reserved — and adds what the semantic tree needs around it: quantities as operands, uncertainty propagation under GUM, the series that feed the type-A statistics, and the second-order modes the 2026 amendment introduces.
+
+=== The precedents and the divergences
+
+The design descends from the systems that evaluate with uncertainty and units. Wolfram's `Around` propagates first-order through arithmetic and displays ± — the presentation and the first-order law are the same here, per clause 6. Python's `uncertainties` and Julia's `Measurements` carry first-order linear propagation through operator overloading — the same linear law with the correlation term omitted, which this document states explicitly and treats as an extension (clause 6.4). MATLAB evaluates on platform doubles and lets `NaN` and `Inf` propagate silently — this document states the divergence deliberately: the strict contract of PM 1004 holds, and no non-finite value leaks (clause 5). Where the systems answer with messages, this document answers with typed diagnostics; the corpus pins each.
+
+=== The design forces
+
+* *The strict contract travels.* Quantities, propagation and series follow PM 1004's error discipline: total, typed, deterministic, replayable.
+* *The units decide.* Coherence per PM 1009 precedes every numeric fold; the unit algebra supplies the derived units the results carry.
+* *The amendment is first-class.* The LPU-adequacy verdict and the second-order mode are results and modes, not warnings.
+* *The series close the loop.* Type-A uncertainty computes from the series of PM 1011's clause 8, and the corpus pins the loop end to end.

@@ -1,0 +1,18 @@
+== Terms and definitions
+
+For the purposes of this document, the following terms and definitions apply.
+
+=== embedded consumer
+a host that drives the evaluation through the serialized surface — the Primmel kernel, a document pipeline, a TS application
+
+=== serialized request
+the JSON document stating the expressions, the bindings, the unit registers, the uncertainty components and the limits
+
+=== serialized response
+the JSON document stating the results, the diagnostics, the verdicts and the version stamps
+
+=== parity
+the property that identical requests yield byte-identical responses across the runtimes
+
+=== drift
+a cross-runtime difference on an identical request — nonconformance, arbitrated by the corpus

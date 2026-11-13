@@ -1,0 +1,13 @@
+== The round-trip contract
+
+=== Parse, render, parse
+
+Rendering the typed AST to any notation format and re-parsing the render yields an AST equal to the original, for every expression in the corpus. The round-trip is the preservation contract: exact decimals, quoted units, uncertainty markers and the undefined literal survive every format the series carries.
+
+=== The lossy formats, stated
+
+Where a notation cannot carry a construct, the render states the loss (the format's interface document of PM 1003 carries the per-format statements); the round-trip claim applies to the formats that carry the construct, and the corpus marks each vector with the formats it round-trips.
+
+[example]
+`2.10 + x` rendered to the formats and re-parsed.
+*Expected outcome.* the trailing zero survives the render and the re-parse in every round-tripping format; the corpus asserts the AST equality per format.

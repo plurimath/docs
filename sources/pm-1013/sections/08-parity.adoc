@@ -1,0 +1,13 @@
+== The parity claims
+
+=== The claims
+
+Identical requests yield byte-identical responses across the ruby, typescript and wasm bindings — for the results, the diagnostics, the verdicts and the stamps (the stamps identical per the pinned versions).
+
+=== The arbitration
+
+A cross-runtime difference is drift: nonconformance, arbitrated by the corpus generation the request names. The corpus gains a vector per observed drift, per the append-only discipline.
+
+=== The scope
+
+The parity claims hold over the corpus generations and the stated precision of the accuracy classes; a runtime's platform-limited results at a stated guard precision are equal when their statements are equal — the statement is the contract, per PM 1004's accuracy classes.

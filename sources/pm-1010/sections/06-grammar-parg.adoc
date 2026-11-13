@@ -1,0 +1,13 @@
+== The grammar artifact
+
+=== One source
+
+The grammar is one PARG source (`expressions.parg`). Parsanol compiles it to one artifact per runtime — ruby, rs, wasm/ts — each checksummed, in the amath artifact discipline. The artifact is the acceptance: two runtimes accept exactly what the artifact accepts.
+
+=== The suites
+
+The `.pgtest` suites ride the same artifact: source, AST and result per case, replayed by every runtime. A runtime whose replay drifts from the artifact's AST is non-conforming — the suite is the cross-implementation normative gate, and no implementation hand-writes the precedence climbing.
+
+=== The checksums
+
+The artifact checksums are published with the artifact. A consumer pins the checksum; a changed checksum is a changed grammar — a new edition of this document, not a silent update.

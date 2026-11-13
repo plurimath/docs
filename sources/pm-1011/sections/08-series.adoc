@@ -1,0 +1,17 @@
+== The series and the aggregations
+
+=== The series value
+
+A series is the ordered quantity values with an optional index axis (the time, the position, the temperature) and one unit. Every element carries the unit; a mixed-unit series is a construction refusal per PM 1009's coherence.
+
+=== The aggregations
+
+The aggregations over a series: `count_of`, `min_of`, `max_of`, `mean_of`, `stddev_of`, and the index access `series.at(t)` with the predicate slice. The statistics follow JCGM 100 §4.2.3: the experimental standard deviation is the n−1 form, and `mean_of` carries the series' unit.
+
+=== The type-A loop
+
+The type A standard uncertainty derives from the series: the experimental standard deviation of the mean, `s/√n`, as a PM 1002 standard-category uncertainty at the series' unit. The loop closes in the corpus: a series, its type A uncertainty, and a propagation through the expression — one vector, end to end.
+
+[example]
+`stddev_of(series)` and the type A standard uncertainty of `mean_of(series)`.
+*Expected outcome.* the experimental standard deviation per JCGM 100 §4.2.3, and the standard uncertainty `s/√n` — both at the series' unit, both with their accuracy classes per PM 1004.

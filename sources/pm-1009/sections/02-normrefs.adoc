@@ -1,0 +1,10 @@
+[bibliography]
+== Normative references
+
+* [[[pm1001,nofetch(PM 1001 (math model))]]] of this series — the formula tree this document's quantities attach to.
+* [[[pm1002,nofetch(PM 1002 (uncertainty model))]]] of this series — the uncertainty model referenced by the optional uncertainty field.
+* [[[pm1004,nofetch(PM 1004 (evaluation))]]] of this series — the accuracy classes (clause 7) that every number in a quantity value carries.
+* [[[sibrochure,nofetch(The International System of Units (SI Brochure))]]], BIPM — the definitions of the SI base and derived units.
+* [[[jcgm200,nofetch(JCGM 200 (VIM))]]] — the vocabulary of quantities and units this document's terms follow.
+* [[[unitsml,nofetch(UnitsML)]]], NIST — the unit codes this document registers as authority references.
+* [[[cc36813,nofetch(CalConnect 36813 (numeric contract))]]] of the UnitsML series — the exact-decimal discipline of the data.

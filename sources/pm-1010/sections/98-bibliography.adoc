@@ -1,0 +1,6 @@
+[bibliography]
+== Bibliography
+
+* [[[ref-pm-1004-of-this-series-the-arithmetic-c,nofetch(*PM 1004 of this series*)]]] — *PM 1004 of this series* — the arithmetic chain this grammar extends
+* [[[ref-parsanol-ruby-the-parg-toolchain-and-the,nofetch(parsanol-ruby)]]] — parsanol-ruby — the PARG toolchain and the artifact discipline
+* [[[ref-calconnect-36813-the-exact-decimal-disci,nofetch(CalConnect 36813)]]] — CalConnect 36813 — the exact-decimal discipline the literals preserve

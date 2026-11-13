@@ -1,0 +1,26 @@
+== The constructs
+
+=== The surface
+
+The language states exactly these constructs:
+
+* the literals: exact-decimal numbers, booleans, the undefined-aware literal, quoted unit and string forms;
+* the bound names;
+* the arithmetic operators over quantities and numbers;
+* the comparisons and the boolean operators `and`, `or`, `xor`, `implies`;
+* the conditional;
+* the iteration over declared ranges with explicit iterators;
+* the aggregate functions and the series access of PM 1011;
+* the parenthesised group.
+
+Nothing else parses. A construct outside this list is refused by name — the parser states the nearest accepted construct, not a bare offset.
+
+=== The literals
+
+* an exact-decimal literal preserves its written digits: `2.10` parses to a value whose statement carries the trailing zero, and rendering back writes `2.10`;
+* the undefined-aware literal parses to the undefined value — distinct from zero, distinct from any error, and refused by every arithmetic operator with the typed error of clause 8;
+* quoted forms (`"kg"`, `"µm"`) parse as the quoted content — the unit and string channel of PM 1003.
+
+=== The conditionals and iteration
+
+The conditional evaluates its condition's boolean type statically; a non-boolean condition is a static type error. The iteration binds its iterator explicitly for its body's extent; the aggregate functions consume the series of PM 1011 and refuse non-series operands statically.

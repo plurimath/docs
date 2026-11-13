@@ -1,0 +1,9 @@
+[bibliography]
+== Bibliography
+
+* [[[ref-jcgm-101-2008-supplement-1-the-monte-car,nofetch(JCGM 101:2008)]]] — JCGM 101:2008 — Supplement 1, the Monte Carlo method
+* [[[ref-jcgm-106-the-role-of-the-decision-rules,nofetch(JCGM 106)]]] — JCGM 106 — the role of the decision rules
+* [[[ref-gum-5-2026-gum-6-2020-the-second-order-t,nofetch(GUM-5:2026, GUM-6:2020)]]] — GUM-5:2026, GUM-6:2020 — the second-order terminology and the LPU-adequacy check
+* [[[ref-wolfram-language-documentation-around-th,nofetch(Wolfram Language documentation)]]] — Wolfram Language documentation — `Around`, the uncertainty propagation precedent
+* [[[ref-python-uncertainties-julia-measurements,nofetch(Python `uncertainties`, Julia `Measurements`)]]] — Python `uncertainties`, Julia `Measurements` — the first-order linear propagation precedents
+* [[[ref-matlab-the-platform-double-evaluation-mo,nofetch(MATLAB)]]] — MATLAB — the platform-double evaluation model this document's strict contract deliberately diverges from

@@ -1,0 +1,22 @@
+        == The typed errors
+
+        === The diagnostics as data
+
+        The quantity algebra's failures are diagnostic values, constructed with their identifying data and carried like results. At the evaluation boundary (PM 1011) they raise as the corresponding typed errors; in construction and reduction they are the returned diagnostic. There is no silent wrong answer.
+
+        === The errors
+
+.The quantity errors
+[cols="2,4", options="headers"]
+|===
+|Error |Carries
+
+|`DimensionMismatch` |`expected`, `got` — the two dimension vectors
+|`UnitNotConvertible` |`from`, `to` — the two unit expressions
+|`UnknownUnit` |`code` — the unregistered symbol
+|`AffineUnitInAlgebra` |`unit`, `operation` — the affine unit and the operation refused
+|===
+
+        === The corpus
+
+        The corpus carries one vector per error per constructible site: construction, reduction, comparison, conversion and (in PM 1011) evaluation. The diagnostic's carried data is asserted in the vector, not just its class.

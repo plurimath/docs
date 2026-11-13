@@ -1,0 +1,26 @@
+        == The error extensions
+
+        === The new refusals
+
+        The evaluation errors extend PM 1004's set. The new refusals, each with its carried data:
+
+.The evaluation processing errors
+[cols="2,4", options="headers"]
+|===
+|Error |Carries
+
+|`DimensionMismatch` |`expected`, `got` — per PM 1009
+|`UnitNotConvertible` |`from`, `to` — per PM 1009
+|`UnknownUnit` |`code` — per PM 1009
+|`AffineUnitInAlgebra` |`unit`, `operation` — per PM 1009
+|`NonlinearityNotValidated` |the verdict naming MCM — the LPU inadequacy
+|`InputNotNormal` |the input whose declared distribution gates GUF₂ out
+|`NotASeries` |the non-series operand of an aggregate
+|`UndefinedOperand` |the operator that refused the undefined literal
+|===
+
+        PM 1004's eight errors hold unchanged for the arithmetic core. The error corpus of PM 1004's clause 11 extends: one vector per new error per constructible site, the message shapes stable within the edition.
+
+        === The contract travels
+
+        The strict contract of PM 1004 — no NaN, no infinity, no partial evaluation, no second chance — holds for every extension in this document. The propagated result that would be non-finite raises `NonFiniteResultError` at the boundary, per PM 1004.

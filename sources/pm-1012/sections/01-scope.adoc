@@ -1,0 +1,15 @@
+== Scope
+
+This document specifies:
+
+* the constraint evaluation: the limit expression, the result operands, and the comparison at the boundary;
+* the decision rules: simple acceptance and guarded acceptance (guard band = k·U, the ILAC-G8 family), and the conditional zone as a first-class verdict kind;
+* the signed residual: the distance to the boundary in the limit's unit, under the accuracy classes of PM 1004;
+* the applicability guards: the `when` expressions evaluated through the same path;
+* the verdict rendering: the evaluation trace as a rendered output.
+
+This document does not specify:
+
+* the propagation that produces the uncertainty (PM 1011);
+* the conformity assessment's sampling plans and population statements — the verdict here is about one evaluated result against one stated limit;
+* the legal metrology's acceptance authorities — the rules are stated as data and chosen by the request.

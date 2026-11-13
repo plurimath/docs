@@ -1,0 +1,35 @@
+== The quantity value
+
+=== The model
+
+[source,lml]
+----
+lml "1.0"
+
+models QuantitySystem {
+
+  class QuantityValue {
+    attribute value, Number[1]
+    attribute unit, UnitExpr[1]
+    attribute uncertainty, Uncertainty[0..1]
+  }
+}
+----
+
+The `value` is a number with its accuracy class per PM 1004, clause 7: exact (integer, rational) or limited (float, guard-digit decimal). The `unit` is a unit expression of clause 6. The `uncertainty`, where present, is one node of PM 1002 — its category, its fields and its exact decimals as that document defines them; this document adds no uncertainty form of its own.
+
+=== Construction
+
+A quantity value is constructed from a number and a unit expression, or refused with a typed error of clause 6: an unregistered unit code constructs `UnknownUnit{code}` as the value's diagnostic — the diagnostic is the constructed result, not an exception in the data path.
+
+[example]
+Constructing `1,2 V` with an uncertainty of `0,06 V` standard.
+*Expected outcome.* one quantity value: `1,2` (limited, per its stated accuracy), unit `V`, uncertainty the PM 1002 standard-category node carrying `0,06` at unit `V`.
+
+=== The number is never unitless by default
+
+A quantity value's unit is stated. There is no implicit unitless quantity: a bare number in the expression language of PM 1010 constructs a dimensionless quantity (unit expression `1`), which is a stated unit, not an absence.
+
+=== Equality and comparison
+
+Two quantity values compare only at the same dimension. Comparison across scales of the same dimension converts one operand to the other's scale first (`3 km` compared to `2500 m` converts the kilometre value), and the numeric comparison follows PM 1004's accuracy classes: comparisons at a stated boundary are evaluated exactly where the operands are exact, per PM 1004's boundary rule.
