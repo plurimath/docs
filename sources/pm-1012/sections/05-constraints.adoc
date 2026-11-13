@@ -1,0 +1,34 @@
+== The constraint evaluation
+
+=== The contract
+
+`evaluate_constraint(limit, result, rule) → ConstraintResult` — the limit expression evaluated per PM 1011 against the result operands, the comparison at the boundary under the accuracy classes of PM 1004, and the verdict constructed with the rule, the signed residual and the diagnostics.
+
+[source,lml]
+----
+lml "1.0"
+
+models Constraints {
+
+  class ConstraintResult {
+    attribute verdict, Verdict[1]
+    attribute residual, QuantityValue[0..1]
+    attribute rule, DecisionRule[1]
+    attribute diagnostics, Diagnostic { cardinality 0..n }
+  }
+
+  enum Verdict {
+    value "satisfied"
+    value "not-satisfied"
+    value "conditional"
+  }
+}
+----
+
+=== The comparison at the boundary
+
+The comparison follows PM 1004's boundary rule: exact operands compare exactly; limited operands compare per their declared precision — `<=` at the limit must be deterministic. A boundary comparison that cannot be decided at the stated precision raises the typed refusal per PM 1004, not a guessed verdict.
+
+=== The dimension coherence
+
+The limit and the result must share the dimension: the coherence check of PM 1009 precedes the comparison, and the mismatch is `DimensionMismatch` — the limit's unit is the residual's unit.

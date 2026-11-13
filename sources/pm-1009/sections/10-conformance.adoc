@@ -1,0 +1,13 @@
+== Conformance
+
+=== The conformance class
+
+An implementation conforms to this document when it constructs, reduces, compares and converts quantity values exactly as clauses 5 to 8 state, produces the typed errors of clause 9 with their carried data, and replays the corpus vectors of this document identically.
+
+=== The acceptance vectors
+
+* `kV·A` reduces to the power dimension at the kilo scale;
+* `3 km` compares to `2500 m` after conversion, exactly;
+* `3 m` and `2 s` refuse with `DimensionMismatch` carrying both vectors;
+* the affine traps (difference vs absolute) return the stated answers, and the corpus pins them;
+* an unregistered symbol refuses with `UnknownUnit` naming the code.

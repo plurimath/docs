@@ -1,0 +1,9 @@
+== Conventions
+
+=== General
+
+Requests and responses are shown as JSON shapes with their required fields; the field names are normative, the example values are illustrative.
+
+=== Examples
+
+Examples carry an *Expected outcome* paragraph stating the response field or the parity claim exercised.

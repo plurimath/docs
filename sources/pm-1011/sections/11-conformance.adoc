@@ -1,0 +1,16 @@
+== Conformance
+
+=== The conformance classes
+
+An implementation conforms to this document at the class its corpus generation pins:
+
+* the *arithmetic class* — PM 1004's corpus, unchanged;
+* the *quantity class* — the construction, coherence and algebra vectors of PM 1009 plus the quantity evaluations of this document's clause 5;
+* the *propagation class* — the GUM worked examples (H.1–H.6) reproduced to the documented precision, the correlation vectors, the coverage and dof vectors;
+* the *second-order class* — the GUF₂ vectors, the normality-gate refusals, the LPU-adequacy verdicts;
+* the *series class* — the aggregations and the type-A loop vectors;
+* the *serialized class* — the JSON request/response parity vectors across the runtimes.
+
+=== The acceptance
+
+A conformance claim names the classes and the corpus generations. The classes are independent: arithmetic-only conformance is PM 1004's, unchanged; each new class stands on PM 1009 and this document's clauses for that class.

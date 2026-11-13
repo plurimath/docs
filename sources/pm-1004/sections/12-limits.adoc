@@ -22,4 +22,4 @@ Each non-goal is a contract someone will eventually ask for. Stating them keeps 
 
 === The road in
 
-When propagation arrives, it arrives in this document: its operations, its error extensions if any, its corpus, its conformance class — the same structure this edition uses for arithmetic. The uncertainty nodes of PM 1002 were built to carry everything propagation will need: category, fields, exact decimals. Nothing in the model blocks the road; the evaluator simply has not walked it yet.
+When propagation arrives, it arrives in this document: its operations, its error extensions if any, its corpus, its conformance class — the same structure this edition uses for arithmetic. The uncertainty nodes of PM 1002 were built to carry everything propagation will need: category, fields, exact decimals. Nothing in the model blocks the road; the evaluator simply has not walked it yet. The successor edition is PM 1011 — the extension it states (the quantity operands, the lifted uncertainty-node refusal, the propagation, the series) amends this document's clauses in place, and PM 1004's contracts hold unchanged for the arithmetic core it covers.

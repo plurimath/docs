@@ -1,0 +1,9 @@
+== Conventions
+
+=== General
+
+Constraints are written as the limit against the result: `L ≤ 100,0 V`, the result, the rule. Verdicts are written as the verdict kind, the residual, and the rule.
+
+=== Examples
+
+Examples carry an *Expected outcome* paragraph stating the verdict kind, the signed residual, and the rule.

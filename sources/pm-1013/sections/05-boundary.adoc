@@ -1,0 +1,13 @@
+== The boundary
+
+=== The host owns
+
+The host parses the model, resolves the bindings and builds the scope: the quantities, their provenance, the requirements the constraints state.
+
+=== plurimath owns
+
+The expression parsing (through the grammar artifact of PM 1010), the static type-check, the evaluation and propagation (PM 1011), the constraint evaluation (PM 1012), the diagnostics as data, and the rendering of the results and the traces.
+
+=== The seam
+
+The seam is the serialized request: everything on the host side arrives as data; everything on the plurimath side returns as data. The host never reaches into the tree; plurimath never reads the host's environment.

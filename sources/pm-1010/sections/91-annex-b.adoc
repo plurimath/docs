@@ -1,0 +1,5 @@
+== Annex B: the pgtest form
+
+A `.pgtest` case is the triple: the source, the artifact's AST, and the result where the case evaluates. The suites ride the grammar artifact; a runtime replays the triple or refuses.
+
+The form is data: the source as written, the AST as the artifact's parse states it, the result as PM 1011's evaluation states it — three fields, each checksummed with the artifact version. A case that refuses carries the diagnostic in the third field; refusals replay exactly like results.

@@ -1,0 +1,21 @@
+== The verdict and the second-order mode
+
+=== The LPU-adequacy verdict
+
+Every propagation carries a verdict: the law of propagation of uncertainty is adequate for the evaluation, or it is not. The adequacy check is the comparison of the first-order result against a reference — the 2N-point comparison of GUM-6:2020 Annex F, or the MCM validation of JCGM 101 §7.9.5, per the stated mode. Where the check fails, the verdict is `LPU not validated; use MCM` — carried as the result, and the wrong first-order number is not presented as an answer.
+
+=== The nonlinearity gate
+
+Per JCGM 100:2008/Amd.1:2026, 4.1.4 NOTE 1: where the nonlinearity of f is significant, the evaluation applies MCM or includes the higher-order terms. The gate is declared: the input normality declarations of the request, checked per clause 6's input forms.
+
+=== The GUF₂ mode
+
+The second-order mode (GUF₂ per GUM-5:2026 Example 7): the corrected estimate — the first-order estimate plus the correction `(1/2) Σᵢ (∂²f/∂xᵢ²) u²(xᵢ)` — and the second-order correction to the combined uncertainty squared, per the note to 5.1.2 applied to the expression. The mode is available for **declared-normal inputs only**; the Hessian terms require the second derivatives over the tree. Non-normal inputs refuse the mode with `InputNotNormal` and the verdict names MCM.
+
+[example]
+The H.1.7-class evaluation under GUF₂.
+*Expected outcome.* the corrected estimate with the second-order terms stated, and the combined uncertainty carrying both orders — per the derivation the corpus documents.
+
+=== The MCM boundary
+
+MCM itself is not specified here — JCGM 101 is the reference. The boundary is stated: the request names MCM, the evaluator refuses the analytic modes and reports the verdict; the Monte Carlo run is the caller's, and its summary returns as the result's uncertainty per PM 1002's encodings.

@@ -1,0 +1,9 @@
+== Annex B: the authority codes
+
+Every unit symbol in the corpus carries its UnitsML authority code. The mapping is data in the register; this annex records the mapping's shape:
+
+* the symbol (`kV`), the scale (`kilo`), the base (`V`), and the code (`unitsml(V)`);
+* the reduction the register carries (the dimension contribution and the factor);
+* the authority reference the corpus asserts.
+
+An implementation that resolves a symbol the register does not carry refuses with `UnknownUnit`; it does not guess spellings.

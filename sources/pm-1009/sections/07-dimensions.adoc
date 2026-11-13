@@ -1,0 +1,26 @@
+== Dimension vectors and coherence
+
+=== The dimensions
+
+The dimension vector is the exponent tuple over the seven SI base dimensions — length, mass, time, electric current, thermodynamic temperature, amount of substance, luminous intensity. The dimensionless unit `1` is the zero vector.
+
+=== The operation rules
+
+* multiplication adds the vectors; division subtracts them; an integer power scales them;
+* comparison and addition require equal vectors — the coherence rule. The check is mechanical and precedes the numeric comparison;
+* a quantity's unit and its uncertainty's unit (where an uncertainty is present) must share the dimension; the uncertainty field states its unit per PM 1002, and this document requires equality of dimension with the value's unit.
+
+[example]
+Adding `3 m` and `2 s`.
+*Expected outcome.* `DimensionMismatch{expected: [1,0,0,…], got: [0,0,1,…]}` — the diagnostic carries both vectors, constructed as the result. Nothing adds.
+
+[example]
+Dividing `6 kW` by `2 A`.
+*Expected outcome.* the quantity `3 kV`: the vectors subtract to the voltage dimension, the scales divide, the numbers divide per the accuracy classes.
+
+=== Affine units
+
+An affine unit converts to its dimension's canonical unit by factor and offset. Two rules hold without exception:
+
+* *differences are not values*: the difference of two quantities in an affine unit is a quantity in the affine unit's difference unit (a temperature difference in `degC` is a plain difference quantity — its dimension is temperature, its conversion is by factor alone, no offset);
+* *affine units do not enter the algebra silently*: multiplication, division and powers over affine operands are the typed error `AffineUnitInAlgebra`. Conversion to the canonical unit first, then the algebra, is the stated path.

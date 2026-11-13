@@ -1,0 +1,13 @@
+== Conformance
+
+=== The conformance class
+
+An implementation conforms to this document when it evaluates constraints under both stated rules, produces the three verdict kinds with the rule and the signed residual carried, evaluates the guards through the PM 1011 path, renders the trace per clause 9, and replays the corpus vectors identically.
+
+=== The acceptance vectors
+
+* the R 60 MPE ranges — each with the stated rule, verdict and residual;
+* the R 134 regime laws — the guards and the applicability records;
+* the series creeps — the residuals against the creep limits;
+* the boundary cases — the exact-edge comparisons per the accuracy classes;
+* the conditional-zone cases — the band-edge vectors per the stated k.

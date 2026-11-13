@@ -1,0 +1,60 @@
+= The quantity type system
+:docnumber: 1009
+:edition: 1
+:ref-docnumber: PM 1009:2026(E)
+:copyright-year: 2026
+:revdate: 2026-11-12
+:language: en
+:script: Latn
+:title: Plurimath specifications -- The quantity type system
+:title-fr: Spécifications Plurimath -- Système de types de quantités
+:doctype: standard
+:status: draft-standard
+:committee: Plurimath
+:committee-type: technical
+:mn-document-class: ribose
+:docfile: document.adoc
+:mn-output-extensions: xml,html,doc
+:local-cache:
+:data-uri-image:
+
+include::sections/00-foreword.adoc[]
+
+include::sections/00-introduction.adoc[]
+
+include::sections/01-scope.adoc[]
+
+include::sections/02-normrefs.adoc[]
+
+include::sections/03-terms.adoc[]
+
+include::sections/04-conventions.adoc[]
+
+include::sections/01-scope.adoc[]
+
+include::sections/02-normrefs.adoc[]
+
+include::sections/03-terms.adoc[]
+
+include::sections/04-conventions.adoc[]
+
+include::sections/05-quantity-value.adoc[]
+
+include::sections/06-unit-expr.adoc[]
+
+include::sections/07-dimensions.adoc[]
+
+include::sections/08-conversion.adoc[]
+
+include::sections/09-errors.adoc[]
+
+include::sections/10-conformance.adoc[]
+
+include::sections/90-annex-a.adoc[]
+
+include::sections/91-annex-b.adoc[]
+
+include::sections/92-annex-c.adoc[]
+
+include::sections/98-bibliography.adoc[]
+

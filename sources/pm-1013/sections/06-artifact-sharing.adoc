@@ -1,0 +1,13 @@
+== The artifact sharing
+
+=== The grammar
+
+The expression grammar of PM 1010 compiles per runtime through the PARG toolchain; the declared binding layer of parsanol#432 emits the per-target bindings. The artifacts are checksummed; the consumer pins the checksums and the runtime verifies them at load.
+
+=== The model definitions
+
+The LML definitions of PM 1009 materialize per runtime through the cross-language realizations of lutaml-model#1033. The definitions are the single source: a model type added in one runtime and not another is a drift the corpus catches.
+
+=== The discipline
+
+No runtime hand-writes what an artifact states. A change to the grammar or the model is a new artifact with new checksums — and a corpus generation named for it.

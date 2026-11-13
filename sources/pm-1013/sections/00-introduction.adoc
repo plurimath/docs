@@ -1,0 +1,12 @@
+== Introduction
+
+An embedded consumer does not import a gem; it drives a surface. The contract is the surface: a serialized request (the expressions, the bindings, the unit registers, the uncertainty components, the limits), a serialized response (the results, the diagnostics, the verdicts, the version stamps), and the parity claims that hold the runtimes to the same answers.
+
+The design centre is the pure function. No filesystem, no environment reads, no hidden state: identical requests yield byte-identical responses across the ruby, typescript and wasm bindings, with the engine and grammar versions stamped in every response.
+
+=== The design forces
+
+* *Pure.* The surface is a function; the corpus replays it.
+* *Stamped.* Every response carries the versions that produced it.
+* *One artifact.* The grammar and the model definitions are shared artifacts, checksummed; no runtime hand-writes what the artifact states.
+* *Parity as conformance.* The cross-runtime difference is the drift; the corpus is the arbiter.

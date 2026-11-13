@@ -1,0 +1,13 @@
+== The serialized interface
+
+=== The request
+
+The evaluation is a pure function over a serialized request: the expressions, the value bindings, the unit registers, the uncertainty components, the limits — JSON in, JSON out, no filesystem, no environment reads, per R-C5. Identical requests yield byte-identical results across the ruby, typescript and wasm bindings.
+
+=== The version stamps
+
+Every result embeds the engine version and the grammar-artifact checksum: a result is reproducible against the versions that produced it, and a drift between runtimes is visible in the result itself.
+
+=== The parity
+
+The corpus generations replay identically in every binding; a cross-runtime difference is nonconformance, and the corpus is the arbiter (PM 1013 carries the surface contract).

@@ -1,0 +1,16 @@
+== Scope
+
+This document specifies:
+
+* the quantity value: the typed pair of a number (with its accuracy class per PM 1004) and a unit expression, with an optional uncertainty in the model of PM 1002;
+* the unit expression algebra: SI base and derived units, scaled units, compound units, and the affine scales handled explicitly;
+* the dimension vectors: the reduction of every unit expression to its dimensions and the coherence rules that consume them;
+* the conversion contract: the registered factors and offsets, and the affine traps;
+* the typed errors of the quantity algebra, stated as data.
+
+This document does not specify:
+
+* the uncertainty model itself (PM 1002) — the uncertainty field references it;
+* evaluation and propagation over quantities (PM 1011);
+* the numeric contract of exact decimals in the data (CalConnect 36813) — this document binds numbers whose accuracy class is stated, under PM 1004's algebra;
+* the expression syntax that constructs quantities (PM 1010).

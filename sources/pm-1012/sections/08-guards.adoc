@@ -1,0 +1,9 @@
+== The applicability guards
+
+=== The guard evaluation
+
+The `when` expression — the applicability guard — evaluates through the same path as any boolean expression of PM 1011: the same grammar, the same scope, the same typed refusals. A guard that does not evaluate to a boolean is a static refusal per PM 1010; a guard evaluating to false makes the constraint inapplicable — a stated verdict kind of the request layer, not an error.
+
+[example]
+The guard `when { regime == "R 134" }`.
+*Expected outcome.* evaluated against the scope; the constraint applies or is recorded inapplicable — the applicability is part of the verdict record either way.

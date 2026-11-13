@@ -1,0 +1,14 @@
+== Scope
+
+This document specifies:
+
+* the boundary: what the host owns (the model, the bindings, the scope) and what plurimath owns (the expression parsing, the type-check, the evaluation, the diagnostics);
+* the artifact sharing: the grammar and the LML definitions as checksummed artifacts across the runtimes;
+* the serialized request and response: the JSON surface, its fields, and the version stamps;
+* the parity claims: the cross-runtime byte-identity over the corpus generations, and the drift statement.
+
+This document does not specify:
+
+* the host languages' internal representations — the surface is the contract;
+* the MCM (JCGM 101) — the boundary is stated in PM 1011;
+* the transport — the surface is transport-independent.

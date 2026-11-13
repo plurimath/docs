@@ -1,0 +1,9 @@
+== Annex C: test-suite examples
+
+Each row is one corpus vector with its expected outcome frozen; the corpus is the checkable form and this annex is its reading guide.
+
+* *Construction and refusal.* a quantity constructs from a number and a registered unit; an unregistered symbol constructs the `UnknownUnit` diagnostic with the code carried.
+* *Reduction.* `kV·A`, `mm·kN` and `V/Hz` reduce to their canonical pairs; the reductions are stated in the corpus with the vectors.
+* *Comparison.* same-dimension comparison converts the smaller scale first; cross-dimension comparison refuses with `DimensionMismatch`.
+* *Conversion.* factor conversions of exact operands are exact; affine conversions apply the offset to the value and never to the difference; both traps carry corpus vectors.
+* *The uncertainty field.* a quantity with a PM 1002 uncertainty node carries the node unchanged — no normalisation, no recomputation; the unit-dimension equality of the uncertainty is checked and refused otherwise.

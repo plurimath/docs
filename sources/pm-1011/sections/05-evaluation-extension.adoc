@@ -1,0 +1,21 @@
+== The evaluation, extended
+
+=== The binding domain, extended
+
+PM 1004 binds names to real numbers. This document extends the binding values to the quantity values of PM 1009, the booleans, and the series of clause 8 — and the binding validation extends with them, per PM 1004's entry-validation discipline: a value outside the stated types raises `InvalidBindingError` carrying the key and the value, before the tree is walked.
+
+[example]
+Binding `V → 1,2 V` (a quantity with a standard uncertainty) and `series → 5 observations`.
+*Expected outcome.* accepted; the names bind the quantity and the series.
+
+=== The uncertainty node evaluates
+
+PM 1004's clause 6 refusal — an uncertainty node raises `UnsupportedExpressionError` — is lifted by this document. The evaluation of an uncertainty node yields its quantity per PM 1009: the node's category, fields and exact decimals as PM 1002 states them, carried unchanged. The *propagation* of uncertainties through operations is clause 6.
+
+=== The precedence chain, extended
+
+The evaluation follows the grammar's chain of PM 1010: the logical levels above the comparison level PM 1004 pins. The arithmetic core folds as PM 1004 states; the logical operators evaluate per their truth tables over the booleans; the conditional evaluates its condition and exactly one branch.
+
+=== What is still refused
+
+A `Text` node, a matrix, and every construct outside PM 1010's grammar still raise `UnsupportedExpressionError`. The refusal shrinks to exactly what remains undefined; it does not disappear.

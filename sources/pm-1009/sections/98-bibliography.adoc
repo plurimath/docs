@@ -1,0 +1,7 @@
+[bibliography]
+== Bibliography
+
+* [[[ref-pm-1001-pm-1003-of-this-series,nofetch(*PM 1001, PM 1003 of this series*)]]] — *PM 1001, PM 1003 of this series*
+* [[[ref-calconnect-36812-36819-the-unitsml-serie,nofetch(CalConnect 36812–36819)]]] — CalConnect 36812–36819 — the UnitsML series of which 36813 is the numeric contract
+* [[[ref-jcgm-100-2008-evaluation-of-measurement,nofetch(JCGM 100:2008)]]] — JCGM 100:2008 — Evaluation of measurement data — Guide to the expression of uncertainty in measurement
+* [[[ref-the-si-brochure-bipm-the-definitions-of,nofetch(The SI Brochure, BIPM)]]] — The SI Brochure, BIPM — the definitions of the base units

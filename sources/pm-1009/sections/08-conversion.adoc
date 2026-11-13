@@ -1,0 +1,25 @@
+== Conversion
+
+=== The registered conversions
+
+A conversion is registered between two unit expressions of the same dimension: by factor, or by factor and offset for the affine pairs. The register is data — the factor, the offset where present, and the authority reference (the UnitsML code) — and an unregistered conversion request is the typed error `UnitNotConvertible{from, to}`.
+
+=== The contract
+
+Conversion multiplies the number by the factor and, for affine targets, adds the offset to the converted magnitude — the offset applies to the value, never to a difference. The accuracy class of the result follows PM 1004's contamination rule: a limited operand converts to a limited result at its declared precision; an exact operand converts exactly when the factor is exact (a rational), and to a limited result at the stated guard precision when the factor is irrational.
+
+[example]
+Converting `3 km` to `m`.
+*Expected outcome.* `3000 m`, exact — the factor is the exact rational `1000`.
+
+[example]
+Converting a difference of `5 degC` to `K`.
+*Expected outcome.* `5 K` — the difference converts by factor alone; no offset applies.
+
+[example]
+Converting the absolute quantity `25 degC` to `K`.
+*Expected outcome.* `278,15 K` at the stated precision — the offset applies to the value.
+
+=== The traps, stated
+
+The affine traps are normative, not advisory: adding an offset to a difference, or applying a factor where an offset is registered, are the wrong answers this document exists to prevent. The corpus carries a vector for each trap.

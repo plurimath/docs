@@ -1,0 +1,12 @@
+== Conformance
+
+=== The conformance class
+
+An implementation conforms to this document when it parses exactly the constructs of clause 5 through a checksummed artifact of the PARG grammar, states the precedence chain of clause 7 unchanged, reports the static diagnostics of clause 8 with their carried data, and satisfies the round-trip contract of clause 9 over the corpus.
+
+=== The acceptance vectors
+
+* the exact-decimal, quoted-unit and undefined literals parse and round-trip per clause 5;
+* the precedence chain parses the Annex A examples to the stated trees;
+* every static diagnostic of the corpus carries the node and the expected types;
+* the artifact checksums match the published artifacts, per runtime.

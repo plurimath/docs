@@ -1,0 +1,16 @@
+== Scope
+
+This document specifies:
+
+* the extension of the evaluation to quantity operands: the binding domain, the lifted uncertainty-node evaluation, and the extended precedence chain;
+* the propagation of uncertainty under GUM: the standard law, the correlation terms, the coverage factor and the expanded uncertainty;
+* the LPU-adequacy verdict and the second-order mode (GUF₂), gated and refused as stated;
+* the series value and its aggregations, and the type-A derivation from series to standard uncertainty;
+* the error extensions, and the serialized evaluation interface with its parity contract.
+
+This document does not specify:
+
+* symbolic algebra — the evaluation is over bound scopes only;
+* Bayesian machinery — the MCM of JCGM 101 is referenced as the fallback the verdicts name, not specified;
+* the constraint and decision-rule layer (PM 1012);
+* the exact-decimal data contract (CalConnect 36813) — the numbers carry PM 1004's accuracy classes under it.

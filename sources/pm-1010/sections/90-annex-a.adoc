@@ -1,0 +1,20 @@
+== Annex A: the operator table
+
+Every operator, its argument types, result type, precedence level and error behaviour. The table is normative; the grammar artifact compiles it.
+
+[cols="2,3,2,2,3", options="headers"]
+|===
+|Operator |Argument types |Result |Level |Error behaviour
+
+|`+`, `−` |quantity/quantity, same dimension |quantity, unit per the algebra |additive |`DimensionMismatch`
+|`*`, `/` |quantity/quantity, affine excluded |quantity |multiplicative |`AffineUnitInAlgebra`
+|`mod` |quantity/quantity, same dimension |quantity, the dividend's unit |multiplicative |`DivisionByZero`, `DimensionMismatch`
+|`^` |quantity, integer |quantity, power of the unit |power |`MathDomain` per PM 1004
+|comparisons |quantity/quantity, same dimension |boolean |comparison |`DimensionMismatch`
+|`and`, `or`, `xor` |boolean/boolean |boolean |the logical levels |static type error on non-boolean
+|`implies` |boolean/boolean |boolean |implies |static type error on non-boolean
+|conditional |boolean, T, T |T |— |static type error on non-boolean
+|aggregates |series |per PM 1011 |operand |`NotASeries`
+|===
+
+The undefined literal is refused by every operator with `UndefinedOperand` — the value exists to be tested, not computed with.

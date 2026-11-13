@@ -1,0 +1,24 @@
+== Terms and definitions
+
+For the purposes of this document, the terms and definitions of PM 1011 apply, and the following apply.
+
+=== limit
+the stated boundary expression with its comparison direction and its unit
+
+=== constraint evaluation
+one evaluation of a limit against a result under one decision rule, yielding one verdict
+
+=== verdict
+the result of a constraint evaluation: satisfied, not satisfied, or conditional, with the rule and the residual
+
+=== signed residual
+the distance from the result to the limit boundary in the limit's unit — signed to the satisfied side
+
+=== guard band
+the interval k·U subtracted from the limit boundary, per the guarded acceptance rule
+
+=== conditional
+the verdict kind for a result inside the guard band: neither satisfied nor not satisfied — the rule does not decide
+
+=== applicability guard
+the `when` expression that states whether the constraint applies to the current scope
