@@ -11,3 +11,11 @@ Where a notation cannot carry a construct, the render states the loss (the forma
 [example]
 `2.10 + x` rendered to the formats and re-parsed.
 *Expected outcome.* the trailing zero survives the render and the re-parse in every round-tripping format; the corpus asserts the AST equality per format.
+
+=== Reading the pinned evidence
+
+The supporting generation and row identifiers are listed in clause 10.
+Its per-target `lossless`, loss and refusal fields delimit the demonstrated
+round trips. They neither establish all new expression constructs in every
+format nor establish preservation after editing in an external document
+application.

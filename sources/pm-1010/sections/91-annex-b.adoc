@@ -3,3 +3,13 @@
 A `.pgtest` case is the triple: the source, the artifact's AST, and the result where the case evaluates. The suites ride the grammar artifact; a runtime replays the triple or refuses.
 
 The form is data: the source as written, the AST as the artifact's parse states it, the result as PM 1011's evaluation states it — three fields, each checksummed with the artifact version. A case that refuses carries the diagnostic in the third field; refusals replay exactly like results.
+
+=== Existing data and the expression-generation gap
+
+The round-trip rows pinned in clause 10 are YAML, not a substitute PARG
+suite. For example, `asciimath-standard.absolute` supplies source
+`ustd(1.230, 0.004)` and per-format results; it checks the existing
+uncertainty representation. A future expression `.pgtest` generation must
+add its actual source, bound Formula tree and evaluation or diagnostic
+result, with grammar and binding checksums. It must not relabel a numeric
+JSON AST fixture as evidence that expression source parsed correctly.
