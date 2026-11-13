@@ -7,3 +7,6 @@
 * [[[pm1012,nofetch(PM 1012 (constraint evaluation))]]] of this series — the verdicts the surface returns.
 * [[[parsanol,nofetch(Parsanol)]]] — the PARG toolchain; the binding declarations of parsanol#432.
 * [[[lutamlmodel1033,nofetch(lutaml-model #1033)]]] — the LML cross-language schema realizations.
+
+* [[[pm-wire-corpus,nofetch(Plurimath serialized evaluation corpus)]]] — https://github.com/plurimath/plurimath-testsuite/tree/7c13256efd0ddcd88680b242b45cdedeaf3c75d5/evaluation[commit 7c13256efd0ddcd88680b242b45cdedeaf3c75d5], `evaluation/` profile manifests (clause 9).
+* [[[unitsml-reference-corpus,nofetch(UnitsML evaluator reference corpus)]]] — https://github.com/unitsml/unitsml-testsuite/tree/087e4ee60eb402d6436ae919f50a187faec2abb7/corpora/features/evaluator-reference/v1[commit 087e4ee60eb402d6436ae919f50a187faec2abb7], `vectors.json`, `index.json` and `acceptance.json` (clause 9).

@@ -10,3 +10,61 @@ An implementation conforms to this document when it parses exactly the construct
 * the precedence chain parses the Annex A examples to the stated trees;
 * every static diagnostic of the corpus carries the node and the expected types;
 * the artifact checksums match the published artifacts, per runtime.
+
+=== Pinned supporting generations
+
+The supporting corpus is `plurimath/plurimath-testsuite` at commit
+`7c13256efd0ddcd88680b242b45cdedeaf3c75d5` (BSD-2-Clause, `LICENSE`).
+The immutable round-trip generation is
+`stages/roundtrip/generations/000001`, listed in `generations/roundtrip.yaml`:
+9 payloads, 46 rows, snapshot digest
+`sha256:7ee63e894f86a139899623f2b04f32228893ea3b0f77da55333c2927b630c337`.
+Its `provenance.yaml` names the producer, dependency versions and generator:
+`plurimath/plurimath` commit `2967dcc47a9f37d5b9a2dd13d94a2ad35d4cc256`,
+`scripts/roundtrip_cases.rb`. A generation is not regenerated in place.
+
+The generation records AsciiMath, UnicodeMath and MathML source cases and
+per-target AsciiMath, UnicodeMath, MathML and OMML outcomes. Each outcome
+states exact output and losslessness, a stated loss, or a refusal. Replay
+uses that outcome rather than assuming every target is lossless.
+
+.Supporting round-trip rows
+[cols="2,3", options="headers"]
+|===
+|Payload under `payloads/` |Row identifiers and purpose
+
+|`asciimath-standard.yaml`
+|`asciimath-standard.absolute`: standard uncertainty and verbatim decimals
+
+|`asciimath-expanded.yaml`
+|`asciimath-expanded.k`: expanded uncertainty and coverage factor
+
+|`asciimath-coverage-interval.yaml`
+|`asciimath-coverage-interval.unspecified`: interval representation, with each target's recorded outcome
+
+|`asciimath-invalid.yaml`
+|`asciimath-invalid.zero-k`: refusal, not a successful round trip
+
+|`unicode-markers.yaml`
+|`unicode-markers.standard`: UnicodeMath marker reading
+
+|`mathml-markers.yaml`
+|`mathml-markers.standard`: MathML marker reading
+|===
+
+=== Coverage boundary
+
+This generation supplies existing uncertainty-markup round trips. It does
+not establish conformance of the complete expression language: it is not a
+frozen `expressions.parg` source-to-AST generation for boolean logic,
+conditionals, iterators, undefined values or the complete static type pass.
+Those constructs still require the grammar artifact and the `.pgtest`
+generation of clause 6. No checksum or row identifier for such a generation
+is asserted here. Supporting arithmetic and serialized diagnostics are
+pinned by PM 1013; they do not replace static-language diagnostics.
+
+The repository checks are `ruby scripts/validate.rb`,
+`ruby scripts/validate-stages.rb` and
+`python3 scripts/validate-evaluation-profiles.py`. These validate corpus
+structure and seals. An implementation's parse/write/read replay is separate
+and must report the generation and the target outcomes it actually checks.

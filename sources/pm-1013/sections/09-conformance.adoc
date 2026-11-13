@@ -9,3 +9,120 @@ A binding conforms to this document when it drives the serialized surface per cl
 * the parity vectors of PM 1011's serialized class, replayed across the runtimes;
 * the checksum-verification refusal on a pinned-mismatched artifact;
 * the stamp presence and correctness on every response.
+
+=== Pinned serialized profiles
+
+The supporting serialized corpus is `plurimath/plurimath-testsuite` at
+commit `7c13256efd0ddcd88680b242b45cdedeaf3c75d5` (BSD-2-Clause,
+`LICENSE`). Each profile directory has `manifest.json`: it pins every
+payload SHA256, row count, producer revision and the scope of recorded
+runtime qualification. The JSON payloads carry stable row identifiers,
+requests and canonical `expected_wire` strings.
+
+.Serialized supporting generations
+[cols="2,2,3", options="headers"]
+|===
+|Directory |Profile |Payloads
+
+|`evaluation/numeric-v1/`
+|`plurimath.evaluate.numeric/1`
+|`numeric-v1.json`, `numeric-supplemental-v1.json`,
+`numeric-validation-v1.json`, `numeric-bignum-v1.json`,
+`numeric-nonfinite-v1.json`, `numeric-annex-v1.json` (204 rows)
+
+|`evaluation/quantity-v1/`
+|`plurimath.evaluate.quantity/1`
+|`request-quantity-v1.json`, `quantity-register-v1.json` (62 rows)
+
+|`evaluation/gum-v1/`
+|`plurimath.evaluate.gum/1`
+|`gum-wires.json`, `coverage-validation-wires.json` (149 rows)
+|===
+
+The manifest SHA256 values, in table order, are:
+
+* numeric: `ea52ac82e1807bbd01a9b78fd9b571f747adffe6c7c59344da0fcbd958f1d4d8`;
+* quantity: `3cfed5e9cf6d62ec8182e227b4125e39a3b6aca21d4deff858736d24366613fc`;
+* GUM: `11c0705ec78064fcd8a6aaa59c625df44ee4c0ad896c43a70f63f79091c17e96`.
+
+An implementation replays the request representation supplied by each row
+and compares the complete response with `expected_wire` byte for byte.
+An expected refusal is an acceptance case too: preserve its diagnostic code
+and any carried fields instead of substituting a successful result or
+comparing the code alone. The 415 rows include 116 refusal rows; these are
+serialized outcomes, not 116 distinct error classes.
+
+.Selected diagnostic and boundary rows
+[cols="2,2,3", options="headers"]
+|===
+|Payload |Row |Expected evidence
+
+|`numeric-v1/numeric-v1.json`
+|`missing-variable`, `zero-divisor`
+|`MissingVariableError`, `DivisionByZeroError`
+
+|`numeric-v1/numeric-v1.json`
+|`sqrt-deferred`, `sqrt-guarded`, `sqrt-approximate`
+|Strict deferral, declared precision and approximate boundary records, respectively
+
+|`numeric-v1/numeric-validation-v1.json`
+|`bad-AST-before-backend-binding`, `backend-binding-after-valid-AST`
+|`InvalidRequest`, `InvalidBindingError`, with the frozen validation priority
+
+|`quantity-v1/request-quantity-v1.json`
+|`dimension-mismatch`, `syntax`
+|`DimensionMismatchError`; `UnitSyntaxError` with the frozen parser details
+
+|`gum-v1/coverage-validation-wires.json`
+|`actual-too-coarse`, `significant-digits-0`
+|`UnsupportedModel`, `InvalidInput`, with the frozen messages
+|===
+
+Paths in this table are relative to `evaluation/`. These source-profile
+error names are not automatically aliases for all diagnostics of PM 1009
+or PM 1011; an adapter claiming those interfaces must state its mapping.
+
+=== Reference acceptance and limits
+
+The companion mathematical/reference acceptance generation is
+`unitsml/unitsml-testsuite` at commit
+`087e4ee60eb402d6436ae919f50a187faec2abb7`,
+`corpora/features/evaluator-reference/v1` (Ribose BSD 2-Clause,
+`LICENSE.md`). Its 388 rows are keyed by profile and row ID and retain
+`request_json`, `expected_wire`, numeric mode, method and seeds where
+applicable. The `vectors.json` SHA256 is
+`81687233681fa60e337f41c4177dea3cbe8ff9e0e9fc5734c556f8f455e62d9d`;
+`index.json` pins source archives and producer revisions;
+`acceptance.json` records the acceptance basis per family and unresolved
+items. This is a companion reference generation, not 388 additional
+independent tests: families overlap the serialized corpus.
+
+The `quantity-register` family's reference acceptance is partial; it must
+not be reported as complete Ruby-reference acceptance. The recorded H.2
+publication-last-digit and named-power-class gaps remain unresolved.
+Approximate values still compare with the frozen wire for that declared
+profile; a mathematical tolerance is not permission to loosen byte replay.
+
+The supporting profiles do not cover the entire illustrative request of
+clause 7, the full expression grammar, real R 60/R 134 or Primmel limit
+exports, every artifact-pair mismatch, or all model realizations. They do
+not alone establish full conformance to this document. A claim must name
+its profile, generation, runtime and qualification scope. In particular,
+the shared-core manifests' native/Ruby/Windows qualifications do not imply
+that every GUM row has been replayed through a TypeScript/WASM binding;
+that requires its own receipt. The model-realization dependency on
+lutaml-model#1033 remains separate from numeric replay.
+
+=== Checking and reproducing a generation
+
+Run `python3 scripts/validate-evaluation-profiles.py` in the pinned
+Plurimath testsuite to verify manifest inventories, payload seals, case IDs,
+response envelopes and canonical wires. Run
+`python3 scripts/evaluator_reference_vectors.py check` in the pinned
+UnitsML testsuite to verify the companion archives and re-derive its
+vectors and acceptance files. Neither command re-executes the evaluator or
+proves new cross-runtime or metrological acceptance. Replay and independent
+reference checks are separate receipts; the manifests and acceptance file
+state which were recorded. To extend coverage, append a generation and
+publish its provenance and replay evidence; never rewrite these pinned
+payloads.

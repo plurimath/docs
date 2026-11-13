@@ -6,3 +6,5 @@
 * [[[pm1009,nofetch(PM 1009 (quantity type system))]]] of this series — the operand types the operators consume.
 * [[[parsanol,nofetch(Parsanol)]]] — the PARG grammar language and toolchain compiling this document's grammar.
 * [[[cc36813,nofetch(CalConnect 36813 (numeric contract))]]] of the UnitsML series — the exact-decimal discipline the literals preserve.
+
+* [[[pm-expression-corpus,nofetch(Plurimath testsuite supporting generation)]]] — https://github.com/plurimath/plurimath-testsuite/tree/7c13256efd0ddcd88680b242b45cdedeaf3c75d5[commit 7c13256efd0ddcd88680b242b45cdedeaf3c75d5], `generations/roundtrip.yaml` and `stages/roundtrip/generations/000001` (clause 10).
