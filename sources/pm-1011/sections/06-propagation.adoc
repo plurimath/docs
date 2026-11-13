@@ -6,7 +6,7 @@ For an expression f over the input quantities xᵢ, each carrying a standard unc
 
 `u_c = √( Σᵢ (∂f/∂xᵢ · uᵢ)² + 2 Σᵢ<ⱼ (∂f/∂xᵢ)(∂f/∂xⱼ) u(xᵢ,xⱼ) )`
 
-— the partials evaluated symbolically over the expression tree or numerically at the bound point, per the stated mode. The independence term is the first sum; the correlation term is stated and carried per clause 6.4.
+— the partials evaluated symbolically over the expression tree or numerically at the bound point, per the stated mode. The independence term is the first sum; the correlation term is the second sum.
 
 === The inputs
 

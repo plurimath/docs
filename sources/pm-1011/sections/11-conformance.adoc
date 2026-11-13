@@ -14,3 +14,64 @@ An implementation conforms to this document at the class its corpus generation p
 === The acceptance
 
 A conformance claim names the classes and the corpus generations. The classes are independent: arithmetic-only conformance is PM 1004's, unchanged; each new class stands on PM 1009 and this document's clauses for that class.
+
+=== The corpus
+
+A claim names the repository, the commit and the generations below, per class. The evaluator-reference generation sends each request verbatim and compares the expected wire byte for byte as canonical JSON; a stochastic row replays only with the identical method, generator and seeds, and `precision=approximate` marks a declared approximation, not a looser comparison.
+
+.Pinned corpus generations (https://github.com/unitsml/unitsml-testsuite, commit `087e4ee60eb402d6436ae919f50a187faec2abb7`)
+[cols="1,3,1", options="headers"]
+|===
+|Class |Generation and families |Rows
+
+|arithmetic
+|`corpora/features/evaluator-reference/v1`: `numeric-v1`, `numeric-supplemental-v1`, `numeric-validation-v1`, `numeric-bignum-v1`, `numeric-nonfinite-v1`, `numeric-annex-h`
+|204
+
+|quantity
+|`corpora/features/evaluator-reference/v1`: `quantity-register`, `quantity-f40`, `R30-wasm-quantity`; with the PM 1009 rows
+|35
+
+|propagation
+|`corpora/features/evaluator-reference/v1`: `gum-annex`, `gum-annex-methods`, `gum-f40`, `coverage-validation`; `corpora/features/host-evaluator/v1`: the Annex H producer rows
+|111 and 74
+
+|second-order
+|`corpora/features/evaluator-reference/v1`: `gum-mcm`, `gum-mcm-joint-rational` (the MCM comparison rows, referenced per clause 7)
+|13
+
+|series
+|`corpora/features/host-evaluator/v1`: `series_statistics`, `grouped_statistics`, `annex_h_type_a_covariance`
+|9
+|===
+
+`scripts/evaluator_reference_vectors.py check` and `scripts/host_evaluator_vectors.py check` of the testsuite verify the seals and re-derive the vectors; both exit 0 at the pinned commit. The acceptance record of each family is `corpora/features/evaluator-reference/v1/acceptance.json`.
+
+=== The GUM worked examples in the corpus
+
+[cols="1,4", options="headers"]
+|===
+|Example |Rows
+
+|H.1
+|`gum-annex`: `h1-lpu-analytic`
+|H.2
+|`gum-annex-methods`: `h2-derived-vector`, `h2-correlations`, `h2-derived-observations`; `host-evaluator/v1`: `producer-00` to `producer-03`
+|H.3
+|`gum-annex-methods`: the `h3-fit-*`, `h3-predict-*`, `h3-correlation-*` and `h3-refusal-*` rows; `host-evaluator/v1`: `producer-00` to `producer-03`
+|H.4
+|`gum-annex-methods`: `h4-derived-covariance`, `h4-ratio-approach`; `host-evaluator/v1`: `producer-04`, `producer-05`
+|H.5
+|`host-evaluator/v1`: `producer-06` to `producer-08`
+|H.6
+|`gum-annex-methods`: `h6-resolution-and-unknown-dof`
+|===
+
+=== Known gaps at the pinned commit
+
+* *H.2.* The independent exact-input arithmetic is checked, but agreement with the last digit the GUM publishes is not established; it needs the original unrounded inputs or the source's rounding convention (`acceptance.json`, `unresolved`).
+* *H.1.* The `h1-lpu-analytic` row carries the second-order terms: its standard uncertainty is 33.78 nm, against 32 nm at the first order. The row reproduces the second-order figure; a first-order H.1 row is not yet pinned.
+* *H.5* is pinned only by the host-evaluator producer rows; the evaluator-reference generation has no H.5 row.
+* The `numeric-annex-h` rows do not record which worked example each reproduces.
+* *The serialized class.* The evaluator-reference wires are produced by the Rust evaluator and re-run byte-equal by the Ruby reference for the arithmetic families; cross-runtime parity for TypeScript is not yet pinned.
+* The MCM rows were not re-run in the generation; they carry the generator, the seeds and the final state of their source run, per clause 7's boundary.

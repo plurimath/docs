@@ -7,3 +7,30 @@ Each row is one corpus vector with its expected outcome frozen; the corpus is th
 * *Comparison.* same-dimension comparison converts the smaller scale first; cross-dimension comparison refuses with `DimensionMismatch`.
 * *Conversion.* factor conversions of exact operands are exact; affine conversions apply the offset to the value and never to the difference; both traps carry corpus vectors.
 * *The uncertainty field.* a quantity with a PM 1002 uncertainty node carries the node unchanged — no normalisation, no recomputation; the unit-dimension equality of the uncertainty is checked and refused otherwise.
+
+=== Vector index
+
+Each acceptance vector of clause 10 with the rows that pin it (generations and commit as in clause 10). "Not yet pinned" marks a vector the corpus does not yet carry.
+
+[cols="3,4", options="headers"]
+|===
+|Vector |Rows
+
+|`kV·A` reduces to the power dimension at the kilo scale
+|`unitsml-quantities.json`: `dim-kVxA`, `kva-product`, `conv-kva-to-w`, `conv-kva-to-kw`, `conv-w-to-kva`
+
+|`3 km` compares to `2500 m` after conversion
+|not yet pinned (conversion only: `unitsml-quantities.json` `conv-km-to-m`, `expected-conversions.json` `km-to-m-prefix`)
+
+|`3 m` and `2 s` refuse with `DimensionMismatch`
+|`unitsml-quantities.json`: `refuse-m-to-s`, `refuse-v-plus-s`; `evaluator-reference/v1`: `registered-dimension-mismatch-refusal`
+
+|the affine traps
+|`unitsml-quantities.json`: `conv-degc-to-k`, `conv-k-to-degc`, `difference-degc`, `refuse-degc-to-k2`, `refuse-degc2-to-k2`; `evaluator-reference/v1`: `registered-affine-point`, `registered-affine-difference`, `registered-affine-subtraction`, `registered-affine-compound-refusal`, `registered-difference-minus-point-refusal`; `expected-conversions.json`: the `degc-*` and `k-to-degc-inverse` rows
+
+|an unregistered symbol refuses with `UnknownUnit`
+|`evaluator-reference/v1`: `register-refusal-unknown-unit`
+
+|the uncertainty field is carried unchanged
+|not yet pinned
+|===

@@ -1,3 +1,5 @@
 == Annex A: the R 60 cases
 
 The corpus's R 60 constraint cases — the MPE ranges against the propagated results, one row per case: the limit, the result with its uncertainty, the rule, the verdict, the signed residual. The annex is the reading guide; the corpus is the checkable form.
+
+NOTE: Not yet pinned. No testsuite generation carries these cases at the commit named in clause 10; see "Known gaps at the pinned commit".
