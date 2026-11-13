@@ -29,8 +29,7 @@ A claim names the repository, the commit and the generations below, per class. T
 |204
 
 |quantity
-|`corpora/features/evaluator-reference/v1`: `quantity-register`, `quantity-f40`, `R30-wasm-quantity`; with the PM 1009 rows
-|35
+|35 UnitsML rows from `corpora/features/evaluator-reference/v1`: `quantity-register`, `quantity-f40`, `R30-wasm-quantity`; plus the PM 1009 rows
 
 |propagation
 |`corpora/features/evaluator-reference/v1`: `gum-annex`, `gum-annex-methods`, `gum-f40`, `coverage-validation`; `corpora/features/host-evaluator/v1`: the Annex H producer rows
