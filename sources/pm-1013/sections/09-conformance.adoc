@@ -13,11 +13,16 @@ A binding conforms to this document when it drives the serialized surface per cl
 === Pinned serialized profiles
 
 The supporting serialized corpus is `plurimath/plurimath-testsuite` at
-commit `7c13256efd0ddcd88680b242b45cdedeaf3c75d5` (BSD-2-Clause,
+commit `b0d5148cba9b2373b18491cf90ba8dfe540b28ab` (BSD-2-Clause,
 `LICENSE`). Each profile directory has `manifest.json`: it pins every
 payload SHA256, row count, producer revision and the scope of recorded
 runtime qualification. The JSON payloads carry stable row identifiers,
 requests and canonical `expected_wire` strings.
+
+This pin must equal the commit of the `submodules/plurimath-testsuite`
+submodule in the `plurimath/plurimath` repository; the two pins must be
+changed together. The `evaluation/` tree is identical at this commit and at
+the earlier pin `7c13256`.
 
 .Serialized supporting generations
 [cols="2,2,3", options="headers"]
