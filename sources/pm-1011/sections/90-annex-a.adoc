@@ -3,7 +3,7 @@
 The mapping of the GUM's worked examples to this document's clauses:
 
 * H.1 (the gauge block, the type A and B components, the combined and expanded) — clauses 6 and 6.3, at the first order;
-* H.2 (the thermometer, the correlation) — clause 6.4, the correlation term stated;
+* H.2 (the thermometer, the correlation) — clause 6.1, the correlation term of the law;
 * H.4–H.6 — clause 6 with the mixtures of type A and B inputs;
 * the Amd.1 note to H.1.7 — clause 7, the second-order terms derived and documented per the corpus;
 * the H.1 comparison against MCM — clause 7, the LPU-adequacy verdict.

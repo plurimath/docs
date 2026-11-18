@@ -11,3 +11,37 @@ An implementation conforms to this document when it constructs, reduces, compare
 * `3 m` and `2 s` refuse with `DimensionMismatch` carrying both vectors;
 * the affine traps (difference vs absolute) return the stated answers, and the corpus pins them;
 * an unregistered symbol refuses with `UnknownUnit` naming the code.
+
+=== The corpus
+
+The vectors of this document are the quantity rows of the UnitsML testsuite. A claim names the repository, the commit and the generation below; an implementation replayed against a different commit makes a different claim.
+
+.Pinned corpus generations
+[cols="2,3,1,3", options="headers"]
+|===
+|Generation |Repository and commit |Rows |Comparison
+
+|`corpora/features/evaluator-reference/v1`, families `quantity-register`, `quantity-f40`, `R30-wasm-quantity`
+|https://github.com/unitsml/unitsml-testsuite, commit `087e4ee60eb402d6436ae919f50a187faec2abb7`
+|35
+|the request is sent verbatim; the expected wire is compared byte for byte as canonical JSON
+
+|`corpora/features/unitsml-quantities.json`
+|same commit
+|39
+|value, unit, dimension vector and scale, or the typed error class
+
+|`corpora/conversions/expected-conversions.json`
+|same commit
+|25
+|the converted value as an exact rational
+|===
+
+`scripts/check_feature_corpus.py` and `scripts/evaluator_reference_vectors.py check` of the testsuite verify the seals and re-derive the vectors; both exit 0 at the pinned commit.
+
+=== Known gaps at the pinned commit
+
+* The `quantity-register` family is partial: its rows are produced by the native evaluator, and an independent exact check covers 16 of its 32 identifiers.
+* No source names the quantity class of `kV·A` (apparent against active power). The corpus states the reduction to the power dimension and the conversion to `kW` by dimension only; it asserts no class. Asserting or refusing a class is an open decision of this document.
+* The UnitsML Ruby `Quantity#==` compares the raw value and the dimension vector without converting the scale (`10 kV * 5 A == 50 W` is true; corpus row `kva-equals-50-W-upstream-spec` and the file's `source_semantics_findings`). Clause 5 ("Equality and comparison") requires conversion to a common scale before comparison, so that row records a non-conformance of the implementation, not an acceptance vector.
+* No row yet pins the comparison `3 km` against `2500 m`, the reductions of `mm·kN` and `V/Hz`, or a quantity carrying a PM 1002 uncertainty node.

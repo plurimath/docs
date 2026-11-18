@@ -30,14 +30,6 @@ include::sections/03-terms.adoc[]
 
 include::sections/04-conventions.adoc[]
 
-include::sections/01-scope.adoc[]
-
-include::sections/02-normrefs.adoc[]
-
-include::sections/03-terms.adoc[]
-
-include::sections/04-conventions.adoc[]
-
 include::sections/05-language.adoc[]
 
 include::sections/06-grammar-parg.adoc[]

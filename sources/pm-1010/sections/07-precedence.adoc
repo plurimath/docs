@@ -1,28 +1,28 @@
-        == The precedence chain
+== The precedence chain
 
-        === The full chain
+=== The full chain
 
-        The grammar states one precedence chain, extending PM 1004's arithmetic chain upward with the logical levels:
+The grammar states one precedence chain, extending PM 1004's arithmetic chain upward with the logical levels:
 
 .The precedence chain of the expression language
 [cols="1,4", options="headers"]
 |===
 |Level |Constructs
 
-|implies
-|or
-|xor
-|and
-|comparison (`<=`, `>=`, `<`, `>`, `=`, `≠`)
-|additive (`+`, `−`)
-|multiplicative (implicit products, `/`, `mod`)
-|unary (negation, positive sign)
-|power (`^`, right-associative)
-|operand (literals, names, calls, groups)
+|implies |`implies`
+|or |`or`
+|xor |`xor`
+|and |`and`
+|comparison |`<=`, `>=`, `<`, `>`, `=`, `≠`
+|additive |`+`, `−`
+|multiplicative |implicit products, `/`, `mod`
+|unary |negation, positive sign
+|power |`^`, right-associative
+|operand |literals, names, calls, groups
 |===
 
-        Each level parses the next as its operand; every level except the power folds left-associatively. The chain is the superset of PM 1004's: an expression PM 1004 accepts parses to the same arithmetic tree here, and the logical levels above it extend, never reorder.
+Each level parses the next as its operand; every level except the power folds left-associatively. The chain is the superset of PM 1004's: an expression PM 1004 accepts parses to the same arithmetic tree here, and the logical levels above it extend, never reorder.
 
-        [example]
-        `a <= b and c < d implies ok`.
-        *Expected outcome.* parsed as `(a <= b) and (c < d)` implies `ok` — the comparison binds tighter than `and`, and `implies` binds loosest, right-associatively.
+[example]
+`a <= b and c < d implies ok`.
+*Expected outcome.* parsed as `(a <= b) and (c < d)` implies `ok` — the comparison binds tighter than `and`, and `implies` binds loosest.

@@ -6,5 +6,5 @@
 * [[[pm1004,nofetch(PM 1004 (evaluation))]]] of this series — the accuracy classes and the strict error contract.
 * [[[pm1009,nofetch(PM 1009 (quantity type system))]]] of this series — the quantities and the coherence.
 * [[[pm1011,nofetch(PM 1011 (evaluation processing))]]] of this series — the propagated results and the expanded uncertainty.
-* [[[ilacg8,nofetch(ILAC-G8)]], ILAC — the guidelines on decision rules and statements of conformity — the guarded acceptance family.
+* [[[ilacg8,nofetch(ILAC-G8)]]], ILAC — the guidelines on decision rules and statements of conformity — the guarded acceptance family.
 * [[[jcgm106,nofetch(JCGM 106)]]] — the decision-rule framing.
