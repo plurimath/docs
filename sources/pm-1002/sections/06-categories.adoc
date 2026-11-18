@@ -56,6 +56,12 @@ Every encoding that can carry semantics carries the category name explicitly: th
 The three categories with the same value `10.3` and unit `g`, side by side in LaTeX.
 *Expected outcome.* `10.3(0.2) g`, `(10.3 \pm 0.5) g~(k = 2)`, and `10.3,~[9.9, 10.7] g~(shortest, p = 0.95)` — three distinguishable shapes, no shared ambiguity.
 
+OpenMath carries the categories as symbols of the register's own content dictionary, `pmquant` (CD base `http://www.plurimath.org/cd`, version 1, revision 0, status experimental), shipped as data with the `openmath` gem <<openmath-gem>>: `ustd(v, m)`, `uexp(v, m, k)` and `uexp(v, m, k, p)`, `ucov(v, l, u)`, `ucov(v, l, u, p)` and `ucov(v, l, u, p, kind)`, and `value(q)`, which extracts the reported value. Each symbol has a signature in the CD's signature file, and the CD loads beside the official collection. The symbol name is the category, so an OpenMath application keeps the category as part of the value's identity, as every other semantic encoding does. Converting one category to another is a computation (PM 1004), never a change of symbol.
+
+[example]
+The expanded result `10.3 g`, `U = 0.5 g`, `k = 2` in OpenMath.
+*Expected outcome.* An `OMA` applying `<OMS cd="pmquant" name="uexp"/>` to the value, the magnitude and the coverage factor, in that order; it reads back as the expanded category with the same three fields.
+
 === The JCGM grounding
 
 .Category grounding in the JCGM family
