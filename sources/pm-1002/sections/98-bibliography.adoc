@@ -3,6 +3,7 @@
 
 * [[[plurimath-repo,nofetch(Plurimath repository)]]] — https://github.com/plurimath/plurimath
 * [[[pm-uncertainty-impl,nofetch(`Plurimath::Math::Function::Uncertainty` implementation)]]] — the reference implementation of this model
+* [[[openmath-gem,nofetch(`openmath` gem)]]] — https://github.com/plurimath/openmath, the `pmquant` content dictionary (`data/pmquant.ocd`) and its signature file (`data/pmquant.sts`)
 * [[[jcgm100-b,JCGM 100:2008]]], Evaluation of measurement data — Guide to the expression of uncertainty in measurement
 * [[[jcgm101-b,JCGM 101:2008]]], Supplement 1 — Propagation of distributions using a Monte Carlo method
 * [[[pendrill2024,nofetch(Pendrill, L. R. (2024))]]], _Quantities and units: order amongst complexity_, De Gruyter
